@@ -10,3 +10,8 @@
 p {
   color: white;
 }*/
+
+mat-toolbar > span {
+  text-align: center;
+  width: 100%;
+}

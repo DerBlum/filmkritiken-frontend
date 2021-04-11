@@ -22,7 +22,8 @@ export class FkTableComponent implements OnInit {
       <Filmbewertungen>{
         film: <Film>{
           name: "Chihiros Reise ins Zauberland",
-          vorschlagvon: "Flo"
+          beitragvon: "Flo",
+          besprochenam: new Date(2021, 3 - 1, 28)
         },
         bewertungen: [
           {

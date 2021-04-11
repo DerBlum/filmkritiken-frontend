@@ -1,6 +1,7 @@
 export interface Film {
   name: string;
-  vorschlagvon: string;
+  beitragvon: string;
+  besprochenam: Date;
 };
 
 export interface Bewertung {
