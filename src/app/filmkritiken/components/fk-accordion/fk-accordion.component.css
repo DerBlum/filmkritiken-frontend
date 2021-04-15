@@ -1,0 +1,16 @@
+.mat-expansion-panel {
+    margin: 7px 0;
+}
+.mat-expansion-panel-spacing {
+    margin: 16px 0;
+}
+
+.span-filmtitel {
+    text-align: left;
+    width: 100%;
+}
+
+.span-filmdatum {
+    text-align: right;
+    width: 100%;
+  }

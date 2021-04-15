@@ -1,0 +1,19 @@
+<div>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="items[0] === item" *ngFor="let item of items">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span class="span-filmtitel">
+                        {{item.film.name}}
+                    </span>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <span class="span-filmdatum">
+                        {{item.film.besprochenam.toLocaleDateString()}}
+                    </span>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            {{item.film.beitragvon}}
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

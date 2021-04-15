@@ -1,17 +1,8 @@
-/*.app, body, fk-table, .mat-cell, .mat-header-cell, div, span, svg, path {
-  background-color: #222;
-  color: white;
-}
-.mat-cell, .mat-header-cell {
-  border-color: white;
-  border-bottom-color:#ddd !important;
-}
-
-p {
-  color: white;
-}*/
-
-mat-toolbar > span {
+.toolbar-title {
   text-align: center;
   width: 100%;
+}
+
+.app-toolbar {
+  margin-bottom: 32px;
 }
