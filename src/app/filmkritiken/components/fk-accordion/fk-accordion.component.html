@@ -13,7 +13,9 @@
                     </span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            {{item.film.beitragvon}}
+
+            <fk-table [film]="item.film" [bewertungen]="item.bewertungen"></fk-table>
+
         </mat-expansion-panel>
     </mat-accordion>
 </div>

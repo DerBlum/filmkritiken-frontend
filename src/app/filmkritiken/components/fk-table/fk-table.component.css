@@ -1,3 +1,7 @@
 table {
     width: 100%;
 }
+
+.fk-filminfo-img, .fk-filminfo-txt, .fk-filmbewertungen {
+    padding: 5px;
+}

@@ -10,6 +10,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FkAccordionComponent } from './filmkritiken/components/fk-accordion/fk-accordion.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { FkAccordionComponent } from './filmkritiken/components/fk-accordion/fk-
     MatPaginatorModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatGridListModule,
+    MatCardModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
