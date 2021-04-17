@@ -27,12 +27,12 @@ export class FkAccordionComponent implements OnInit {
           },
           details: <Filmdetails>{
             altersfreigabe: 18,
-            erscheinungsjahr: new Date(2009),
+            erscheinungsjahr: new Date(2009, 1),
             regie: "Gaspar Noé",
             laenge: 161,
             originaltitel: "Enter the Void",
             originalsprache: "Englisch, Japanisch",
-            produktionsland: "Deusch, Japanisch"
+            produktionsland: "Frankreich, Japan, Kanada"
           }
         },
         bewertungen: [
@@ -71,7 +71,7 @@ export class FkAccordionComponent implements OnInit {
           },
           details: <Filmdetails>{
             altersfreigabe: 0,
-            erscheinungsjahr: new Date(2001),
+            erscheinungsjahr: new Date(2001, 1),
             regie: "Hayao Miyazaki",
             laenge: 125,
             originaltitel: "千と千尋の神隠し (Sen to Chihiro no Kamikakushi)",
