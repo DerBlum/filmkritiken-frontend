@@ -1,7 +1,7 @@
 <table mat-table [dataSource]="bewertungenDataSource">
     <!-- Person -->
     <ng-container matColumnDef="person">
-        <th mat-header-cell *matHeaderCellDef> Person </th>
+        <th mat-header-cell *matHeaderCellDef> Bewertender </th>
         <td mat-cell *matCellDef="let element"> {{element.von}} </td>
         <td mat-footer-cell *matFooterCellDef> Durchschnitt </td>
     </ng-container>

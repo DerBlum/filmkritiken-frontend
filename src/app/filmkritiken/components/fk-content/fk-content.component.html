@@ -1,7 +1,6 @@
-<div fxLayout="column" lfLayout.lg="row" fxLayout.xl="row">
+<div fxLayout="column" fxLayout.xl="row">
 
-    <div class="fk-filminfo" fxFlex="100" fxFlex.xl="66" fxLayout="column" fxLayout.sm="row" fxLayout.md="row"
-        lfLayout.md="row" fxLayout.xl="row" fxLayout.lg="row">
+    <div class="fk-filminfo" fxFlex="100" fxFlex.xl="66" fxLayout="column" fxLayout.gt-xs="row">
         <div class="fk-filminfo-img" fxFlex>
             <fk-image [film]="filmbewertungen.film"></fk-image>
         </div>
@@ -11,7 +10,10 @@
     </div>
 
     <div class="fk-filmbewertungen" fxFlex="100" fxFlex.xl="33">
-        <h4>Bewertungen</h4>
-        <fk-table [bewertungen]="filmbewertungen.bewertungen"></fk-table>
+        <div fxFlex=25 fxHide fxShow.lg fxShow.md fxShow.sm></div>
+        <div fxFlex=100>
+            <fk-table [bewertungen]="filmbewertungen.bewertungen"></fk-table>
+        </div>
+        <div fxFlex=25 fxHide fxShow.lg fxShow.md fxShow.sm></div>
     </div>
 </div>
