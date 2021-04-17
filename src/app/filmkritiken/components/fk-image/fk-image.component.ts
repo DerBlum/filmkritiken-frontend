@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Film } from '../../types/DataTypes';
+import { ImageData } from '../../types/DataTypes';
 
 @Component({
   selector: 'fk-image',
@@ -9,7 +9,7 @@ import { Film } from '../../types/DataTypes';
 export class FkImageComponent implements OnInit {
 
   @Input()
-  film: Film;
+  imageData: ImageData;
 
   constructor() { }
 

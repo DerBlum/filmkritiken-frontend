@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Film } from '../../types/DataTypes';
+import { Filmbewertungen } from '../../types/DataTypes';
 
 @Component({
   selector: 'fk-filminfo',
@@ -9,7 +9,7 @@ import { Film } from '../../types/DataTypes';
 export class FkFilminfoComponent implements OnInit {
 
   @Input()
-  film: Film;
+  filmbewertungen: Filmbewertungen;
 
   constructor() { }
 

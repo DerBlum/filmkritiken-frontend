@@ -1,11 +1,11 @@
 <div fxLayout="column" fxLayout.xl="row">
 
     <div class="fk-filminfo" fxFlex="100" fxFlex.xl="66" fxLayout="column" fxLayout.gt-xs="row">
-        <div class="fk-filminfo-img" fxFlex>
-            <fk-image [film]="filmbewertungen.film"></fk-image>
+        <div class="fk-filminfo-img" fxFlex="100">
+            <fk-image [imageData]="filmbewertungen.film.image"></fk-image>
         </div>
         <div class="fk-filminfo-txt" fxFlex="100">
-            <fk-filminfo [film]="filmbewertungen.film"></fk-filminfo>
+            <fk-filminfo [filmbewertungen]="filmbewertungen"></fk-filminfo>
         </div>
     </div>
 

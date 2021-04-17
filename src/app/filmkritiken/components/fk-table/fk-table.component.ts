@@ -29,7 +29,7 @@ export class FkTableComponent implements OnInit {
       counter = counter + 1;
     });
 
-    return 9;
+    return rating / counter;
   }
 
 }
