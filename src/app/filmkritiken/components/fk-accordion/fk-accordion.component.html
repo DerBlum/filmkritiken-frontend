@@ -4,17 +4,21 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <span class="span-filmtitel">
-                        {{item.film.name}}
+                        <h3>
+                            {{item.film.name}}
+                        </h3>
                     </span>
                 </mat-panel-title>
                 <mat-panel-description>
                     <span class="span-filmdatum">
-                        {{item.film.besprochenam.toLocaleDateString()}}
+                        <h3>
+                            {{item.film.besprochenam.toLocaleDateString()}}
+                        </h3>
                     </span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <fk-table [film]="item.film" [bewertungen]="item.bewertungen"></fk-table>
+            <fk-content [filmbewertungen]="item"></fk-content>
 
         </mat-expansion-panel>
     </mat-accordion>

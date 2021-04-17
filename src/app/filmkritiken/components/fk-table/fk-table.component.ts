@@ -1,24 +1,19 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Filmbewertungen, Film, Bewertung } from './../../types/DataTypes';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { Bewertung } from '../../types/DataTypes';
 
 @Component({
   selector: 'fk-table',
   templateUrl: './fk-table.component.html',
-  styleUrls: ['./fk-table.component.css'],
+  styleUrls: ['./fk-table.component.css']
 })
 export class FkTableComponent implements OnInit {
-
-  displayedColumns: string[] = ['person', 'wertung'];
-
-  @Input()
-  film: Film
 
   @Input()
   bewertungen: Array<Bewertung>
 
   bewertungenDataSource: MatTableDataSource<Bewertung>
+  displayedColumns: string[] = ['person', 'wertung'];
 
   constructor() { }
 

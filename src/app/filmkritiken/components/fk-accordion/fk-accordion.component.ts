@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Filmbewertungen, Film, Bewertung } from '../../types/DataTypes';
+import { Filmbewertungen, Film, Bewertung, ImageData } from '../../types/DataTypes';
 
 @Component({
   selector: 'fk-accordion',
@@ -8,7 +8,7 @@ import { Filmbewertungen, Film, Bewertung } from '../../types/DataTypes';
 })
 export class FkAccordionComponent implements OnInit {
 
-  items: Array<Filmbewertungen>
+  items: Array<Filmbewertungen>;
 
   constructor() { }
 
@@ -18,7 +18,11 @@ export class FkAccordionComponent implements OnInit {
         film: <Film>{
           name: "Chihiros Reise ins Zauberland",
           beitragvon: "Flo",
-          besprochenam: new Date(2021, 3 - 1, 28)
+          besprochenam: new Date(2021, 3 - 1, 28),
+          image: <ImageData>{
+            source: "chihiro.jpg",
+            copyright: "dummy copyright"
+          }
         },
         bewertungen: [
           {
@@ -35,7 +39,11 @@ export class FkAccordionComponent implements OnInit {
         film: <Film>{
           name: "Chihiros Reise ins Zauberland",
           beitragvon: "Flo",
-          besprochenam: new Date(2021, 3 - 1, 21)
+          besprochenam: new Date(2021, 3 - 1, 21),
+          image: <ImageData>{
+            source: "chihiro.jpg",
+            copyright: "dummy copyright"
+          }
         },
         bewertungen: [
           {
@@ -52,7 +60,11 @@ export class FkAccordionComponent implements OnInit {
         film: <Film>{
           name: "Chihiros Reise ins Zauberland",
           beitragvon: "Flo",
-          besprochenam: new Date(2021, 3 - 1, 14)
+          besprochenam: new Date(2021, 3 - 1, 14),
+          image: <ImageData>{
+            source: "chihiro.jpg",
+            copyright: "dummy copyright"
+          }
         },
         bewertungen: [
           {
