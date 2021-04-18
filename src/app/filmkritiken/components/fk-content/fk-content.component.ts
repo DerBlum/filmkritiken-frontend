@@ -1,7 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Filmbewertungen, Film, Bewertung } from '../../types/DataTypes';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, Input, OnInit } from '@angular/core';
+import { Filmbewertungen } from '../../types/DataTypes';
 
 @Component({
   selector: 'fk-content',
