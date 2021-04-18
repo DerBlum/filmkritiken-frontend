@@ -693,12 +693,12 @@ body {
   display: none; }
 
 .mat-autocomplete-panel {
-  background: #202020;
+  background: #010101;
   color: white; }
   .mat-autocomplete-panel:not([class*='mat-elevation-z']) {
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); }
   .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover) {
-    background: #202020; }
+    background: #010101; }
     .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled) {
       color: white; }
 
@@ -865,7 +865,7 @@ body {
 
 .mat-bottom-sheet-container {
   box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
-  background: #202020;
+  background: #010101;
   color: white; }
 
 .mat-button, .mat-icon-button, .mat-stroked-button {
@@ -899,7 +899,7 @@ body {
 
 .mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
   color: white;
-  background-color: #202020; }
+  background-color: #010101; }
   .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
     color: white; }
   .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
@@ -959,7 +959,7 @@ body {
 
 .mat-button-toggle-appearance-standard {
   color: white;
-  background: #202020; }
+  background: #010101; }
   .mat-button-toggle-appearance-standard .mat-button-toggle-focus-overlay {
     background-color: white; }
 
@@ -985,7 +985,7 @@ body {
   color: rgba(255, 255, 255, 0.3);
   background-color: #464646; }
   .mat-button-toggle-disabled.mat-button-toggle-appearance-standard {
-    background: #202020; }
+    background: #010101; }
   .mat-button-toggle-disabled.mat-button-toggle-checked {
     background-color: #797979; }
 
@@ -994,7 +994,7 @@ body {
   border: solid 1px rgba(255, 255, 255, 0.12); }
 
 .mat-card {
-  background: #202020;
+  background: #010101;
   color: white; }
   .mat-card:not([class*='mat-elevation-z']) {
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); }
@@ -1092,7 +1092,7 @@ body {
     background-color: rgba(255, 255, 255, 0.1); }
 
 .mat-table {
-  background: #202020; }
+  background: #010101; }
 
 .mat-table thead, .mat-table tbody, .mat-table tfoot,
 mat-header-row, mat-row, mat-footer-row,
@@ -1157,7 +1157,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 
 .mat-datepicker-content {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  background-color: #202020;
+  background-color: #010101;
   color: white; }
   .mat-datepicker-content.mat-accent .mat-calendar-body-selected {
     background-color: #2f2f2f;
@@ -1186,7 +1186,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 
 .mat-dialog-container {
   box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
-  background: #202020;
+  background: #010101;
   color: white; }
 
 .mat-divider {
@@ -1196,7 +1196,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   border-right-color: rgba(255, 255, 255, 0.12); }
 
 .mat-expansion-panel {
-  background: #202020;
+  background: #010101;
   color: white; }
   .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); }
@@ -1210,7 +1210,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 @media (hover: none) {
   .mat-expansion-panel:not(.mat-expanded):not([aria-disabled='true'])
 .mat-expansion-panel-header:hover {
-    background: #202020; } }
+    background: #010101; } }
 
 .mat-expansion-panel-header-title {
   color: white; }
@@ -1398,7 +1398,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background: rgba(250, 250, 250, 0.12); }
 
 .mat-menu-panel {
-  background: #202020; }
+  background: #010101; }
   .mat-menu-panel:not([class*='mat-elevation-z']) {
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); }
 
@@ -1419,7 +1419,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background: rgba(250, 250, 250, 0.04); }
 
 .mat-paginator {
-  background: #202020; }
+  background: #010101; }
 
 .mat-paginator,
 .mat-paginator-page-size .mat-select-trigger {
@@ -1527,7 +1527,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: rgba(255, 255, 255, 0.7); }
 
 .mat-select-panel {
-  background: #202020; }
+  background: #010101; }
   .mat-select-panel:not([class*='mat-elevation-z']) {
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); }
   .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
@@ -1553,10 +1553,10 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: white; }
 
 .mat-drawer {
-  background-color: #202020;
+  background-color: #010101;
   color: white; }
   .mat-drawer.mat-drawer-push {
-    background-color: #202020; }
+    background-color: #010101; }
   .mat-drawer:not(.mat-drawer-side) {
     box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12); }
 
@@ -1718,7 +1718,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: #ff0e00; }
 
 .mat-stepper-horizontal, .mat-stepper-vertical {
-  background-color: #202020; }
+  background-color: #010101; }
 
 .mat-stepper-vertical-line::before {
   border-left-color: rgba(255, 255, 255, 0.12); }
@@ -1868,7 +1868,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background-color: rgba(255, 255, 255, 0.12); }
 
 .mat-toolbar {
-  background: #202020;
+  background: #010101;
   color: white; }
   .mat-toolbar.mat-primary {
     background: #ab1414;
@@ -1896,7 +1896,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background: rgba(95, 95, 95, 0.9); }
 
 .mat-tree {
-  background: #202020; }
+  background: #010101; }
 
 .mat-tree-node,
 .mat-nested-tree-node {

@@ -12,7 +12,8 @@
                 <mat-panel-description>
                     <span class="span-filmdatum">
                         <h3>
-                            {{item.filmbewertungDetails.besprochenam.toLocaleDateString()}}
+                            {{item.filmbewertungDetails.besprochenam.toLocaleDateString(undefined, { month:
+                            '2-digit',day: '2-digit',year: 'numeric'})}}
                         </h3>
                     </span>
                 </mat-panel-description>

@@ -21,7 +21,7 @@ export class FkTableComponent implements OnInit {
     this.bewertungenDataSource = new MatTableDataSource(this.bewertungen);
   }
 
-  getAverageWertung(): number {
+  getAverageWertung(): string {
     var counter = 0;
     var rating = 0;
     this.bewertungen.forEach(element => {
@@ -29,7 +29,8 @@ export class FkTableComponent implements OnInit {
       counter = counter + 1;
     });
 
-    return rating / counter;
+    var average = rating / counter;
+    return average.toLocaleString(undefined, { maximumFractionDigits: 2 });
   }
 
 }
