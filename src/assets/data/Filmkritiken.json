@@ -1,0 +1,182 @@
+[
+    {
+        "filmbewertungDetails": {
+            "beitragvon": "Nico",
+            "besprochenam": "2021-04-17T12:00:00.000Z"
+        },
+        "film": {
+            "titel": "Falling Down - Ein ganz normaler Tag",
+            "image": {
+                "source": "FallingDown.jpg",
+                "copyright": "IMDb"
+            },
+            "details": {
+                "altersfreigabe": 16,
+                "erscheinungsjahr": "1993-01-01T12:00:00.000Z",
+                "regie": "Joel Schumacher",
+                "laenge": 107,
+                "originaltitel": "Falling Down",
+                "originalsprache": "Englisch",
+                "produktionsland": "Vereinigte Staaten, Frankreich, Großbritannien"
+            }
+        },
+        "bewertungen": [
+            {
+                "von": "Dani",
+                "wertung": 7
+            },
+            {
+                "von": "Flo",
+                "wertung": 7
+            },
+            {
+                "von": "Nico",
+                "wertung": 9
+            },
+            {
+                "von": "Stefan",
+                "wertung": 7
+            },
+            {
+                "von": "Tiffy",
+                "wertung": 5
+            }
+        ]
+    },
+    {
+        "filmbewertungDetails": {
+            "beitragvon": "Tiffy",
+            "besprochenam": "2021-04-11T12:00:00.000Z"
+        },
+        "film": {
+            "titel": "La La Land",
+            "image": {
+                "source": "LaLaLand.jpg",
+                "copyright": "IMDb"
+            },
+            "details": {
+                "altersfreigabe": 0,
+                "erscheinungsjahr": "2016-01-01T12:00:00.000Z",
+                "regie": "Damien Chazelle",
+                "laenge": 128,
+                "originaltitel": "La La Land",
+                "originalsprache": "Englisch",
+                "produktionsland": "Vereinigte Staaten"
+            }
+        },
+        "bewertungen": [
+            {
+                "von": "Dani",
+                "wertung": 6
+            },
+            {
+                "von": "Flo",
+                "wertung": 8
+            },
+            {
+                "von": "Jana",
+                "wertung": 8
+            },
+            {
+                "von": "Nico",
+                "wertung": 8
+            },
+            {
+                "von": "Stefan",
+                "wertung": 8
+            },
+            {
+                "von": "Tiffy",
+                "wertung": 8
+            }
+        ]
+    },
+    {
+        "filmbewertungDetails": {
+            "beitragvon": "Dani",
+            "besprochenam": "2021-03-04T12:00:00.000Z"
+        },
+        "film": {
+            "titel": "Enter The Void",
+            "image": {
+                "source": "EnterTheVoid.jpg",
+                "copyright": "IMDb"
+            },
+            "details": {
+                "altersfreigabe": 18,
+                "erscheinungsjahr": "2009-01-01T12:00:00.000Z",
+                "regie": "Gaspar Noé",
+                "laenge": 161,
+                "originaltitel": "Enter the Void",
+                "originalsprache": "Englisch, Japanisch",
+                "produktionsland": "Frankreich, Japan, Kanada"
+            }
+        },
+        "bewertungen": [
+            {
+                "von": "Dani",
+                "wertung": 7
+            },
+            {
+                "von": "Flo",
+                "wertung": 4
+            },
+            {
+                "von": "Nico",
+                "wertung": 2
+            },
+            {
+                "von": "Stefan",
+                "wertung": 1
+            },
+            {
+                "von": "Tiffy",
+                "wertung": 1
+            }
+        ]
+    },
+    {
+        "filmbewertungDetails": {
+            "beitragvon": "Flo",
+            "besprochenam": "2021-03-28T12:00:00.000Z"
+        },
+        "film": {
+            "titel": "Chihiros Reise ins Zauberland",
+            "image": {
+                "source": "chihiro.jpg",
+                "copyright": "© Constantin Film"
+            },
+            "details": {
+                "altersfreigabe": 0,
+                "erscheinungsjahr": "2001-01-01T12:00:00.000Z",
+                "regie": "Hayao Miyazaki",
+                "laenge": 125,
+                "originaltitel": "千と千尋の神隠し (Sen to Chihiro no Kamikakushi)",
+                "originalsprache": "Japanisch",
+                "produktionsland": "Japan"
+            }
+        },
+        "bewertungen": [
+            {
+                "von": "Dani",
+                "wertung": 6
+            },
+            {
+                "von": "Flo",
+                "wertung": 9
+            },
+            {
+                "von": "Nico",
+                "wertung": 7
+            },
+            {
+                "von": "Stefan",
+                "wertung": 9
+            },
+            {
+                "von": "Tiffy",
+                "wertung": 9
+            }
+        ]
+    }
+]
