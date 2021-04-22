@@ -9,7 +9,8 @@
         </div>
     </div>
 
-    <div class="fk-filmbewertungen" fxFlex="100" fxFlex.xl="33">
+    <div *ngIf="filmbewertungen.bewertungen && filmbewertungen.bewertungen.length > 0" class="fk-filmbewertungen"
+        fxFlex="100" fxFlex.xl="33">
         <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
         <div fxFlex=100>
             <fk-table [bewertungen]="filmbewertungen.bewertungen"></fk-table>
