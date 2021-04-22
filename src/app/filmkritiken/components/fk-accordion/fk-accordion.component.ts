@@ -10,10 +10,14 @@ import { Filmbewertungen } from '../../types/DataTypes';
 export class FkAccordionComponent implements OnInit {
 
   items: Array<Filmbewertungen>;
+  mobile: boolean = false;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    if (window.visualViewport.width < 960) {
+      this.mobile = true;
+    }
     this.items = this.route.snapshot.data.filmbewertungen
   }
 

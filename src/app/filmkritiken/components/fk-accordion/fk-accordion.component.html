@@ -1,6 +1,6 @@
 <div>
     <mat-accordion>
-        <mat-expansion-panel [expanded]="items[0] === item" *ngFor="let item of items">
+        <mat-expansion-panel [expanded]="!mobile && items[0] === item" *ngFor="let item of items">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <span class="span-filmtitel">
