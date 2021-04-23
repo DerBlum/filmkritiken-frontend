@@ -1,40 +1,40 @@
-<div>
+<div *ngIf="filmbewertungen.film.details.originaltitel">
     <h4 class="inline">Originaltitel: </h4>
     {{filmbewertungen.film.details.originaltitel}}
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.originalsprache">
     <h4 class="inline">Originalsprache: </h4>
     {{filmbewertungen.film.details.originalsprache}}
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.erscheinungsjahr">
     <h4 class="inline">Erscheinungsjahr: </h4>
     {{filmbewertungen.film.details.erscheinungsjahr.getFullYear()}}
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.regie">
     <h4 class="inline">Regie: </h4>
     {{filmbewertungen.film.details.regie}}
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.laenge">
     <h4 class="inline">Länge: </h4>
     {{filmbewertungen.film.details.laenge}} Minuten
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.altersfreigabe">
     <h4 class="inline">Altersfreigabe: </h4>
     {{filmbewertungen.film.details.altersfreigabe}}
 </div>
 
-<div>
+<div *ngIf="filmbewertungen.film.details.produktionsland">
     <h4 class="inline">Produktionsland: </h4>
     {{filmbewertungen.film.details.produktionsland}}
 </div>
 
 <br>
-<div>
+<div *ngIf="filmbewertungen.filmbewertungDetails.beitragvon">
     <h4 class="inline">Beitrag von: </h4>
     {{filmbewertungen.filmbewertungDetails.beitragvon}}
 </div>

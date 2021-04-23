@@ -4,7 +4,7 @@
         <div *ngIf="filmbewertungen.film.image" class="fk-filminfo-img" fxFlex="100">
             <fk-image [imageData]="filmbewertungen.film.image"></fk-image>
         </div>
-        <div class="fk-filminfo-txt" fxFlex="100">
+        <div *ngIf="filmbewertungen.film.details" class="fk-filminfo-txt" fxFlex="100">
             <fk-filminfo [filmbewertungen]="filmbewertungen"></fk-filminfo>
         </div>
     </div>
