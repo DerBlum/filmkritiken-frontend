@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 
 COPY ./ ./
 
-RUN npm ci --quiet && npm run build
+RUN npm ci --quiet && npm run build-prod
 
 ####################
 ### Stage 2: Run ###
