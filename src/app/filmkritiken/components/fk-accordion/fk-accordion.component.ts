@@ -15,7 +15,7 @@ export class FkAccordionComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    if (window.visualViewport.width < 960) {
+    if (window.innerWidth < 960) {
       this.mobile = true;
     }
     this.items = this.route.snapshot.data.filmbewertungen
