@@ -19,6 +19,51 @@ import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-fi
 import { ApiModule, BASE_PATH } from './openapi';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+import { BrowserCacheLocation, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
+
+const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1; // Remove this line to use Angular Universal
+
+export function loggerCallback(logLevel: LogLevel, message: string, containsPii: boolean) {
+  if (containsPii) {
+    return;
+  }
+  switch (logLevel) {
+    case LogLevel.Error:
+      console.error(message);
+      return;
+    case LogLevel.Info:
+      console.info(message);
+      return;
+    case LogLevel.Verbose:
+      console.debug(message);
+      return;
+    case LogLevel.Warning:
+      console.warn(message);
+      return;
+  }
+}
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: 'b4dcd77f-8bc3-46e4-add1-8a44cd968428',
+      authority: 'https://login.microsoftonline.com/865638a4-e4fb-4aef-89e1-6824acc3a785',
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: isIE, // set to true for IE 11. Remove this line to use Angular Universal
+    },
+    system: {
+      loggerOptions: {
+        loggerCallback,
+        logLevel: LogLevel.Info,
+        piiLoggingEnabled: false
+      }
+    }
+  });
+}
+
 
 @NgModule({
   declarations: [
@@ -42,12 +87,20 @@ import { HttpClientModule } from '@angular/common/http';
     MatGridListModule,
     MatCardModule,
     FlexLayoutModule,
+    MsalModule,
   ],
   providers: [
-    [
-      { provide: BASE_PATH, useValue: environment.BACKEND_URL }
-    ]
+    {
+      provide: BASE_PATH,
+      useValue: environment.BACKEND_URL,
+    },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory,
+    },
+    MsalService,
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

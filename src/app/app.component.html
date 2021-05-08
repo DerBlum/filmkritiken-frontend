@@ -4,6 +4,9 @@
       <span class="toolbar-title">
         <h2>Filmkritiken</h2>
       </span>
+      <button *ngIf="isLoggedIn == false" (click)="loginPopup()">
+        Login
+      </button>
     </mat-toolbar>
   </p>
 
