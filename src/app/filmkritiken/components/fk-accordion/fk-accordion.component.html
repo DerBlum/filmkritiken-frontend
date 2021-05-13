@@ -9,11 +9,11 @@
                         </h3>
                     </span>
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description *ngIf="getAverageWertung(item)">
                     <span class="span-filmdatum">
                         <h3>
-                            {{item.filmbewertungDetails.besprochenam.toLocaleDateString(undefined, { month:
-                            '2-digit',day: '2-digit',year: 'numeric'})}}
+                            <!-- {{item.filmbewertungDetails.besprochenam.toLocaleDateString(undefined, { month: '2-digit',day: '2-digit',year: 'numeric'})}} -->
+                            {{getAverageWertung(item)}}
                         </h3>
                     </span>
                 </mat-panel-description>

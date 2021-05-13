@@ -38,3 +38,9 @@
     <h4 class="inline">Beitrag von: </h4>
     {{filmbewertungen.filmbewertungDetails.beitragvon}}
 </div>
+
+<div *ngIf="filmbewertungen.filmbewertungDetails.besprochenam">
+    <h4 class="inline">Besprochen am: </h4>
+    {{filmbewertungen.filmbewertungDetails.besprochenam.toLocaleDateString(undefined, { month: '2-digit',day:
+    '2-digit',year: 'numeric'})}}
+</div>

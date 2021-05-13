@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Bewertung } from '../../types/DataTypes';
+import { getAverageWertung } from '../../utilities/BewertungUtilities';
 
 @Component({
   selector: 'fk-table',
@@ -22,15 +23,7 @@ export class FkTableComponent implements OnInit {
   }
 
   getAverageWertung(): string {
-    var counter = 0;
-    var rating = 0;
-    this.bewertungen.forEach(element => {
-      rating = rating + element.wertung;
-      counter = counter + 1;
-    });
-
-    var average = rating / counter;
-    return average.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    return getAverageWertung(this.bewertungen);
   }
 
 }
