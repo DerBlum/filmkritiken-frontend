@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Filmbewertungen } from '../../types/DataTypes';
+import { Filmkritiken } from 'src/app/openapi';
 
 @Component({
   selector: 'fk-filminfo',
@@ -9,11 +9,16 @@ import { Filmbewertungen } from '../../types/DataTypes';
 export class FkFilminfoComponent implements OnInit {
 
   @Input()
-  filmbewertungen: Filmbewertungen;
+  filmkritiken: Filmkritiken;
+  besprochenAm: Date;
 
   constructor() { }
 
   ngOnInit(): void {
+    let ba = this.filmkritiken?.details?.besprochenam;
+    if (ba) {
+      this.besprochenAm = new Date(this.filmkritiken.details.besprochenam)
+    }
   }
 
 }

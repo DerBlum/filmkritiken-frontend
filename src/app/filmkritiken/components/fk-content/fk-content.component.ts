@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Filmbewertungen } from '../../types/DataTypes';
+import { Filmkritiken } from 'src/app/openapi';
 
 @Component({
   selector: 'fk-content',
@@ -9,7 +9,7 @@ import { Filmbewertungen } from '../../types/DataTypes';
 export class FkContentComponent implements OnInit {
 
   @Input()
-  filmbewertungen: Filmbewertungen;
+  filmkritiken: Filmkritiken;
 
   constructor() { }
 

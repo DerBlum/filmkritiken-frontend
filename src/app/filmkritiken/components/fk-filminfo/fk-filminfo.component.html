@@ -1,46 +1,45 @@
-<div *ngIf="filmbewertungen.film.details.originaltitel">
+<div *ngIf="filmkritiken.film.originaltitel">
     <h4 class="inline">Originaltitel: </h4>
-    {{filmbewertungen.film.details.originaltitel}}
+    {{filmkritiken.film.originaltitel}}
 </div>
 
-<div *ngIf="filmbewertungen.film.details.originalsprache">
+<div *ngIf="filmkritiken.film.originalsprache">
     <h4 class="inline">Originalsprache: </h4>
-    {{filmbewertungen.film.details.originalsprache}}
+    {{filmkritiken.film.originalsprache}}
 </div>
 
-<div *ngIf="filmbewertungen.film.details.erscheinungsjahr">
+<div *ngIf="filmkritiken.film.erscheinungsjahr">
     <h4 class="inline">Erscheinungsjahr: </h4>
-    {{filmbewertungen.film.details.erscheinungsjahr.getFullYear()}}
+    {{filmkritiken.film.erscheinungsjahr}}
 </div>
 
-<div *ngIf="filmbewertungen.film.details.regie">
+<div *ngIf="filmkritiken.film.regie">
     <h4 class="inline">Regie: </h4>
-    {{filmbewertungen.film.details.regie}}
+    {{filmkritiken.film.regie}}
 </div>
 
-<div *ngIf="filmbewertungen.film.details.laenge">
+<div *ngIf="filmkritiken.film.laenge">
     <h4 class="inline">Länge: </h4>
-    {{filmbewertungen.film.details.laenge}} Minuten
+    {{filmkritiken.film.laenge}} Minuten
 </div>
 
-<div *ngIf="filmbewertungen.film.details.altersfreigabe">
+<div *ngIf="filmkritiken.film.altersfreigabe">
     <h4 class="inline">Altersfreigabe: </h4>
-    {{filmbewertungen.film.details.altersfreigabe}}
+    {{filmkritiken.film.altersfreigabe}}
 </div>
 
-<div *ngIf="filmbewertungen.film.details.produktionsland">
+<div *ngIf="filmkritiken.film.produktionsland">
     <h4 class="inline">Produktionsland: </h4>
-    {{filmbewertungen.film.details.produktionsland}}
+    {{filmkritiken.film.produktionsland}}
 </div>
 
 <br>
-<div *ngIf="filmbewertungen.filmbewertungDetails.beitragvon">
+<div *ngIf="filmkritiken.details.beitragvon">
     <h4 class="inline">Beitrag von: </h4>
-    {{filmbewertungen.filmbewertungDetails.beitragvon}}
+    {{filmkritiken.details.beitragvon}}
 </div>
 
-<div *ngIf="filmbewertungen.filmbewertungDetails.besprochenam">
+<div *ngIf="besprochenAm">
     <h4 class="inline">Besprochen am: </h4>
-    {{filmbewertungen.filmbewertungDetails.besprochenam.toLocaleDateString(undefined, { month: '2-digit',day:
-    '2-digit',year: 'numeric'})}}
+    {{ besprochenAm.toLocaleDateString(undefined, { month: '2-digit',day: '2-digit',year: 'numeric'})}}
 </div>

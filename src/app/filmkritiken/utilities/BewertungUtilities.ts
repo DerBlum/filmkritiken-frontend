@@ -1,4 +1,4 @@
-import { Bewertung } from "../types/DataTypes";
+import { Bewertung } from "src/app/openapi";
 
 export function getAverageWertung(bewertungen: Array<Bewertung>): string {
     if (!bewertungen || bewertungen.length == 0) {

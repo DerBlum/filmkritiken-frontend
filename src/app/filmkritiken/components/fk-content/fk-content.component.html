@@ -1,19 +1,19 @@
 <div fxLayout="column" fxLayout.xl="row">
 
     <div class="fk-filminfo" fxFlex="100" fxFlex.xl="66" fxLayout="column" fxLayout.gt-sm="row">
-        <div *ngIf="filmbewertungen.film.image" class="fk-filminfo-img" fxFlex="100">
-            <fk-image [imageData]="filmbewertungen.film.image"></fk-image>
+        <div *ngIf="filmkritiken.film.image" class="fk-filminfo-img" fxFlex="100">
+            <fk-image [image]="filmkritiken.film.image"></fk-image>
         </div>
-        <div *ngIf="filmbewertungen.film.details" class="fk-filminfo-txt" fxFlex="100">
-            <fk-filminfo [filmbewertungen]="filmbewertungen"></fk-filminfo>
+        <div *ngIf="filmkritiken.details" class="fk-filminfo-txt" fxFlex="100">
+            <fk-filminfo [filmkritiken]="filmkritiken"></fk-filminfo>
         </div>
     </div>
 
-    <div *ngIf="filmbewertungen.bewertungen && filmbewertungen.bewertungen.length > 0" class="fk-filmbewertungen"
-        fxFlex="100" fxFlex.xl="33">
+    <div *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" class="fk-filmbewertungen" fxFlex="100"
+        fxFlex.xl="33">
         <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
         <div fxFlex=100>
-            <fk-table [bewertungen]="filmbewertungen.bewertungen"></fk-table>
+            <fk-table [bewertungen]="filmkritiken.bewertungen"></fk-table>
         </div>
         <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
         <div fxFlex=50 fxHide fxShow.sm></div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ImageData } from '../../types/DataTypes';
+import { Image } from 'src/app/openapi';
 
 @Component({
   selector: 'fk-image',
@@ -9,7 +9,7 @@ import { ImageData } from '../../types/DataTypes';
 export class FkImageComponent implements OnInit {
 
   @Input()
-  imageData: ImageData;
+  image: Image;
 
   constructor() { }
 

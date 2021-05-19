@@ -16,6 +16,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FkTableComponent } from './filmkritiken/components/fk-table/fk-table.component';
 import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.component';
 import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
+import { ApiModule, BASE_PATH } from './openapi';
+import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,9 +30,11 @@ import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-fi
     FkFilminfoComponent,
   ],
   imports: [
+    ApiModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
     MatToolbarModule,
@@ -38,7 +43,11 @@ import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-fi
     MatCardModule,
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [
+    [
+      { provide: BASE_PATH, useValue: environment.BACKEND_URL }
+    ]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
