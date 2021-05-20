@@ -18,9 +18,11 @@ import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.co
 import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
 import { ApiModule, BASE_PATH } from './openapi';
 import { environment } from 'src/environments/environment';
-import { HttpClientModule } from '@angular/common/http';
-import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MsalModule, MsalService, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
 import { BrowserCacheLocation, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
+import { ApiInterceptor } from './shared/interceptor/api.interceptor';
+import { UserService } from './shared/user/user.service';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1; // Remove this line to use Angular Universal
 
@@ -64,7 +66,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   });
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,8 +92,17 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   ],
   providers: [
     {
+      provide: UserService,
+      useClass: UserService
+    },
+    {
       provide: BASE_PATH,
       useValue: environment.BACKEND_URL,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
     },
     {
       provide: MSAL_INSTANCE,
