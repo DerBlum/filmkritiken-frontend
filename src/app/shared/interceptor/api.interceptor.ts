@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { MsalService } from "@azure/msal-angular";
 import { Observable } from "rxjs";
+import { catchError, switchMap, take } from "rxjs/operators";
 import { UserService } from "../user/user.service";
 
 @Injectable()
@@ -15,18 +15,33 @@ export class ApiInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        // get Auth header value
-        const header = 'Bearer ' + this.authService.getAuthToken();
+        return this.authService.getAuthToken().
+            pipe(
+                take(1),
+                switchMap(token => {
+                    if (!token) {
+                        throw new Error('Could not get token from AuthService');
+                    }
 
-        // set the Auth header
-        req = req.clone({
-            setHeaders: {
-                Authorization: header
-            }
-        })
+                    // get Auth header value
+                    const header = 'Bearer ' + token;
 
-        // go on
-        return next.handle(req)
+                    // set the Auth header
+                    req = req.clone({
+                        setHeaders: {
+                            Authorization: header
+                        }
+                    });
+
+                    return next.handle(req);
+                }),
+                catchError(error => {
+                    // send it without an Authorization Header
+                    return next.handle(req);
+                })
+            );
+
+
     }
 
 }

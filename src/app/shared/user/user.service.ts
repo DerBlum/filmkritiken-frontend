@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { MsalBroadcastService, MsalService } from "@azure/msal-angular";
-import { AuthenticationResult, InteractionStatus } from "@azure/msal-browser";
+import { AuthenticationResult, EndSessionRequest, InteractionStatus } from "@azure/msal-browser";
 import { AccountInfo } from "@azure/msal-common";
-import { of, Subject } from "rxjs";
-import { filter, takeUntil } from "rxjs/operators";
+import { from, Observable, of, PartialObserver, Subject } from "rxjs";
+import { catchError, filter, map, take, takeUntil } from "rxjs/operators";
 
 var minute: 60_000;
 
@@ -13,8 +13,10 @@ export class UserService {
     private readonly _destroying$ = new Subject<void>();
 
     private accountInfo: AccountInfo;
-    private authToken: string;
+    private authToken: String;
     private authTokenExpiryDate: Date;
+
+    private loginChanged = new Subject<boolean>();
 
     constructor(
         private authService: MsalService,
@@ -42,18 +44,13 @@ export class UserService {
     public loginViaPopup(): void {
         this.authService.loginPopup()
             .subscribe((response: AuthenticationResult) => {
-                this.authService.instance.setActiveAccount(response.account);
-                this.setUserInfo(response);
+                this.onLoginFinished(response);
             });
     }
 
     public logout(): void {
-        this.authService.logoutPopup({
-            mainWindowRedirectUri: "/",
-        });
-        this.accountInfo = undefined;
-        this.authToken = undefined;
-        this.authTokenExpiryDate = undefined;
+        this.authService.logoutPopup();
+        this.onLogout();
     }
 
     public isLoggedIn(): boolean {
@@ -63,23 +60,27 @@ export class UserService {
         return false;
     }
 
-    public getAuthToken(): string {
-        if (!this.isLoggedIn()) {
-            return undefined;
-        }
-
-        if (this.authTokenExpiryDate < new Date(Date.now() + (1 * minute))) {
-            this.refreshToken();
-        }
-        return this.authToken;
+    public subscribeToLoginState(observer: PartialObserver<boolean>) {
+        this.loginChanged.subscribe(observer);
     }
 
-    public hasRole(role: string): boolean {
+    public getAuthToken(): Observable<String> {
+        if (!this.isLoggedIn()) {
+            return of(undefined);
+        }
+
+        if (!this.authToken || this.authTokenExpiryDate < new Date(Date.now() + (1 * minute))) {
+            return this.refreshToken();
+        }
+        return of(this.authToken);
+    }
+
+    public hasRole(role: String): boolean {
         if (!this.isLoggedIn()) {
             return undefined;
         }
 
-        let userRoles = ((this.accountInfo.idTokenClaims as any).roles as String[])
+        let userRoles = ((this.accountInfo.idTokenClaims as any).roles as String[]);
         return userRoles.includes(role);
     }
 
@@ -94,26 +95,41 @@ export class UserService {
 
         if (activeAccount) {
             this.accountInfo = activeAccount;
-            this.refreshToken();
         }
     }
 
-    private refreshToken(): void {
+    private refreshToken(): Observable<String> {
+
         if (this.isLoggedIn()) {
-            // FIXME: Make this call synchronous somehow
-            //of(
-            this.authService.acquireTokenSilent({
-                scopes: [],
-            })
-                .subscribe((response: AuthenticationResult) => {
-                    this.authService.instance.setActiveAccount(response.account);
-                    this.setUserInfo(response);
-                }, (error: any) => {
+            return from(this.authService.instance.acquireTokenSilent({
+                scopes: []
+            })).pipe(
+                take(1),
+                map(authResult => {
+                    this.onLoginFinished(authResult);
+                    return this.authToken;
+                }),
+                catchError(error => {
                     console.log("Acquiring Token failed because of error: " + error);
+                    this.onLogout();
+                    this.loginViaPopup();
+                    return of(undefined);
                 })
-                //).toPromise()
-                ;
+            );
         }
+
+        return of(undefined)
+    }
+
+    private onLoginFinished(authResult: AuthenticationResult): void {
+        this.authService.instance.setActiveAccount(authResult.account);
+        this.setUserInfo(authResult);
+        this.loginChanged.next(true);
+    }
+
+    private onLogout(): void {
+        this.setUserInfo(undefined);
+        this.loginChanged.next(false);
     }
 
     private setUserInfo(authResult: AuthenticationResult): void {
@@ -122,7 +138,9 @@ export class UserService {
             this.authToken = authResult.idToken
             this.authTokenExpiryDate = authResult.expiresOn;
         } else {
-            this.accountInfo = null;
+            this.accountInfo = undefined;
+            this.authToken = undefined;
+            this.authTokenExpiryDate = undefined;
         }
     }
 

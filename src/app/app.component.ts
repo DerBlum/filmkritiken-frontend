@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
 import { UserService } from './shared/user/user.service';
 
 @Component({
@@ -20,6 +16,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.refreshLoginState();
+    this.userService.subscribeToLoginState({
+      next: loginStateUpdated => this.isLoggedIn = loginStateUpdated
+    })
   }
 
   loginPopup() {
