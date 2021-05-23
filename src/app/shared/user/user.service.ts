@@ -49,7 +49,7 @@ export class UserService {
     }
 
     public logout(): void {
-        this.authService.logoutPopup();
+        localStorage.clear();
         this.onLogout();
     }
 
