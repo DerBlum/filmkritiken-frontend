@@ -37,12 +37,13 @@
     "@angular/router": "~11.2.8",
     "@azure/msal-angular": "^2.0.0-beta.5",
     "@azure/msal-browser": "^2.14.1",
+    "@ecodev/fab-speed-dial": "^7.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1102.7",
+    "@angular-devkit/build-angular": "^0.901.15",
     "@angular/cli": "~11.2.7",
     "@angular/compiler-cli": "~11.2.8",
     "@openapitools/openapi-generator-cli": "^2.2.8",

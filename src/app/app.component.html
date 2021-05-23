@@ -4,12 +4,24 @@
       <span class="toolbar-title">
         <h2>Filmkritiken</h2>
       </span>
-      <!--<button *ngIf="isLoggedIn == false" (click)="loginPopup()">
-        Login
-      </button>
-      <button *ngIf="isLoggedIn == true" (click)="logout()">
-        Logout
-      </button>-->
+      <eco-fab-speed-dial #speedDial [direction]='"down"' [animationMode]='"fling"' (mouseenter)="speedDial.open = true"
+        (mouseleave)="speedDial.open = false">
+        <eco-fab-speed-dial-trigger>
+          <button [color]="'primary'" mat-fab>
+            <mat-icon>menu</mat-icon>
+          </button>
+        </eco-fab-speed-dial-trigger>
+        <eco-fab-speed-dial-actions>
+          <button *ngIf="isLoggedIn == false" mat-mini-fab (click)="loginPopup()" matTooltip="Anmelden"
+            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <button *ngIf="isLoggedIn == true" mat-mini-fab (click)="logout()" matTooltip="Abmelden"
+            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </eco-fab-speed-dial-actions>
+      </eco-fab-speed-dial>
     </mat-toolbar>
   </p>
 

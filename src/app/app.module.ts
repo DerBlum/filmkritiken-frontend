@@ -19,10 +19,14 @@ import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-fi
 import { ApiModule, BASE_PATH } from './openapi';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MsalModule, MsalService, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
 import { BrowserCacheLocation, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './shared/interceptor/api.interceptor';
 import { UserService } from './shared/user/user.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { EcoFabSpeedDialModule } from '@ecodev/fab-speed-dial';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1; // Remove this line to use Angular Universal
 
@@ -89,6 +93,10 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MatCardModule,
     FlexLayoutModule,
     MsalModule,
+    MatButtonModule,
+    MatIconModule,
+    EcoFabSpeedDialModule,
+    MatTooltipModule,
   ],
   providers: [
     {
