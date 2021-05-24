@@ -15,6 +15,7 @@ import { Bewertung } from './bewertung';
 
 
 export interface Filmkritiken { 
+    id?: string;
     details: FilmkritikenDetails;
     film: Film;
     bewertungen: Array<Bewertung>;

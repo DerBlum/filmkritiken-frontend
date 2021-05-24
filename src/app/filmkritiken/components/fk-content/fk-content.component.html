@@ -9,11 +9,10 @@
         </div>
     </div>
 
-    <div *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" class="fk-filmbewertungen" fxFlex="100"
-        fxFlex.xl="33">
+    <div class="fk-filmbewertungen" fxFlex="100" fxFlex.xl="33">
         <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
         <div fxFlex=100>
-            <fk-table [bewertungen]="filmkritiken.bewertungen"></fk-table>
+            <fk-table [filmkritiken]="filmkritiken"></fk-table>
         </div>
         <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
         <div fxFlex=50 fxHide fxShow.sm></div>

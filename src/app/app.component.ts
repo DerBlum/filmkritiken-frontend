@@ -7,6 +7,7 @@ import { UserService } from './shared/user/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'filmkritiken-frontend';
   isLoggedIn = false;
 
@@ -15,10 +16,10 @@ export class AppComponent {
   ) { }
 
   ngOnInit(): void {
-    this.refreshLoginState();
     this.userService.subscribeToLoginState({
       next: loginStateUpdated => this.isLoggedIn = loginStateUpdated
     })
+    this.isLoggedIn = this.userService.isLoggedIn();
   }
 
   loginPopup() {
@@ -27,10 +28,6 @@ export class AppComponent {
 
   logout() {
     this.userService.logout();
-  }
-
-  refreshLoginState() {
-    this.isLoggedIn = this.userService.isLoggedIn();
   }
 
 }

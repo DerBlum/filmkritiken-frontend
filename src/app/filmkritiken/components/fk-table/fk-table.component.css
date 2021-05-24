@@ -1,3 +1,13 @@
 table {
     width: 100%;
 }
+
+.bewertung-form {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.bewertung-form-send {
+    margin-left: 10px;
+    text-align: center;
+}

@@ -12,12 +12,12 @@
           </button>
         </eco-fab-speed-dial-trigger>
         <eco-fab-speed-dial-actions>
-          <button *ngIf="isLoggedIn == false" mat-mini-fab (click)="loginPopup()" matTooltip="Anmelden"
+          <button *ngIf="!isLoggedIn" mat-mini-fab (click)="loginPopup()" matTooltip="Anmelden"
             matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>account_circle</mat-icon>
           </button>
-          <button *ngIf="isLoggedIn == true" mat-mini-fab (click)="logout()" matTooltip="Abmelden"
-            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
+          <button *ngIf="isLoggedIn" mat-mini-fab (click)="logout()" matTooltip="Abmelden" matTooltipPosition="left"
+            matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>logout</mat-icon>
           </button>
         </eco-fab-speed-dial-actions>
