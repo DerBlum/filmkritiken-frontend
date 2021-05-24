@@ -11,15 +11,11 @@
  */
 
 
-export interface Bewertung { 
+export interface BenutzerBewertung { 
+    wertung?: number;
     /**
-     * Nutzername des Bewertenden
+     * Benutzer, für den die Wertung gilt.
      */
-    von: string;
-    wertung: number;
-    /**
-     * Wenn gesetzt, gilt die Bewertung als aktive Enthaltung.
-     */
-    enthaltung?: boolean;
+    benutzer?: string;
 }
 

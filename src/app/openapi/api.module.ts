@@ -2,6 +2,8 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
+import { BewertungenService } from './api/bewertungen.service';
+import { FilmeService } from './api/filme.service';
 import { FilmkritikenService } from './api/filmkritiken.service';
 
 @NgModule({

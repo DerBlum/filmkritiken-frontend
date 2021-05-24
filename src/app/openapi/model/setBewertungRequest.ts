@@ -11,15 +11,11 @@
  */
 
 
-export interface Bewertung { 
+export interface SetBewertungRequest { 
     /**
-     * Nutzername des Bewertenden
+     * ID der Filmkritiken.
      */
-    von: string;
-    wertung: number;
-    /**
-     * Wenn gesetzt, gilt die Bewertung als aktive Enthaltung.
-     */
-    enthaltung?: boolean;
+    filmkritikenId?: string;
+    wertung?: number;
 }
 

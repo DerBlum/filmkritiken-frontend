@@ -84,6 +84,10 @@ export class UserService {
         return userRoles.includes(role);
     }
 
+    public getUsername(): string {
+        return this.accountInfo?.name;
+    }
+
     private initUserData() {
         let activeAccount = this.authService.instance.getActiveAccount();
 

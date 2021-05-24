@@ -14,7 +14,7 @@
 export interface FilmkritikenDetails { 
     beitragvon: string;
     /**
-     * Datum nach ISO 8601 / EN 28601, an dem der Film besprochen wurde.
+     * Datum nach ISO 8601 / EN 28601, an dem der Film besprochen wird / wurde.
      */
     besprochenam?: string;
 }

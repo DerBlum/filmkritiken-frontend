@@ -9,17 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Film } from './film';
 
 
-export interface Bewertung { 
+export interface FilmRequest { 
+    film: Film;
     /**
-     * Nutzername des Bewertenden
+     * Der Benutzer, der den Film vorgeschlagen hat.
      */
     von: string;
-    wertung: number;
     /**
-     * Wenn gesetzt, gilt die Bewertung als aktive Enthaltung.
+     * Datum nach ISO 8601 / EN 28601, an dem der Film besprochen wird / wurde.
      */
-    enthaltung?: boolean;
+    besprochenam: string;
 }
 

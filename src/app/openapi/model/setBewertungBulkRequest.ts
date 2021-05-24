@@ -9,17 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { BenutzerBewertung } from './benutzerBewertung';
 
 
-export interface Bewertung { 
+export interface SetBewertungBulkRequest { 
     /**
-     * Nutzername des Bewertenden
+     * ID der Filmkritiken.
      */
-    von: string;
-    wertung: number;
-    /**
-     * Wenn gesetzt, gilt die Bewertung als aktive Enthaltung.
-     */
-    enthaltung?: boolean;
+    filmkritikenId?: string;
+    benutzerBewertungen?: Array<BenutzerBewertung>;
 }
 
