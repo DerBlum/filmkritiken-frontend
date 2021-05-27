@@ -11,21 +11,23 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec }       from '@angular/common/http';
-import { CustomHttpParameterCodec }                          from '../encoder';
-import { Observable }                                        from 'rxjs';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent, HttpParameterCodec
+} from '@angular/common/http';
+import { CustomHttpParameterCodec } from '../encoder';
+import { Observable } from 'rxjs';
 
 import { SetBewertungRequest } from '../model/models';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH } from '../variables';
+import { Configuration } from '../configuration';
 
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BewertungenService {
 
@@ -34,7 +36,7 @@ export class BewertungenService {
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (configuration) {
             this.configuration = configuration;
         }
@@ -64,16 +66,16 @@ export class BewertungenService {
 
         if (typeof value === "object") {
             if (Array.isArray(value)) {
-                (value as any[]).forEach( elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
+                (value as any[]).forEach(elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
             } else if (value instanceof Date) {
                 if (key != null) {
                     httpParams = httpParams.append(key,
                         (value as Date).toISOString().substr(0, 10));
                 } else {
-                   throw Error("key may not be null if value is Date");
+                    throw Error("key may not be null if value is Date");
                 }
             } else {
-                Object.keys(value).forEach( k => httpParams = this.addToHttpParamsRecursive(
+                Object.keys(value).forEach(k => httpParams = this.addToHttpParamsRecursive(
                     httpParams, value[k], key != null ? `${key}.${k}` : k));
             }
         } else if (key != null) {
@@ -92,18 +94,18 @@ export class BewertungenService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePost(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any>;
-    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePost(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<any>>;
-    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePost(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<any>>;
-    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePost(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any>;
+    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpResponse<any>>;
+    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'text/plain' }): Observable<HttpEvent<any>>;
+    public apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'text/plain' }): Observable<any> {
         if (filmkritikenId === null || filmkritikenId === undefined) {
-            throw new Error('Required parameter filmkritikenId was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePost.');
+            throw new Error('Required parameter filmkritikenId was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePut.');
         }
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePost.');
+            throw new Error('Required parameter username was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePut.');
         }
         if (setBewertungRequest === null || setBewertungRequest === undefined) {
-            throw new Error('Required parameter setBewertungRequest was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePost.');
+            throw new Error('Required parameter setBewertungRequest was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenUsernamePut.');
         }
 
         let headers = this.defaultHeaders;
@@ -138,11 +140,11 @@ export class BewertungenService {
         }
 
         let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+        if (httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/api/filmkritiken/${encodeURIComponent(String(filmkritikenId))}/bewertungen/${encodeURIComponent(String(username))}`,
+        return this.httpClient.put<any>(`${this.configuration.basePath}/api/filmkritiken/${encodeURIComponent(String(filmkritikenId))}/bewertungen/${encodeURIComponent(String(username))}`,
             setBewertungRequest,
             {
                 responseType: <any>responseType_,

@@ -7,3 +7,7 @@
 .app-toolbar {
   margin-bottom: 32px;
 }
+
+.app-toolbar-speeddial-tooltip {
+  font-size: medium;
+}

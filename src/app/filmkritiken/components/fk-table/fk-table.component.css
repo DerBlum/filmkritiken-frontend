@@ -2,6 +2,10 @@ table {
     width: 100%;
 }
 
+.bewertung-form-send-tooltip {
+    font-size: medium;
+}
+
 .bewertung-form {
     text-align: left;
     margin-top: 10px;

@@ -38,7 +38,7 @@ export class FilmkritikenFrontendService {
   }
 
   setBewertung(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest): Observable<Error> {
-    return this.bewertungenService.apiFilmkritikenFilmkritikenIdBewertungenUsernamePost(filmkritikenId, username, setBewertungRequest)
+    return this.bewertungenService.apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId, username, setBewertungRequest)
       .pipe(
         mapTo(undefined),
         catchError(err => {

@@ -19,10 +19,17 @@
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 
-<form *ngIf="isLoggedIn" class="bewertung-form bewertung-form-{{filmkritiken.id}}">
+<form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()" *ngIf="isLoggedIn"
+    class="bewertung-form bewertung-form-{{filmkritiken.id}}">
     <mat-form-field appearance="fill" [color]="'primary'">
         <mat-label>Wertung</mat-label>
-        <input matInput type="number" placeholder="10" min="1" max="10" [formControl]="wertungControl">
+        <mat-hint>1-10</mat-hint>
+        <input matInput class="form-control" id="wertung" formControlName="wertung" type="number" placeholder="10"
+            min="1" max="10">
     </mat-form-field>
-    <button mat-button [color]="'primary'" class="bewertung-form-send" (click)="sendWertung()">Wertung abgeben</button>
+    <button [disabled]="wertungFormGroup.invalid" type="submit" mat-flat-button [color]="'primary'"
+        class="bewertung-form-send" matTooltip="Wertung abgeben" matTooltipPosition="right"
+        matTooltipClass="bewertung-form-send-tooltip">
+        <mat-icon>thumbs_up_down</mat-icon>
+    </button>
 </form>
