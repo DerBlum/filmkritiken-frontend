@@ -17,5 +17,9 @@ export interface FilmkritikenDetails {
      * Datum nach ISO 8601 / EN 28601, an dem der Film besprochen wird / wurde.
      */
     besprochenam?: string;
+    /**
+     * True, wenn noch Bewertungen abgegeben werden können.
+     */
+    bewertungoffen?: boolean;
 }
 

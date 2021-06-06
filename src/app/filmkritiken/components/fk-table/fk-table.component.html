@@ -19,8 +19,8 @@
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 
-<form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()" *ngIf="isLoggedIn"
-    class="bewertung-form bewertung-form-{{filmkritiken.id}}">
+<form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()"
+    *ngIf="isLoggedIn && filmkritiken.details.bewertungoffen" class="bewertung-form bewertung-form-{{filmkritiken.id}}">
     <mat-form-field appearance="fill" [color]="'primary'">
         <mat-label>Wertung</mat-label>
         <mat-hint>1-10</mat-hint>
