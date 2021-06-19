@@ -16,6 +16,10 @@
             matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>account_circle</mat-icon>
           </button>
+          <button *ngIf="isLoggedIn && canCopyToken" mat-mini-fab (click)="copyAuthToken()" matTooltip="Token kopieren"
+            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
+            <mat-icon>content_copy</mat-icon>
+          </button>
           <button *ngIf="isLoggedIn" mat-mini-fab (click)="logout()" matTooltip="Abmelden" matTooltipPosition="left"
             matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>logout</mat-icon>

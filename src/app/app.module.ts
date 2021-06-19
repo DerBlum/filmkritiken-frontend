@@ -30,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1; // Remove this line to use Angular Universal
 
@@ -104,6 +105,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    ClipboardModule,
   ],
   providers: [
     {

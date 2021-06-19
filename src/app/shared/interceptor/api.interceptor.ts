@@ -35,7 +35,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
                     return next.handle(req);
                 }),
-                catchError(error => {
+                catchError(_ => {
                     // send it without an Authorization Header
                     return next.handle(req);
                 })
