@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { FilmRequest } from './filmRequest';
 
 
-export interface Image { 
-    id?: string;
-    source?: string;
-    copyright: string;
+export interface InlineObject { 
+    json: FilmRequest;
+    image: Blob;
 }
 

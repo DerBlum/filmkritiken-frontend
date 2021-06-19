@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, mapTo } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { BewertungenService, Filmkritiken, FilmkritikenService, FilmeService, SetBewertungRequest, FilmRequest } from 'src/app/openapi';
+import { BewertungenService, Filmkritiken, FilmkritikenService, FilmeService, SetBewertungRequest } from 'src/app/openapi';
+import { FilmRequest } from 'src/app/openapi/model/filmRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,8 @@ export class FilmkritikenFrontendService {
       );
   }
 
-  addFilm(filmRequest: FilmRequest): Observable<Filmkritiken | Error> {
-    return this.filmeService.apiFilmePut(filmRequest)
+  addFilm(filmRequest: FilmRequest, image: Blob): Observable<Filmkritiken | Error> {
+    return this.filmeService.apiFilmePost(filmRequest, image)
       .pipe(
         map(response => response),
         catchError(err => {

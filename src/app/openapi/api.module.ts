@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { BewertungenService } from './api/bewertungen.service';
+import { BilderService } from './api/bilder.service';
 import { FilmeService } from './api/filme.service';
 import { FilmkritikenService } from './api/filmkritiken.service';
 

@@ -1,8 +1,10 @@
 .gitignore
+.openapi-generator-ignore
 README.md
 api.module.ts
 api/api.ts
 api/bewertungen.service.ts
+api/bilder.service.ts
 api/filme.service.ts
 api/filmkritiken.service.ts
 configuration.ts
@@ -16,6 +18,7 @@ model/filmRequest.ts
 model/filmkritiken.ts
 model/filmkritikenDetails.ts
 model/image.ts
+model/inlineObject.ts
 model/models.ts
 model/setBewertungBulkRequest.ts
 model/setBewertungRequest.ts

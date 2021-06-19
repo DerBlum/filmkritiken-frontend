@@ -17,7 +17,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { FilmRequest } from '../model/models';
 import { Filmkritiken } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -28,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class FilmeService {
+export class BilderService {
 
     protected basePath = 'https://filmkritiken-backend.marsrover.418-teapot.de';
     public defaultHeaders = new HttpHeaders();
@@ -48,19 +47,6 @@ export class FilmeService {
         this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
     }
 
-    /**
-     * @param consumes string[] mime-types
-     * @return true: consumes contains 'multipart/form-data', false: otherwise
-     */
-    private canConsumeForm(consumes: string[]): boolean {
-        const form = 'multipart/form-data';
-        for (const consume of consumes) {
-            if (form === consume) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private addToHttpParams(httpParams: HttpParams, value: any, key?: string): HttpParams {
         if (typeof value === "object" && value instanceof Date === false) {
@@ -99,31 +85,20 @@ export class FilmeService {
     }
 
     /**
-     * Create Film
-     * @param json 
-     * @param image 
+     * Retrieves an image file by ID
+     * @param imageId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFilmePost(json: FilmRequest, image: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<Filmkritiken>;
-    public apiFilmePost(json: FilmRequest, image: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpResponse<Filmkritiken>>;
-    public apiFilmePost(json: FilmRequest, image: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpEvent<Filmkritiken>>;
-    public apiFilmePost(json: FilmRequest, image: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<any> {
-        if (json === null || json === undefined) {
-            throw new Error('Required parameter json was null or undefined when calling apiFilmePost.');
-        }
-        if (image === null || image === undefined) {
-            throw new Error('Required parameter image was null or undefined when calling apiFilmePost.');
+    public apiImagesImageIdGet(imageId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<Array<Filmkritiken>>;
+    public apiImagesImageIdGet(imageId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpResponse<Array<Filmkritiken>>>;
+    public apiImagesImageIdGet(imageId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpEvent<Array<Filmkritiken>>>;
+    public apiImagesImageIdGet(imageId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<any> {
+        if (imageId === null || imageId === undefined) {
+            throw new Error('Required parameter imageId was null or undefined when calling apiImagesImageIdGet.');
         }
 
         let headers = this.defaultHeaders;
-
-        let credential: string | undefined;
-        // authentication (bearerAuth) required
-        credential = this.configuration.lookupCredential('bearerAuth');
-        if (credential) {
-            headers = headers.set('Authorization', 'Bearer ' + credential);
-        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -138,39 +113,13 @@ export class FilmeService {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'multipart/form-data'
-        ];
-
-        const canConsumeForm = this.canConsumeForm(consumes);
-
-        let formParams: { append(param: string, value: any): any; };
-        let useForm = false;
-        let convertFormParamsToString = false;
-        // use FormData to transmit files using content-type "multipart/form-data"
-        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-        useForm = canConsumeForm;
-        if (useForm) {
-            formParams = new FormData();
-        } else {
-            formParams = new HttpParams({encoder: this.encoder});
-        }
-
-        if (json !== undefined) {
-            formParams = formParams.append('json', useForm ? new Blob([JSON.stringify(json)], {type: 'application/json'}) : <any>json) as any || formParams;
-        }
-        if (image !== undefined) {
-            formParams = formParams.append('image', <any>image) as any || formParams;
-        }
 
         let responseType_: 'text' | 'json' = 'json';
         if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<Filmkritiken>(`${this.configuration.basePath}/api/filme`,
-            convertFormParamsToString ? formParams.toString() : formParams,
+        return this.httpClient.get<Array<Filmkritiken>>(`${this.configuration.basePath}/api/images/${encodeURIComponent(String(imageId))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
