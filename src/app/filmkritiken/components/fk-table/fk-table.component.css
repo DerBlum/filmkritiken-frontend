@@ -1,8 +1,9 @@
-table {
+.bewertungen-table {
+    margin-top: 10px;
     width: 100%;
 }
 
-.bewertung-form-send-tooltip {
+.button-tooltip {
     font-size: medium;
 }
 
@@ -14,4 +15,9 @@ table {
 .bewertung-form-send {
     margin-left: 10px;
     text-align: center;
+}
+
+.bewertungen-buttonbar {
+    margin-top: 10px;
+    text-align: right;
 }

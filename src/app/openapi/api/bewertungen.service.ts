@@ -17,6 +17,7 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
+import { Filmkritiken } from '../model/models';
 import { SetBewertungRequest } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -144,6 +145,64 @@ export class BewertungenService {
 
         return this.httpClient.put<any>(`${this.configuration.basePath}/api/filmkritiken/${encodeURIComponent(String(filmkritikenId))}/bewertungen/${encodeURIComponent(String(username))}`,
             setBewertungRequest,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Add single Bewertung for Filmkritiken
+     * @param filmkritikenId 
+     * @param offen 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch(filmkritikenId: string, offen: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<Filmkritiken>;
+    public apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch(filmkritikenId: string, offen: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpResponse<Filmkritiken>>;
+    public apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch(filmkritikenId: string, offen: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<HttpEvent<Filmkritiken>>;
+    public apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch(filmkritikenId: string, offen: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain'}): Observable<any> {
+        if (filmkritikenId === null || filmkritikenId === undefined) {
+            throw new Error('Required parameter filmkritikenId was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch.');
+        }
+        if (offen === null || offen === undefined) {
+            throw new Error('Required parameter offen was null or undefined when calling apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (bearerAuth) required
+        credential = this.configuration.lookupCredential('bearerAuth');
+        if (credential) {
+            headers = headers.set('Authorization', 'Bearer ' + credential);
+        }
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json',
+                'text/plain'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.patch<Filmkritiken>(`${this.configuration.basePath}/api/filmkritiken/${encodeURIComponent(String(filmkritikenId))}/bewertungenoffen/${encodeURIComponent(String(offen))}`,
+            null,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

@@ -38,6 +38,17 @@ export class FilmkritikenFrontendService {
       )
   }
 
+  openCloseBewertungen(filmkritikenId: string, open: boolean): Observable<Error> {
+    return this.bewertungenService.apiFilmkritikenFilmkritikenIdBewertungenoffenOffenPatch(filmkritikenId, open)
+      .pipe(
+        mapTo(undefined),
+        catchError(err => {
+          console.error(err);
+          return of(err);
+        })
+      );
+  }
+
   setBewertung(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest): Observable<Error> {
     return this.bewertungenService.apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId, username, setBewertungRequest)
       .pipe(
@@ -48,4 +59,5 @@ export class FilmkritikenFrontendService {
         })
       );
   }
+
 }

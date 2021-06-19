@@ -1,4 +1,13 @@
-<table *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" mat-table
+<div *ngIf="hasRoleForOpenCloseBewertung" class="bewertungen-buttonbar">
+    <button mat-flat-button [color]="'primary'" class="bewertung-form-send" matTooltip="Bewertung öffnen / schließen"
+        matTooltipPosition="right" (click)="openCloseBewertungen(!filmkritiken.details.bewertungoffen)"
+        matTooltipClass="button-tooltip">
+        <mat-icon *ngIf="filmkritiken.details.bewertungoffen">lock</mat-icon>
+        <mat-icon *ngIf="!filmkritiken.details.bewertungoffen">lock_open</mat-icon>
+    </button>
+</div>
+
+<table class="bewertungen-table" *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" mat-table
     [dataSource]="bewertungenDataSource">
     <!-- Person -->
     <ng-container matColumnDef="person">
@@ -20,7 +29,8 @@
 </table>
 
 <form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()"
-    *ngIf="isLoggedIn && filmkritiken.details.bewertungoffen" class="bewertung-form bewertung-form-{{filmkritiken.id}}">
+    *ngIf="hasRoleForBewertung && filmkritiken.details.bewertungoffen"
+    class="bewertung-form bewertung-form-{{filmkritiken.id}}">
     <mat-form-field appearance="fill" [color]="'primary'">
         <mat-label>Wertung</mat-label>
         <mat-hint>1-10</mat-hint>
@@ -29,7 +39,7 @@
     </mat-form-field>
     <button [disabled]="wertungFormGroup.invalid" type="submit" mat-flat-button [color]="'primary'"
         class="bewertung-form-send" matTooltip="Wertung abgeben" matTooltipPosition="right"
-        matTooltipClass="bewertung-form-send-tooltip">
+        matTooltipClass="button-tooltip">
         <mat-icon>thumbs_up_down</mat-icon>
     </button>
 </form>

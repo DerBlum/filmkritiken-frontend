@@ -8,6 +8,7 @@ import { UserService } from 'src/app/shared/user/user.service';
 import { FilmkritikenFrontendService } from '../../services/filmkritiken.service';
 import { getAverageWertung } from '../../utilities/BewertungUtilities';
 import { openErrorPopup } from '../../utilities/ErrorPopup';
+import * as roles from '../../../shared/user/roles';
 
 @Component({
   selector: 'fk-table',
@@ -18,7 +19,8 @@ export class FkTableComponent implements OnInit {
 
   @Input()
   filmkritiken: Filmkritiken;
-  isLoggedIn = false;
+  hasRoleForBewertung = false;
+  hasRoleForOpenCloseBewertung = false;
 
   bewertungenDataSource: MatTableDataSource<Bewertung>;
   displayedColumns: string[] = ['person', 'wertung'];
@@ -35,10 +37,21 @@ export class FkTableComponent implements OnInit {
   ngOnInit(): void {
     this.bewertungenDataSource = new MatTableDataSource(this.filmkritiken.bewertungen);
     this.userService.subscribeToLoginState({
-      next: loginStateUpdated => this.isLoggedIn = loginStateUpdated
+      next: _ => this.updateOnLoginStateChange()
     })
-    this.isLoggedIn = this.userService.isLoggedIn();
-    this.setInitialWertung();
+
+    this.updateOnLoginStateChange();
+  }
+
+  updateOnLoginStateChange(): void {
+    if (this.userService.isLoggedIn()) {
+      this.hasRoleForBewertung = this.userService.hasRole(roles.roleBewertungAdd);
+      this.hasRoleForOpenCloseBewertung = this.userService.hasRole(roles.roleBewertungOpenClose);
+      this.setInitialWertung();
+    } else {
+      this.hasRoleForBewertung = false;
+      this.hasRoleForOpenCloseBewertung = false;
+    }
   }
 
   getAverageWertung(): string {
@@ -46,7 +59,7 @@ export class FkTableComponent implements OnInit {
   }
 
   setInitialWertung(): void {
-    if (this.isLoggedIn && this.filmkritiken?.bewertungen) {
+    if (this.hasRoleForBewertung && this.filmkritiken?.bewertungen) {
       let user = this.userService.getUsername();
       for (const wertung of this.filmkritiken.bewertungen) {
         if (wertung.von == user) {
@@ -55,6 +68,31 @@ export class FkTableComponent implements OnInit {
         }
       }
     }
+  }
+
+  openCloseBewertungen(open: boolean): void {
+    let filmkritikenId = this.filmkritiken.id;
+
+    let response = this.filmkritikenService.openCloseBewertungen(filmkritikenId, open)
+    response.subscribe({
+      error: error => {
+        this.showError((error as Error).message);
+      },
+      next: error => {
+        if (!error) {
+          this.filmkritiken.details.bewertungoffen = open;
+          return;
+        }
+
+        if (error instanceof HttpErrorResponse) {
+          this.showError((error as HttpErrorResponse).error);
+        } else {
+          this.showError(error.message);
+        }
+      },
+      complete: () => console.log("openCloseBewertungen received completed event")
+    })
+
   }
 
   sendWertung(): void {
