@@ -1,19 +1,19 @@
-import { Injectable } from "@angular/core";
-import { MsalBroadcastService, MsalService } from "@azure/msal-angular";
-import { AuthenticationResult, EndSessionRequest, InteractionStatus } from "@azure/msal-browser";
-import { AccountInfo } from "@azure/msal-common";
-import { from, Observable, of, PartialObserver, Subject } from "rxjs";
-import { catchError, filter, map, take, takeUntil } from "rxjs/operators";
+import {Injectable, OnDestroy} from '@angular/core';
+import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
+import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
+import { AccountInfo } from '@azure/msal-common';
+import { from, Observable, of, PartialObserver, Subject } from 'rxjs';
+import { catchError, filter, map, take, takeUntil } from 'rxjs/operators';
 
-var minute: 60_000;
+const minute = 60_000;
 
 @Injectable()
-export class UserService {
+export class UserService implements OnDestroy {
 
-    private readonly _destroying$ = new Subject<void>();
+    private readonly destroying$ = new Subject<void>();
 
     private accountInfo: AccountInfo;
-    private authToken: String;
+    private authToken: string;
     private authTokenExpiryDate: Date;
 
     private loginChanged = new Subject<boolean>();
@@ -23,13 +23,10 @@ export class UserService {
         private msalBroadcastService: MsalBroadcastService,
     ) {
         this.initUserData();
-    }
-
-    ngOnInit(): void {
         this.msalBroadcastService.inProgress$
             .pipe(
                 filter((status: InteractionStatus) => status === InteractionStatus.None),
-                takeUntil(this._destroying$)
+                takeUntil(this.destroying$)
             )
             .subscribe(() => {
                 this.initUserData();
@@ -37,8 +34,8 @@ export class UserService {
     }
 
     ngOnDestroy(): void {
-        this._destroying$.next(undefined);
-        this._destroying$.complete();
+        this.destroying$.next(undefined);
+        this.destroying$.complete();
     }
 
     public loginViaPopup(): void {
@@ -54,33 +51,30 @@ export class UserService {
     }
 
     public isLoggedIn(): boolean {
-        if (this.accountInfo) {
-            return true;
-        }
-        return false;
+        return !!this.accountInfo;
     }
 
-    public subscribeToLoginState(observer: PartialObserver<boolean>) {
+    public subscribeToLoginState(observer: PartialObserver<boolean>): void {
         this.loginChanged.subscribe(observer);
     }
 
-    public getAuthToken(): Observable<String> {
+    public getAuthToken(): Observable<string> {
         if (!this.isLoggedIn()) {
             return of(undefined);
         }
 
-        if (!this.authToken || this.authTokenExpiryDate < new Date(Date.now() + (1 * minute))) {
+        if (!this.authToken || this.authTokenExpiryDate < new Date(Date.now() + (minute))) {
             return this.refreshToken();
         }
         return of(this.authToken);
     }
 
-    public hasRole(role: String): boolean {
+    public hasRole(role: string): boolean {
         if (!this.isLoggedIn()) {
             return undefined;
         }
 
-        let userRoles = ((this.accountInfo.idTokenClaims as any).roles as String[]);
+        const userRoles = ((this.accountInfo.idTokenClaims as any).roles as string[]);
         return userRoles.includes(role);
     }
 
@@ -88,11 +82,11 @@ export class UserService {
         return this.accountInfo?.name;
     }
 
-    private initUserData() {
+    private initUserData(): void {
         let activeAccount = this.authService.instance.getActiveAccount();
 
         if (!activeAccount && this.authService.instance.getAllAccounts().length > 0) {
-            let accounts = this.authService.instance.getAllAccounts();
+            const accounts = this.authService.instance.getAllAccounts();
             activeAccount = accounts[0];
             this.authService.instance.setActiveAccount(activeAccount);
         }
@@ -102,7 +96,7 @@ export class UserService {
         }
     }
 
-    private refreshToken(): Observable<String> {
+    private refreshToken(): Observable<string> {
 
         if (this.isLoggedIn()) {
             return from(this.authService.instance.acquireTokenSilent({
@@ -114,7 +108,7 @@ export class UserService {
                     return this.authToken;
                 }),
                 catchError(error => {
-                    console.log("Acquiring Token failed because of error: " + error);
+                    console.log('Acquiring Token failed because of error: ' + error);
                     this.onLogout();
                     this.loginViaPopup();
                     return of(undefined);
@@ -122,7 +116,7 @@ export class UserService {
             );
         }
 
-        return of(undefined)
+        return of(undefined);
     }
 
     private onLoginFinished(authResult: AuthenticationResult): void {
@@ -139,7 +133,7 @@ export class UserService {
     private setUserInfo(authResult: AuthenticationResult): void {
         if (authResult) {
             this.accountInfo = authResult.account;
-            this.authToken = authResult.idToken
+            this.authToken = authResult.idToken;
             this.authTokenExpiryDate = authResult.expiresOn;
         } else {
             this.accountInfo = undefined;

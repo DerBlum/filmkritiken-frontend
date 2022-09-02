@@ -20,6 +20,10 @@
             matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>content_copy</mat-icon>
           </button>
+          <button *ngIf="isLoggedIn && canAddFilm" mat-mini-fab (click)="openAddFilmDialog()" matTooltip="Film hinzufügen"
+                  matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
+            <mat-icon>add</mat-icon>
+          </button>
           <button *ngIf="isLoggedIn" mat-mini-fab (click)="logout()" matTooltip="Abmelden" matTooltipPosition="left"
             matTooltipClass="app-toolbar-speeddial-tooltip">
             <mat-icon>logout</mat-icon>

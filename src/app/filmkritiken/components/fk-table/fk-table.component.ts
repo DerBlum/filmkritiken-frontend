@@ -26,19 +26,19 @@ export class FkTableComponent implements OnInit {
   displayedColumns: string[] = ['person', 'wertung'];
 
   wertungControl = new FormControl(10, [Validators.required, Validators.min(1), Validators.max(10)]);
-  wertungFormGroup = new FormGroup({ 'wertung': this.wertungControl });
+  wertungFormGroup = new FormGroup({ wertung: this.wertungControl });
 
   constructor(
     private userService: UserService,
     private filmkritikenService: FilmkritikenFrontendService,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
     this.bewertungenDataSource = new MatTableDataSource(this.filmkritiken.bewertungen);
     this.userService.subscribeToLoginState({
       next: _ => this.updateOnLoginStateChange()
-    })
+    });
 
     this.updateOnLoginStateChange();
   }
@@ -60,9 +60,9 @@ export class FkTableComponent implements OnInit {
 
   setInitialWertung(): void {
     if (this.hasRoleForBewertung && this.filmkritiken?.bewertungen) {
-      let user = this.userService.getUsername();
+      const user = this.userService.getUsername();
       for (const wertung of this.filmkritiken.bewertungen) {
-        if (wertung.von == user) {
+        if (wertung.von === user) {
           this.wertungControl.setValue(wertung.wertung);
           return;
         }
@@ -71,9 +71,9 @@ export class FkTableComponent implements OnInit {
   }
 
   openCloseBewertungen(open: boolean): void {
-    let filmkritikenId = this.filmkritiken.id;
+    const filmkritikenId = this.filmkritiken.id;
 
-    let response = this.filmkritikenService.openCloseBewertungen(filmkritikenId, open)
+    const response = this.filmkritikenService.openCloseBewertungen(filmkritikenId, open);
     response.subscribe({
       error: error => {
         this.showError((error as Error).message);
@@ -90,27 +90,27 @@ export class FkTableComponent implements OnInit {
           this.showError(error.message);
         }
       },
-      complete: () => console.log("openCloseBewertungen received completed event")
-    })
+      complete: () => console.log('openCloseBewertungen received completed event')
+    });
 
   }
 
   sendWertung(): void {
-    let filmkritikenId = this.filmkritiken.id;
-    let username = this.userService.getUsername();
-    let wertung = this.wertungControl.value;
+    const filmkritikenId = this.filmkritiken.id;
+    const username = this.userService.getUsername();
+    const wertung = this.wertungControl.value;
 
     if (this.wertungControl.invalid) {
-      this.showError("Wertung muss zwischen 1 und 10 liegen.");
+      this.showError('Wertung muss zwischen 1 und 10 liegen.');
       return;
     }
 
-    let response = this.filmkritikenService.setBewertung(
+    const response = this.filmkritikenService.setBewertung(
       filmkritikenId,
       username,
       {
-        filmkritikenId: filmkritikenId,
-        wertung: wertung,
+        filmkritikenId,
+        wertung,
       }
     );
     response.subscribe({
@@ -129,14 +129,14 @@ export class FkTableComponent implements OnInit {
           this.showError(error.message);
         }
       },
-      complete: () => console.log("sendWertung received completed event")
+      complete: () => console.log('sendWertung received completed event')
     });
   }
 
-  createOrUpdateWertung(username: string, wertung: number) {
+  createOrUpdateWertung(username: string, wertung: number): void {
     let bewertungFound = false;
     this.bewertungenDataSource.data.forEach(element => {
-      if (element.von == username) {
+      if (element.von === username) {
         element.wertung = wertung;
         bewertungFound = true;
       }
@@ -146,13 +146,13 @@ export class FkTableComponent implements OnInit {
       this.bewertungenDataSource.data.push({
         enthaltung: false,
         von: username,
-        wertung: wertung,
+        wertung,
       });
     }
   }
 
-  showError(errorMessage: string) {
-    openErrorPopup(this._snackBar, errorMessage);
+  showError(errorMessage: string): void {
+    openErrorPopup(this.snackBar, errorMessage);
   }
 
 }

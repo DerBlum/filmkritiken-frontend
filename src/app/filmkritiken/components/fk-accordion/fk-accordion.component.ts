@@ -11,7 +11,7 @@ import { getAverageWertung } from '../../utilities/BewertungUtilities';
 export class FkAccordionComponent implements OnInit {
 
   items: Array<Filmkritiken>;
-  mobile: boolean = false;
+  mobile = false;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -19,7 +19,7 @@ export class FkAccordionComponent implements OnInit {
     if (window.innerWidth < 960) {
       this.mobile = true;
     }
-    this.items = this.route.snapshot.data.filmbewertungen
+    this.items = this.route.snapshot.data.filmbewertungen;
   }
 
   getAverageWertung(item: Filmkritiken): string {

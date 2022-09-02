@@ -12,7 +12,7 @@ export class FkImageComponent implements OnInit {
   @Input()
   image: Image;
 
-  backendImageUrl: String;
+  backendImageUrl: string;
 
   constructor() {
   }
@@ -21,11 +21,11 @@ export class FkImageComponent implements OnInit {
     this.fillBackendImageUrl();
   }
 
-  fillBackendImageUrl() {
+  fillBackendImageUrl(): void {
     if (this.image.id && this.image.id.length > 0) {
-      this.backendImageUrl = environment.BACKEND_URL + "/api/images/" + this.image.id;
+      this.backendImageUrl = environment.BACKEND_URL + '/api/images/' + this.image.id;
     } else {
-      this.backendImageUrl = "assets/images/" + this.image.source;
+      this.backendImageUrl = 'assets/images/' + this.image.source;
     }
   }
 

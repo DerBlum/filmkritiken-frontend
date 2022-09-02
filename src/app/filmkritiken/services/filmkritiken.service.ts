@@ -22,7 +22,7 @@ export class FilmkritikenFrontendService {
         map(response => response),
         catchError(err => {
           console.error(err);
-          return of(new Array());
+          return of([]);
         })
       );
   }
@@ -35,7 +35,7 @@ export class FilmkritikenFrontendService {
           console.error(err);
           return of(err);
         })
-      )
+      );
   }
 
   openCloseBewertungen(filmkritikenId: string, open: boolean): Observable<Error> {

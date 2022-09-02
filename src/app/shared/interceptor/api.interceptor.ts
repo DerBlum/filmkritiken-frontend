@@ -1,8 +1,8 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { catchError, switchMap, take } from "rxjs/operators";
-import { UserService } from "../user/user.service";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, switchMap, take } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {

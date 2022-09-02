@@ -15,9 +15,9 @@ export class FkFilminfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    let ba = this.filmkritiken?.details?.besprochenam;
+    const ba = this.filmkritiken?.details?.besprochenam;
     if (ba) {
-      this.besprochenAm = new Date(this.filmkritiken.details.besprochenam)
+      this.besprochenAm = new Date(this.filmkritiken.details.besprochenam);
     }
   }
 
