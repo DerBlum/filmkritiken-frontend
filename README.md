@@ -1,6 +1,6 @@
-# FilmkritikenFrontend
+# filmkritiken-frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
+[![Build](https://github.com/DerBlum/filmkritiken-frontend/actions/workflows/build_push.yml/badge.svg)](https://github.com/DerBlum/filmkritiken-frontend/actions/workflows/build_push.yml)
 
 ## Development server
 
