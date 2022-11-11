@@ -1,7 +1,7 @@
 ######################
 ### Stage 2: Build ###
 ######################
-FROM node:12.22.12-alpine as build
+FROM node:18-alpine as build
 
 WORKDIR /usr/src/app
 
