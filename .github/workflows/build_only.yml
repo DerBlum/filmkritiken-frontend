@@ -41,9 +41,9 @@ jobs:
           images: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPO }}
           tags: type=raw,value=${{ env.IMAGE_TAG }}
 
-      # Build and push Docker image with Buildx (don't push on PR)
+      # Build Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
+      - name: Build Docker image
         id: build-and-push
         uses: docker/build-push-action@175d02bffea74695e96b351069ac938b338802f9
         with:
