@@ -13,7 +13,7 @@ env:
 
 jobs:
 
-  build_push:
+  build_only:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
