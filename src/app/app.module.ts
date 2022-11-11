@@ -12,7 +12,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FkAccordionComponent } from './filmkritiken/components/fk-accordion/fk-accordion.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FkTableComponent } from './filmkritiken/components/fk-table/fk-table.component';
 import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.component';
 import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
@@ -102,7 +101,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MatExpansionModule,
     MatGridListModule,
     MatCardModule,
-    FlexLayoutModule,
     MsalModule,
     MatButtonModule,
     MatIconModule,
