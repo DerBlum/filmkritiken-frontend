@@ -7,13 +7,13 @@ on:
 
 
 env:
-  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-backend:release
+  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-frontend:release
 
 jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'master' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.ref_name == 'master' && github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
 
@@ -24,12 +24,13 @@ jobs:
         uses: MrFreasy/action-caprover@v2
         with:
           host: 'https://captain.marsrover.418-teapot.de'
-          app: 'filmkritiken-backend'
+          app: 'filmkritiken-frontend'
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
           image: '${{ env.FULL_IMAGE_NAME }}'
 
   noop:
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'master' || github.event.workflow_run.conclusion == 'failure' }}
+    if: ${{ github.ref_name != 'master' || github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo "No deployment because of wrong branch of failure of build step"
+      - run: |
+          echo "No deployment because of wrong branch ($GITHUB_REF_NAME) or failure of build step"
