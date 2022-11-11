@@ -113,5 +113,7 @@
       }
     }
   },
-  "defaultProject": "filmkritiken-frontend"
+  "cli": {
+    "analytics": false
+  }
 }

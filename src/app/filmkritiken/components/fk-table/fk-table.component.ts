@@ -1,13 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
-import { Bewertung, Filmkritiken } from 'src/app/openapi';
-import { UserService } from 'src/app/shared/user/user.service';
-import { FilmkritikenFrontendService } from '../../services/filmkritiken.service';
-import { getAverageWertung } from '../../utilities/BewertungUtilities';
-import { openErrorPopup } from '../../utilities/ErrorPopup';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatTableDataSource} from '@angular/material/table';
+import {Bewertung, Filmkritiken} from 'src/app/openapi';
+import {UserService} from 'src/app/shared/user/user.service';
+import {FilmkritikenFrontendService} from '../../services/filmkritiken.service';
+import {getAverageWertung} from '../../utilities/BewertungUtilities';
+import {openErrorPopup} from '../../utilities/ErrorPopup';
 import * as roles from '../../../shared/user/roles';
 
 @Component({
@@ -25,14 +25,16 @@ export class FkTableComponent implements OnInit {
   bewertungenDataSource: MatTableDataSource<Bewertung>;
   displayedColumns: string[] = ['person', 'wertung'];
 
-  wertungControl = new FormControl(10, [Validators.required, Validators.min(1), Validators.max(10)]);
-  wertungFormGroup = new FormGroup({ wertung: this.wertungControl });
+  wertungControl = new FormControl<number>(10, [Validators.required, Validators.min(1), Validators.max(10)]);
+  wertungFormGroup = this.fb.group({wertung: this.wertungControl});
 
   constructor(
     private userService: UserService,
     private filmkritikenService: FilmkritikenFrontendService,
     private snackBar: MatSnackBar,
-  ) { }
+    private fb: FormBuilder,
+  ) {
+  }
 
   ngOnInit(): void {
     this.bewertungenDataSource = new MatTableDataSource(this.filmkritiken.bewertungen);

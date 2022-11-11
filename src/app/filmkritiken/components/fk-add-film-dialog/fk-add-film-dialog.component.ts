@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl, UntypedFormControl,
+  Validators
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {Film, Image} from 'src/app/openapi';
 import { UserService } from 'src/app/shared/user/user.service';
@@ -19,19 +23,19 @@ export class FkAddFilmDialogComponent implements OnInit {
 
   hasRoleForAdd = false;
 
-  vonControl = new FormControl('', [Validators.required]);
-  titelControl = new FormControl('', [Validators.required]);
-  imageCopyrightControl = new FormControl('IMDb', [Validators.required]);
-  altersfreigabeControl = new FormControl(0, [Validators.required, Validators.min(0), Validators.max(18)]);
-  erscheinungsjahrControl = new FormControl(2000, [Validators.required, Validators.min(1900), Validators.max(2100)]);
-  regieControl = new FormControl('', [Validators.required]);
-  laengeControl = new FormControl(0, [Validators.required, Validators.min(1), Validators.max(1000)]);
-  originalspracheControl = new FormControl('', [Validators.required]);
-  produktionslandControl = new FormControl('', [Validators.required]);
-  originaltitelControl = new FormControl('');
-  besprochenamControl = new FormControl(null, [Validators.required]);
+  vonControl = new FormControl<string>('', [Validators.required]);
+  titelControl = new FormControl<string>('', [Validators.required]);
+  imageCopyrightControl = new FormControl<string>('IMDb', [Validators.required]);
+  altersfreigabeControl = new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(18)]);
+  erscheinungsjahrControl = new FormControl<number>(2000, [Validators.required, Validators.min(1900), Validators.max(2100)]);
+  regieControl = new FormControl<string>('', [Validators.required]);
+  laengeControl = new FormControl<number>(0, [Validators.required, Validators.min(1), Validators.max(1000)]);
+  originalspracheControl = new FormControl<string>('', [Validators.required]);
+  produktionslandControl = new FormControl<string>('', [Validators.required]);
+  originaltitelControl = new FormControl<string>('');
+  besprochenamControl = new FormControl<Date>(null, [Validators.required]);
 
-  filmFormGroup = new FormGroup({
+  filmFormGroup = this.fb.group({
     von: this.vonControl,
     titel: this.titelControl,
     imageCopyright: this.imageCopyrightControl,
@@ -52,6 +56,7 @@ export class FkAddFilmDialogComponent implements OnInit {
     private filmkritikenService: FilmkritikenFrontendService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<FkAddFilmDialogComponent>,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
