@@ -24,7 +24,7 @@ jobs:
         uses: MrFreasy/action-caprover@v2
         with:
           host: 'https://captain.marsrover.418-teapot.de'
-          app: 'filmkritiken-frontend'
+          app: 'filmkritiken'
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
           image: '${{ env.FULL_IMAGE_NAME }}'
 
