@@ -37,7 +37,7 @@
     "@angular/router": "^15.2.2",
     "@azure/msal-angular": "^2.4.6",
     "@azure/msal-browser": "^2.31.0",
-    "@ecodev/fab-speed-dial": "^11.0.0",
+    "@ecodev/fab-speed-dial": "^13.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.4.1",
     "zone.js": "~0.12.0"
