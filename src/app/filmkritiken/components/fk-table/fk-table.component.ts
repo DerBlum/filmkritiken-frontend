@@ -1,8 +1,8 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
+import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
 import {Bewertung, Filmkritiken} from 'src/app/openapi';
 import {UserService} from 'src/app/shared/user/user.service';
 import {FilmkritikenFrontendService} from '../../services/filmkritiken.service';
