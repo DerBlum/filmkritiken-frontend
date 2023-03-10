@@ -1,45 +1,48 @@
-<div *ngIf="hasRoleForOpenCloseBewertung" class="bewertungen-buttonbar">
-    <button mat-flat-button [color]="'primary'" class="bewertung-form-send" matTooltip="Bewertung öffnen / schließen"
-        matTooltipPosition="right" (click)="openCloseBewertungen(!filmkritiken.details.bewertungoffen)"
-        matTooltipClass="button-tooltip">
-        <mat-icon *ngIf="filmkritiken.details.bewertungoffen">lock</mat-icon>
-        <mat-icon *ngIf="!filmkritiken.details.bewertungoffen">lock_open</mat-icon>
-    </button>
+<div class="fk-table-wrapper">
+  <div *ngIf="hasRoleForOpenCloseBewertung" class="bewertungen-buttonbar">
+      <button mat-flat-button [color]="'primary'" class="bewertung-form-send" matTooltip="Bewertung öffnen / schließen"
+          matTooltipPosition="right" (click)="openCloseBewertungen(!filmkritiken.details.bewertungoffen)"
+          matTooltipClass="button-tooltip">
+          <mat-icon *ngIf="filmkritiken.details.bewertungoffen">lock</mat-icon>
+          <mat-icon *ngIf="!filmkritiken.details.bewertungoffen">lock_open</mat-icon>
+      </button>
+  </div>
+
+  <table class="bewertungen-table" *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" mat-table
+      [dataSource]="bewertungenDataSource">
+    <caption>Bewertungen der Teilnehmer</caption>
+      <!-- Person -->
+      <ng-container matColumnDef="person">
+          <th mat-header-cell *matHeaderCellDef> Bewertender </th>
+          <td mat-cell *matCellDef="let element"> {{element.von}} </td>
+          <td mat-footer-cell *matFooterCellDef> Durchschnitt </td>
+      </ng-container>
+
+      <!-- Wertung -->
+      <ng-container matColumnDef="wertung">
+          <th mat-header-cell *matHeaderCellDef> Wertung </th>
+          <td mat-cell *matCellDef="let element"> {{element.wertung}} </td>
+          <td mat-footer-cell *matFooterCellDef> {{getAverageWertung()}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  </table>
+
+  <form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()"
+      *ngIf="hasRoleForBewertung && filmkritiken.details.bewertungoffen"
+      class="bewertung-form bewertung-form-{{filmkritiken.id}}">
+      <mat-form-field class="bewertung-form-input" appearance="fill" [color]="'primary'">
+          <mat-label>Wertung</mat-label>
+          <mat-hint>1-10</mat-hint>
+          <input matInput class="form-control" id="wertung" formControlName="wertung" type="number" placeholder="10"
+              min="1" max="10">
+      </mat-form-field>
+      <button [disabled]="wertungFormGroup.invalid" type="submit" mat-flat-button [color]="'primary'"
+          class="bewertung-form-send" matTooltip="Wertung abgeben" matTooltipPosition="right"
+          matTooltipClass="button-tooltip">
+          <mat-icon>thumbs_up_down</mat-icon>
+      </button>
+  </form>
 </div>
-
-<table class="bewertungen-table" *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" mat-table
-    [dataSource]="bewertungenDataSource">
-    <!-- Person -->
-    <ng-container matColumnDef="person">
-        <th mat-header-cell *matHeaderCellDef> Bewertender </th>
-        <td mat-cell *matCellDef="let element"> {{element.von}} </td>
-        <td mat-footer-cell *matFooterCellDef> Durchschnitt </td>
-    </ng-container>
-
-    <!-- Wertung -->
-    <ng-container matColumnDef="wertung">
-        <th mat-header-cell *matHeaderCellDef> Wertung </th>
-        <td mat-cell *matCellDef="let element"> {{element.wertung}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getAverageWertung()}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-</table>
-
-<form [formGroup]="wertungFormGroup" (ngSubmit)="sendWertung()"
-    *ngIf="hasRoleForBewertung && filmkritiken.details.bewertungoffen"
-    class="bewertung-form bewertung-form-{{filmkritiken.id}}">
-    <mat-form-field appearance="fill" [color]="'primary'">
-        <mat-label>Wertung</mat-label>
-        <mat-hint>1-10</mat-hint>
-        <input matInput class="form-control" id="wertung" formControlName="wertung" type="number" placeholder="10"
-            min="1" max="10">
-    </mat-form-field>
-    <button [disabled]="wertungFormGroup.invalid" type="submit" mat-flat-button [color]="'primary'"
-        class="bewertung-form-send" matTooltip="Wertung abgeben" matTooltipPosition="right"
-        matTooltipClass="button-tooltip">
-        <mat-icon>thumbs_up_down</mat-icon>
-    </button>
-</form>

@@ -35,7 +35,6 @@ import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-di
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
-import {FlexLayoutModule} from '@angular/flex-layout';
 
 // Remove this line to use Angular Universal
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -102,7 +101,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MatExpansionModule,
     MatGridListModule,
     MatCardModule,
-    FlexLayoutModule,
     MsalModule,
     MatButtonModule,
     MatIconModule,

@@ -1,20 +1,18 @@
-<div fxLayout="column" fxLayout.xl="row">
+<div class="fk-content-component">
 
-    <div class="fk-filminfo" fxFlex="100" fxFlex.xl="66" fxLayout="column" fxLayout.gt-sm="row">
-        <div *ngIf="filmkritiken.film.image" class="fk-filminfo-img" fxFlex="100">
+    <div class="fk-filminfo">
+        <div *ngIf="filmkritiken.film.image" class="fk-filminfo-img flex100">
             <fk-image [image]="filmkritiken.film.image"></fk-image>
         </div>
-        <div *ngIf="filmkritiken.details" class="fk-filminfo-txt" fxFlex="100">
+        <div *ngIf="filmkritiken.details" class="fk-filminfo-txt flex100" >
             <fk-filminfo [filmkritiken]="filmkritiken"></fk-filminfo>
         </div>
     </div>
 
-    <div class="fk-filmbewertungen" fxFlex="100" fxFlex.xl="33">
-        <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
-        <div fxFlex=100>
-            <fk-table [filmkritiken]="filmkritiken"></fk-table>
-        </div>
-        <div fxFlex=25 fxHide fxShow.lg fxShow.md></div>
-        <div fxFlex=50 fxHide fxShow.sm></div>
+    <div class="fk-filmbewertungen">
+        <div class="fk-filmbewertungen-25-md-lg"></div>
+          <fk-table class="flex100" [filmkritiken]="filmkritiken"></fk-table>
+        <div class="fk-filmbewertungen-25-md-lg"></div>
+        <div class="fk-filmbewertungen-50-sm"></div>
     </div>
 </div>
