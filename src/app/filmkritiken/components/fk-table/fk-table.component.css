@@ -9,6 +9,10 @@
   width: 100%;
 }
 
+.bewertungen-table-caption {
+  display: none;
+}
+
 .button-tooltip {
   font-size: medium;
 }

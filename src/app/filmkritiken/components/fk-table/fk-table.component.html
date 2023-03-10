@@ -10,7 +10,7 @@
 
   <table class="bewertungen-table" *ngIf="filmkritiken.bewertungen && filmkritiken.bewertungen.length > 0" mat-table
       [dataSource]="bewertungenDataSource">
-    <caption>Bewertungen der Teilnehmer</caption>
+    <caption class="bewertungen-table-caption">Bewertungen der Teilnehmer</caption>
       <!-- Person -->
       <ng-container matColumnDef="person">
           <th mat-header-cell *matHeaderCellDef> Bewertender </th>
