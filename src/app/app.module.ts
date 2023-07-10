@@ -24,7 +24,6 @@ import { ApiInterceptor } from './shared/interceptor/api.interceptor';
 import { UserService } from './shared/user/user.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { EcoFabSpeedDialModule } from '@ecodev/fab-speed-dial';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,6 +34,7 @@ import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-di
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
+import {MatMenuModule} from '@angular/material/menu';
 
 // Remove this line to use Angular Universal
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -104,7 +104,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MsalModule,
     MatButtonModule,
     MatIconModule,
-    EcoFabSpeedDialModule,
     MatTooltipModule,
     MatInputModule,
     FormsModule,
@@ -115,6 +114,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMenuModule,
   ],
   providers: [
     {

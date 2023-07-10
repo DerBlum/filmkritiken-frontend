@@ -8,6 +8,18 @@
   margin-bottom: 32px;
 }
 
-.app-toolbar-speeddial-tooltip {
+.app-toolbar-tooltip {
   font-size: medium;
+}
+
+.toolbar-menu {
+  background-color: #2f2f2f;
+}
+
+.toolbar-menu-item-icon {
+  color: #ffffff;
+}
+
+.toolbar-menu-item-text {
+  color: #ffffff;
 }

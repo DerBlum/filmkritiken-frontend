@@ -4,32 +4,27 @@
       <span class="toolbar-title">
         <h2>Filmkritiken</h2>
       </span>
-      <eco-fab-speed-dial #speedDial [direction]='"down"' [animationMode]='"fling"' (mouseenter)="speedDial.open = true"
-        (mouseleave)="speedDial.open = false">
-        <eco-fab-speed-dial-trigger>
-          <button [color]="'primary'" mat-fab>
-            <mat-icon>menu</mat-icon>
-          </button>
-        </eco-fab-speed-dial-trigger>
-        <eco-fab-speed-dial-actions>
-          <button *ngIf="!isLoggedIn" mat-mini-fab (click)="loginPopup()" matTooltip="Anmelden"
-            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
-            <mat-icon>account_circle</mat-icon>
-          </button>
-          <button *ngIf="isLoggedIn && canCopyToken" mat-mini-fab (click)="copyAuthToken()" matTooltip="Token kopieren"
-            matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
-            <mat-icon>content_copy</mat-icon>
-          </button>
-          <button *ngIf="isLoggedIn && canAddFilm" mat-mini-fab (click)="openAddFilmDialog()" matTooltip="Film hinzufügen"
-                  matTooltipPosition="left" matTooltipClass="app-toolbar-speeddial-tooltip">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button *ngIf="isLoggedIn" mat-mini-fab (click)="logout()" matTooltip="Abmelden" matTooltipPosition="left"
-            matTooltipClass="app-toolbar-speeddial-tooltip">
-            <mat-icon>logout</mat-icon>
-          </button>
-        </eco-fab-speed-dial-actions>
-      </eco-fab-speed-dial>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="toolbar-menu-item-icon">menu</mat-icon>
+      </button>
+      <mat-menu class="toolbar-menu" #menu="matMenu" yPosition="below" xPosition="before">
+        <button mat-menu-item *ngIf="!isLoggedIn" (click)="loginPopup()">
+          <mat-icon class="toolbar-menu-item-icon">account_circle</mat-icon>
+          <span class="toolbar-menu-item-text">Anmelden</span>
+        </button>
+        <button mat-menu-item *ngIf="isLoggedIn && canCopyToken" (click)="copyAuthToken()">
+          <mat-icon class="toolbar-menu-item-icon">content_copy</mat-icon>
+          <span class="toolbar-menu-item-text">Token kopieren</span>
+        </button>
+        <button mat-menu-item *ngIf="isLoggedIn && canAddFilm" (click)="openAddFilmDialog()">
+          <mat-icon class="toolbar-menu-item-icon">add</mat-icon>
+          <span class="toolbar-menu-item-text">Film hinzufügen</span>
+        </button>
+        <button mat-menu-item *ngIf="isLoggedIn" (click)="logout()">
+          <mat-icon class="toolbar-menu-item-icon">logout</mat-icon>
+          <span class="toolbar-menu-item-text">Abmelden</span>
+        </button>
+      </mat-menu>
     </mat-toolbar>
   </p>
 
