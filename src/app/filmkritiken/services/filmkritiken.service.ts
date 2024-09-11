@@ -17,7 +17,7 @@ export class FilmkritikenFrontendService {
   ) { }
 
   getFilmkritiken(): Observable<Filmkritiken[]> {
-    return this.filmkritikenService.apiFilmkritikenGet(50)
+    return this.filmkritikenService.apiFilmkritikenGet(100)
       .pipe(
         map(response => response),
         catchError(err => {
