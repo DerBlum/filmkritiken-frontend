@@ -13,7 +13,7 @@ RUN npm ci --quiet && npm run build-prod
 ### Stage 2: Run ###
 ####################
 
-FROM nginx:1.27.5-alpine
+FROM nginx:1.28.0-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /usr/src/app/dist/filmkritiken-frontend /usr/share/nginx/html
