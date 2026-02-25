@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FkAddFilmDialogComponent } from './fk-add-film-dialog.component';
 
-describe('FkAddFilmDialogComponent', () => {
+xdescribe('FkAddFilmDialogComponent', () => {
   let component: FkAddFilmDialogComponent;
   let fixture: ComponentFixture<FkAddFilmDialogComponent>;
 

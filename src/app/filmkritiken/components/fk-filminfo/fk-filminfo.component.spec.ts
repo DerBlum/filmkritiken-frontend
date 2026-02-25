@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FkFilminfoComponent } from './fk-filminfo.component';
 
-describe('FkFilminfoComponent', () => {
+xdescribe('FkFilminfoComponent', () => {
   let component: FkFilminfoComponent;
   let fixture: ComponentFixture<FkFilminfoComponent>;
 

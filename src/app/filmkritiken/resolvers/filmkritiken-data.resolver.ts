@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Filmkritiken } from 'src/app/openapi';
 import { FilmkritikenFrontendService } from '../services/filmkritiken.service';
@@ -11,7 +7,7 @@ import { FilmkritikenFrontendService } from '../services/filmkritiken.service';
 @Injectable({
   providedIn: 'root'
 })
-export class FilmkritikenDataResolver implements Resolve<Filmkritiken[]> {
+export class FilmkritikenDataResolver  {
 
   constructor(private filmkritikenService: FilmkritikenFrontendService) { }
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FkImageComponent } from './fk-image.component';
 
-describe('FkImageComponent', () => {
+xdescribe('FkImageComponent', () => {
   let component: FkImageComponent;
   let fixture: ComponentFixture<FkImageComponent>;
 

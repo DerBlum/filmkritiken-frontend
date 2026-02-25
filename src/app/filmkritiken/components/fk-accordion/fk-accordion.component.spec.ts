@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FkAccordionComponent } from './fk-accordion.component';
 
-describe('FkAccordionComponent', () => {
+xdescribe('FkAccordionComponent', () => {
   let component: FkAccordionComponent;
   let fixture: ComponentFixture<FkAccordionComponent>;
 

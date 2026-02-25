@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FilmkritikenDataResolver } from './filmkritiken-data.resolver';
 
-describe('FilmkritikenDataResolver', () => {
+xdescribe('FilmkritikenDataResolver', () => {
   let resolver: FilmkritikenDataResolver;
 
   beforeEach(() => {

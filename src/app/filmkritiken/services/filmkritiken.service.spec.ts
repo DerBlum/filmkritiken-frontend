@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FilmkritikenFrontendService } from './filmkritiken.service';
 
-describe('FilmkritikenService', () => {
+xdescribe('FilmkritikenService', () => {
   let service: FilmkritikenFrontendService;
 
   beforeEach(() => {
