@@ -39,7 +39,11 @@
     {{filmkritiken.details.beitragvon}}
 </div>
 
-<div *ngIf="besprochenAm">
+<div *ngIf="besprochenAm" class="besprochen-am-row">
     <h4 class="inline">Besprochen am: </h4>
     {{ besprochenAm.toLocaleDateString(undefined, { month: '2-digit',day: '2-digit',year: 'numeric'})}}
+    <button *ngIf="hasRoleForEdit" mat-icon-button (click)="openEditDialog()" matTooltip="Besprechungsdatum ändern"
+        matTooltipPosition="right" class="edit-besprochen-am-btn">
+        <mat-icon>edit</mat-icon>
+    </button>
 </div>

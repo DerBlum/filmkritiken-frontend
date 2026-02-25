@@ -6,5 +6,6 @@ export * from './filmkritiken';
 export * from './filmkritikenDetails';
 export * from './image';
 export * from './inlineObject';
+export * from './setBesprochenAmRequest';
 export * from './setBewertungBulkRequest';
 export * from './setBewertungRequest';

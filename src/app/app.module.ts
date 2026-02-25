@@ -30,11 +30,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
-import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
-import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
-import {MatMenuModule} from '@angular/material/menu';
+import { FkAddFilmDialogComponent } from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
+import { FkSetBesprochenAmDialogComponent } from './filmkritiken/components/fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Remove this line to use Angular Universal
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -88,6 +89,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     FkImageComponent,
     FkFilminfoComponent,
     FkAddFilmDialogComponent,
+    FkSetBesprochenAmDialogComponent,
   ],
   imports: [
     ApiModule,

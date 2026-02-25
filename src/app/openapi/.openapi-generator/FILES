@@ -20,6 +20,7 @@ model/filmkritikenDetails.ts
 model/image.ts
 model/inlineObject.ts
 model/models.ts
+model/setBesprochenAmRequest.ts
 model/setBewertungBulkRequest.ts
 model/setBewertungRequest.ts
 variables.ts

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, mapTo } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { BewertungenService, Filmkritiken, FilmkritikenService, FilmeService, SetBewertungRequest } from 'src/app/openapi';
+import { BewertungenService, Filmkritiken, FilmkritikenService, FilmeService, SetBewertungRequest, SetBesprochenAmRequest } from 'src/app/openapi';
 import { FilmRequest } from 'src/app/openapi/model/filmRequest';
 
 @Injectable({
@@ -51,6 +51,20 @@ export class FilmkritikenFrontendService {
 
   setBewertung(filmkritikenId: string, username: string, setBewertungRequest: SetBewertungRequest): Observable<Error> {
     return this.bewertungenService.apiFilmkritikenFilmkritikenIdBewertungenUsernamePut(filmkritikenId, username, setBewertungRequest)
+      .pipe(
+        mapTo(undefined),
+        catchError(err => {
+          console.error(err);
+          return of(err);
+        })
+      );
+  }
+
+  setBesprochenAm(filmkritikenId: string, date: Date): Observable<Error> {
+    const request: SetBesprochenAmRequest = {
+      besprochenam: date.toISOString(),
+    };
+    return this.filmkritikenService.apiFilmkritikenFilmkritikenIdBesprochenAmPatch(filmkritikenId, request)
       .pipe(
         mapTo(undefined),
         catchError(err => {

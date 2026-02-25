@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Filmkritiken } from '../model/models';
+import { SetBesprochenAmRequest } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -82,6 +83,72 @@ export class FilmkritikenService {
             throw Error("key may not be null if value is not object or array");
         }
         return httpParams;
+    }
+
+    /**
+     * Update the BesprochenAm timestamp of a Filmkritiken
+     * @param filmkritikenId 
+     * @param setBesprochenAmRequest 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiFilmkritikenFilmkritikenIdBesprochenAmPatch(filmkritikenId: string, setBesprochenAmRequest: SetBesprochenAmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any>;
+    public apiFilmkritikenFilmkritikenIdBesprochenAmPatch(filmkritikenId: string, setBesprochenAmRequest: SetBesprochenAmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpResponse<any>>;
+    public apiFilmkritikenFilmkritikenIdBesprochenAmPatch(filmkritikenId: string, setBesprochenAmRequest: SetBesprochenAmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain'}): Observable<HttpEvent<any>>;
+    public apiFilmkritikenFilmkritikenIdBesprochenAmPatch(filmkritikenId: string, setBesprochenAmRequest: SetBesprochenAmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain'}): Observable<any> {
+        if (filmkritikenId === null || filmkritikenId === undefined) {
+            throw new Error('Required parameter filmkritikenId was null or undefined when calling apiFilmkritikenFilmkritikenIdBesprochenAmPatch.');
+        }
+        if (setBesprochenAmRequest === null || setBesprochenAmRequest === undefined) {
+            throw new Error('Required parameter setBesprochenAmRequest was null or undefined when calling apiFilmkritikenFilmkritikenIdBesprochenAmPatch.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (bearerAuth) required
+        credential = this.configuration.lookupCredential('bearerAuth');
+        if (credential) {
+            headers = headers.set('Authorization', 'Bearer ' + credential);
+        }
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'text/plain'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.patch<any>(`${this.configuration.basePath}/api/filmkritiken/${encodeURIComponent(String(filmkritikenId))}/besprochenAm`,
+            setBesprochenAmRequest,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
     /**
