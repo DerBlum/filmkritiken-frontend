@@ -17,7 +17,7 @@ import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.co
 import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
 import { ApiModule, BASE_PATH } from './openapi';
 import { environment } from 'src/environments/environment';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
 import { BrowserCacheLocation, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './shared/interceptor/api.interceptor';
@@ -80,69 +80,62 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   });
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    FkContentComponent,
-    FkAccordionComponent,
-    FkTableComponent,
-    FkImageComponent,
-    FkFilminfoComponent,
-    FkAddFilmDialogComponent,
-    FkSetBesprochenAmDialogComponent,
-  ],
-  imports: [
-    ApiModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatCardModule,
-    MsalModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSnackBarModule,
-    ClipboardModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMenuModule,
-  ],
-  providers: [
-    {
-      provide: UserService,
-      useClass: UserService
-    },
-    {
-      provide: BASE_PATH,
-      useValue: environment.BACKEND_URL,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiInterceptor,
-      multi: true,
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory,
-    },
-    {
-      provide: MAT_DATE_LOCALE,
-      useValue: 'de-DE'
-    },
-    MsalService,
-  ],
-
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        FkContentComponent,
+        FkAccordionComponent,
+        FkTableComponent,
+        FkImageComponent,
+        FkFilminfoComponent,
+        FkAddFilmDialogComponent,
+        FkSetBesprochenAmDialogComponent,
+    ],
+    bootstrap: [AppComponent], imports: [ApiModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatToolbarModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatCardModule,
+        MsalModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        ClipboardModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule], providers: [
+        {
+            provide: UserService,
+            useClass: UserService
+        },
+        {
+            provide: BASE_PATH,
+            useValue: environment.BACKEND_URL,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiInterceptor,
+            multi: true,
+        },
+        {
+            provide: MSAL_INSTANCE,
+            useFactory: MSALInstanceFactory,
+        },
+        {
+            provide: MAT_DATE_LOCALE,
+            useValue: 'de-DE'
+        },
+        MsalService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
