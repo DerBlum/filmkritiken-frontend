@@ -1,49 +1,69 @@
-<div *ngIf="filmkritiken.film.originaltitel">
+@if (filmkritiken.film.originaltitel) {
+  <div>
     <h4 class="inline">Originaltitel: </h4>
     {{filmkritiken.film.originaltitel}}
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.originalsprache">
+@if (filmkritiken.film.originalsprache) {
+  <div>
     <h4 class="inline">Originalsprache: </h4>
     {{filmkritiken.film.originalsprache}}
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.erscheinungsjahr">
+@if (filmkritiken.film.erscheinungsjahr) {
+  <div>
     <h4 class="inline">Erscheinungsjahr: </h4>
     {{filmkritiken.film.erscheinungsjahr}}
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.regie">
+@if (filmkritiken.film.regie) {
+  <div>
     <h4 class="inline">Regie: </h4>
     {{filmkritiken.film.regie}}
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.laenge">
+@if (filmkritiken.film.laenge) {
+  <div>
     <h4 class="inline">Länge: </h4>
     {{filmkritiken.film.laenge}} Minuten
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.altersfreigabe">
+@if (filmkritiken.film.altersfreigabe) {
+  <div>
     <h4 class="inline">Altersfreigabe: </h4>
     {{filmkritiken.film.altersfreigabe}}
-</div>
+  </div>
+}
 
-<div *ngIf="filmkritiken.film.produktionsland">
+@if (filmkritiken.film.produktionsland) {
+  <div>
     <h4 class="inline">Produktionsland: </h4>
     {{filmkritiken.film.produktionsland}}
-</div>
+  </div>
+}
 
 <br>
-<div *ngIf="filmkritiken.details.beitragvon">
-    <h4 class="inline">Beitrag von: </h4>
-    {{filmkritiken.details.beitragvon}}
-</div>
+  @if (filmkritiken.details.beitragvon) {
+    <div>
+      <h4 class="inline">Beitrag von: </h4>
+      {{filmkritiken.details.beitragvon}}
+    </div>
+  }
 
-<div *ngIf="besprochenAm" class="besprochen-am-row">
-    <h4 class="inline">Besprochen am: </h4>
-    {{ besprochenAm.toLocaleDateString(undefined, { month: '2-digit',day: '2-digit',year: 'numeric'})}}
-    <button *ngIf="hasRoleForEdit" mat-icon-button (click)="openEditDialog()" matTooltip="Besprechungsdatum ändern"
-        matTooltipPosition="right" class="edit-besprochen-am-btn">
-        <mat-icon>edit</mat-icon>
-    </button>
-</div>
+  @if (besprochenAm) {
+    <div class="besprochen-am-row">
+      <h4 class="inline">Besprochen am: </h4>
+      {{ besprochenAm.toLocaleDateString(undefined, { month: '2-digit',day: '2-digit',year: 'numeric'})}}
+      @if (hasRoleForEdit) {
+        <button mat-icon-button (click)="openEditDialog()" matTooltip="Besprechungsdatum ändern"
+          matTooltipPosition="right" class="edit-besprochen-am-btn">
+          <mat-icon>edit</mat-icon>
+        </button>
+      }
+    </div>
+  }

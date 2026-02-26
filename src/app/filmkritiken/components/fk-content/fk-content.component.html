@@ -1,18 +1,22 @@
 <div class="fk-content-component">
 
-    <div class="fk-filminfo">
-        <div *ngIf="filmkritiken.film.image" class="fk-filminfo-img flex100">
-            <fk-image [image]="filmkritiken.film.image"></fk-image>
-        </div>
-        <div *ngIf="filmkritiken.details" class="fk-filminfo-txt flex100" >
-            <fk-filminfo [filmkritiken]="filmkritiken"></fk-filminfo>
-        </div>
-    </div>
+  <div class="fk-filminfo">
+    @if (filmkritiken.film.image) {
+      <div class="fk-filminfo-img flex100">
+        <fk-image [image]="filmkritiken.film.image"></fk-image>
+      </div>
+    }
+    @if (filmkritiken.details) {
+      <div class="fk-filminfo-txt flex100" >
+        <fk-filminfo [filmkritiken]="filmkritiken"></fk-filminfo>
+      </div>
+    }
+  </div>
 
-    <div class="fk-filmbewertungen">
-        <div class="fk-filmbewertungen-25-md-lg"></div>
-          <fk-table class="flex100" [filmkritiken]="filmkritiken"></fk-table>
-        <div class="fk-filmbewertungen-25-md-lg"></div>
-        <div class="fk-filmbewertungen-50-sm"></div>
-    </div>
+  <div class="fk-filmbewertungen">
+    <div class="fk-filmbewertungen-25-md-lg"></div>
+    <fk-table class="flex100" [filmkritiken]="filmkritiken"></fk-table>
+    <div class="fk-filmbewertungen-25-md-lg"></div>
+    <div class="fk-filmbewertungen-50-sm"></div>
+  </div>
 </div>
