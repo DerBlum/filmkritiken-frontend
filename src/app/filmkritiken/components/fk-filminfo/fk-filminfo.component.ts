@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Filmkritiken } from 'src/app/openapi';
 import { UserService } from 'src/app/shared/user/user.service';
 import * as roles from '../../../shared/user/roles';

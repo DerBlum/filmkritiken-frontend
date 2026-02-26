@@ -1,11 +1,11 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import {Component, OnInit} from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, map, take } from 'rxjs/operators';
 import { openErrorPopup } from './filmkritiken/utilities/ErrorPopup';
 import { UserService } from './shared/user/user.service';
 import * as roles from './shared/user/roles';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
 
 @Component({

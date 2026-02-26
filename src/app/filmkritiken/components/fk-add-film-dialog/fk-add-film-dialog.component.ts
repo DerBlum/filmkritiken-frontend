@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {Film, Image} from 'src/app/openapi';
 import { UserService } from 'src/app/shared/user/user.service';
 import { FilmkritikenFrontendService } from '../../services/filmkritiken.service';
 import { FilmRequest } from 'src/app/openapi/model/filmRequest';
 import { openErrorPopup } from '../../utilities/ErrorPopup';
 import * as roles from '../../../shared/user/roles';
-import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-fk-add-film-dialog',
