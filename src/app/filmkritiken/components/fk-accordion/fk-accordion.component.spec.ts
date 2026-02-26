@@ -1,14 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 import { FkAccordionComponent } from './fk-accordion.component';
+import { provideRouter } from '@angular/router';
 
-xdescribe('FkAccordionComponent', () => {
+describe('FkAccordionComponent', () => {
   let component: FkAccordionComponent;
   let fixture: ComponentFixture<FkAccordionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FkAccordionComponent]
+      providers: [provideRouter([])],
+      declarations: [FkAccordionComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   });
