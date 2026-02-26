@@ -34,8 +34,8 @@
     "@angular/platform-browser": "^18.2.14",
     "@angular/platform-browser-dynamic": "^18.2.14",
     "@angular/router": "^18.2.14",
-    "@azure/msal-angular": "^3.1.0",
-    "@azure/msal-browser": "^3.30.0",
+    "@azure/msal-angular": "^4.0.27",
+    "@azure/msal-browser": "^4.29.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.4.1",
     "zone.js": "~0.14.10"
