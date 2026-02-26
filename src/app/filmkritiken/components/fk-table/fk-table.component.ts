@@ -11,9 +11,10 @@ import {openErrorPopup} from '../../utilities/ErrorPopup';
 import * as roles from '../../../shared/user/roles';
 
 @Component({
-  selector: 'fk-table',
-  templateUrl: './fk-table.component.html',
-  styleUrls: ['./fk-table.component.css']
+    selector: 'fk-table',
+    templateUrl: './fk-table.component.html',
+    styleUrls: ['./fk-table.component.css'],
+    standalone: false
 })
 export class FkTableComponent implements OnInit {
 

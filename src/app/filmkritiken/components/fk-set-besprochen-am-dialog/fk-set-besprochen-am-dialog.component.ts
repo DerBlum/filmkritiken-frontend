@@ -9,7 +9,8 @@ import { FilmkritikenFrontendService } from '../../services/filmkritiken.service
 @Component({
     selector: 'app-fk-set-besprochen-am-dialog',
     templateUrl: './fk-set-besprochen-am-dialog.component.html',
-    styleUrls: ['./fk-set-besprochen-am-dialog.component.css']
+    styleUrls: ['./fk-set-besprochen-am-dialog.component.css'],
+    standalone: false
 })
 export class FkSetBesprochenAmDialogComponent implements OnInit {
 

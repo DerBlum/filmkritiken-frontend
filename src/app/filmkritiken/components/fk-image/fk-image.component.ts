@@ -3,9 +3,10 @@ import { Image } from 'src/app/openapi';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'fk-image',
-  templateUrl: './fk-image.component.html',
-  styleUrls: ['./fk-image.component.css']
+    selector: 'fk-image',
+    templateUrl: './fk-image.component.html',
+    styleUrls: ['./fk-image.component.css'],
+    standalone: false
 })
 export class FkImageComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { Filmkritiken } from 'src/app/openapi';
 import { getAverageWertung } from '../../utilities/BewertungUtilities';
 
 @Component({
-  selector: 'fk-accordion',
-  templateUrl: './fk-accordion.component.html',
-  styleUrls: ['./fk-accordion.component.css']
+    selector: 'fk-accordion',
+    templateUrl: './fk-accordion.component.html',
+    styleUrls: ['./fk-accordion.component.css'],
+    standalone: false
 })
 export class FkAccordionComponent implements OnInit {
 

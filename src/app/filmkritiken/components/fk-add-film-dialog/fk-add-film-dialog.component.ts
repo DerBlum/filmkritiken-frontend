@@ -11,9 +11,10 @@ import * as roles from '../../../shared/user/roles';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-fk-add-film-dialog',
-  templateUrl: './fk-add-film-dialog.component.html',
-  styleUrls: ['./fk-add-film-dialog.component.css']
+    selector: 'app-fk-add-film-dialog',
+    templateUrl: './fk-add-film-dialog.component.html',
+    styleUrls: ['./fk-add-film-dialog.component.css'],
+    standalone: false
 })
 export class FkAddFilmDialogComponent implements OnInit {
 

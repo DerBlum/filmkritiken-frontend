@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Filmkritiken } from 'src/app/openapi';
 
 @Component({
-  selector: 'fk-content',
-  templateUrl: './fk-content.component.html',
-  styleUrls: ['./fk-content.component.css'],
+    selector: 'fk-content',
+    templateUrl: './fk-content.component.html',
+    styleUrls: ['./fk-content.component.css'],
+    standalone: false
 })
 export class FkContentComponent implements OnInit {
 

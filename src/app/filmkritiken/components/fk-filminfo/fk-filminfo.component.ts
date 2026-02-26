@@ -6,9 +6,10 @@ import * as roles from '../../../shared/user/roles';
 import { FkSetBesprochenAmDialogComponent } from '../fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
 
 @Component({
-  selector: 'fk-filminfo',
-  templateUrl: './fk-filminfo.component.html',
-  styleUrls: ['./fk-filminfo.component.css']
+    selector: 'fk-filminfo',
+    templateUrl: './fk-filminfo.component.html',
+    styleUrls: ['./fk-filminfo.component.css'],
+    standalone: false
 })
 export class FkFilminfoComponent implements OnInit {
 
