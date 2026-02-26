@@ -16,5 +16,5 @@ RUN npm ci --quiet && npm run build-prod
 FROM nginx:1.29.5-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /usr/src/app/dist/filmkritiken-frontend /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/filmkritiken-frontend/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
