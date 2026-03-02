@@ -1,41 +1,50 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FkContentComponent } from './filmkritiken/components/fk-content/fk-content.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {FkContentComponent} from './filmkritiken/components/fk-content/fk-content.component';
 
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { FkAccordionComponent } from './filmkritiken/components/fk-accordion/fk-accordion.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { FkTableComponent } from './filmkritiken/components/fk-table/fk-table.component';
-import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.component';
-import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
-import { ApiModule, BASE_PATH } from './openapi';
-import { environment } from 'src/environments/environment';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
-import { BrowserCacheLocation, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
-import { ApiInterceptor } from './shared/interceptor/api.interceptor';
-import { UserService } from './shared/user/user.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { MatDialogModule } from '@angular/material/dialog';
-import { FkAddFilmDialogComponent } from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
-import { FkSetBesprochenAmDialogComponent } from './filmkritiken/components/fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatMenuModule } from '@angular/material/menu';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {FkAccordionComponent} from './filmkritiken/components/fk-accordion/fk-accordion.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import {FkTableComponent} from './filmkritiken/components/fk-table/fk-table.component';
+import {FkImageComponent} from './filmkritiken/components/fk-image/fk-image.component';
+import {FkFilminfoComponent} from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
+import {ApiModule, BASE_PATH} from './openapi';
+import {environment} from 'src/environments/environment';
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {
+  MsalModule,
+  MsalService,
+  MSAL_INSTANCE,
+  MsalInterceptorConfiguration,
+  MsalGuardConfiguration,
+  MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalGuard, MsalBroadcastService
+} from '@azure/msal-angular';
+import {BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication} from '@azure/msal-browser';
+import {ApiInterceptor} from './shared/interceptor/api.interceptor';
+import {UserService} from './shared/user/user.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {MatDialogModule} from '@angular/material/dialog';
+import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
+import {
+  FkSetBesprochenAmDialogComponent
+} from './filmkritiken/components/fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
 
 // Remove this line to use Angular Universal
 
@@ -78,6 +87,25 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   });
 }
 
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+
+  return {
+    interactionType: InteractionType.Popup,
+    protectedResourceMap,
+  };
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Popup,
+    authRequest: {
+      scopes: [],
+    },
+    loginFailedRoute: '/',
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,7 +117,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     FkAddFilmDialogComponent,
     FkSetBesprochenAmDialogComponent,
   ],
-  bootstrap: [AppComponent], imports: [ApiModule,
+  bootstrap: [AppComponent], imports: [
+    ApiModule,
     BrowserModule,
     AppRoutingModule,
     MatTableModule,
@@ -111,30 +140,43 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule], providers: [
-      {
-        provide: UserService,
-        useClass: UserService
-      },
-      {
-        provide: BASE_PATH,
-        useValue: environment.BACKEND_URL,
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: ApiInterceptor,
-        multi: true,
-      },
-      {
-        provide: MSAL_INSTANCE,
-        useFactory: MSALInstanceFactory,
-      },
-      {
-        provide: MAT_DATE_LOCALE,
-        useValue: 'de-DE'
-      },
-      MsalService,
-      provideHttpClient(withInterceptorsFromDi()),
-    ]
+    MatMenuModule
+  ],
+  providers: [
+    {
+      provide: UserService,
+      useClass: UserService
+    },
+    {
+      provide: BASE_PATH,
+      useValue: environment.BACKEND_URL,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory,
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory,
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory,
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'de-DE'
+    },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ]
 })
-export class AppModule { }
+export class AppModule {
+}

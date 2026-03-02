@@ -16,12 +16,13 @@ export class UserService implements OnDestroy {
     private authToken: string;
     private authTokenExpiryDate: Date;
 
-    private loginChanged = new Subject<boolean>();
+    private readonly loginChanged = new Subject<boolean>();
 
     constructor(
-        private authService: MsalService,
-        private msalBroadcastService: MsalBroadcastService,
+        private readonly authService: MsalService,
+        private readonly msalBroadcastService: MsalBroadcastService,
     ) {
+        authService.initialize()
         this.initUserData();
         this.msalBroadcastService.inProgress$
             .pipe(
@@ -41,7 +42,7 @@ export class UserService implements OnDestroy {
     public loginViaPopup(): void {
         this.authService.loginPopup()
             .subscribe((response: AuthenticationResult) => {
-                this.onLoginFinished(response);
+              this.onLoginFinished(response);
             });
     }
 

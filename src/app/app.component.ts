@@ -7,6 +7,7 @@ import { UserService } from './shared/user/user.service';
 import * as roles from './shared/user/roles';
 import {MatDialog} from '@angular/material/dialog';
 import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
     selector: 'fk-root',
@@ -22,10 +23,10 @@ export class AppComponent implements OnInit{
   canAddFilm = false;
 
   constructor(
-    private userService: UserService,
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar,
-    private matDialog: MatDialog,
+    private readonly userService: UserService,
+    private readonly clipboard: Clipboard,
+    private readonly snackBar: MatSnackBar,
+    private readonly matDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit{
   }
 
   copyAuthToken(): void {
-    this.userService.getAuthToken().
+    const observable = this.userService.getAuthToken().
       pipe(
         take(1),
         map(token => {
@@ -60,10 +61,9 @@ export class AppComponent implements OnInit{
         catchError(_ => {
           openErrorPopup(this.snackBar, 'Token konnte nicht kopiert werden.');
           return undefined;
-        })
-      )
-      .toPromise()
-      .finally(() => { });
+        }),
+      );
+    firstValueFrom(observable).finally(() => { });
   }
 
   logout(): void {
