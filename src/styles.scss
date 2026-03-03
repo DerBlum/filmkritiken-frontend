@@ -135,3 +135,51 @@ body {
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
+/* Proactive Glass-morphism theme for remaining MDC popup components */
+
+/* Dialogs */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: #ffffff !important;
+    --mdc-dialog-container-color: rgba(0, 0, 0, 0.85);
+    --mdc-dialog-subhead-color: #ffffff;
+    --mdc-dialog-supporting-text-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Menus */
+.mat-mdc-menu-panel {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    --mat-menu-container-color: rgba(0, 0, 0, 0.85);
+    --mat-menu-item-label-text-color: #ffffff;
+    --mat-menu-item-icon-color: #ffffff;
+}
+
+.mat-mdc-menu-item {
+    color: #ffffff !important;
+}
+
+.mat-mdc-menu-item:hover:not([disabled]) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Datepickers */
+.mat-datepicker-content {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: #ffffff !important;
+    --mat-datepicker-calendar-container-background-color: rgba(0, 0, 0, 0.85);
+    --mat-datepicker-calendar-text-color: #ffffff;
+    --mat-datepicker-calendar-header-text-color: #ffffff;
+    --mat-datepicker-calendar-body-label-text-color: rgba(255, 255, 255, 0.7);
+    --mat-datepicker-calendar-date-text-color: #ffffff;
+    --mat-datepicker-calendar-date-hover-state-background-color: rgba(255, 255, 255, 0.1);
+    --mat-datepicker-calendar-date-selected-state-background-color: #811010;
+}
+
+/* Tooltips */
+.mdc-tooltip__surface {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    --mdc-tooltip-container-color: #000000;
+    --mdc-tooltip-supporting-text-color: #ffffff;
+}
