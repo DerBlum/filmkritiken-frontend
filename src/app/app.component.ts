@@ -1,21 +1,21 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, map, take } from 'rxjs/operators';
 import { openErrorPopup } from './filmkritiken/utilities/ErrorPopup';
 import { UserService } from './shared/user/user.service';
 import * as roles from './shared/user/roles';
-import {MatDialog} from '@angular/material/dialog';
-import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
-import {firstValueFrom} from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { FkAddFilmDialogComponent } from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'fk-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'fk-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  standalone: false
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   title = 'filmkritiken-frontend';
   isLoggedIn = false;
@@ -42,8 +42,8 @@ export class AppComponent implements OnInit{
     this.canAddFilm = this.userService.hasRole(roles.roleFilmAdd);
   }
 
-  loginPopup(): void {
-    this.userService.loginViaPopup();
+  login(): void {
+    this.userService.loginViaRedirect();
   }
 
   copyAuthToken(): void {

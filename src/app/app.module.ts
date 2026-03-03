@@ -1,23 +1,23 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {FkContentComponent} from './filmkritiken/components/fk-content/fk-content.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FkContentComponent } from './filmkritiken/components/fk-content/fk-content.component';
 
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {FkAccordionComponent} from './filmkritiken/components/fk-accordion/fk-accordion.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
-import {FkTableComponent} from './filmkritiken/components/fk-table/fk-table.component';
-import {FkImageComponent} from './filmkritiken/components/fk-image/fk-image.component';
-import {FkFilminfoComponent} from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
-import {ApiModule, BASE_PATH} from './openapi';
-import {environment} from 'src/environments/environment';
-import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { FkAccordionComponent } from './filmkritiken/components/fk-accordion/fk-accordion.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { FkTableComponent } from './filmkritiken/components/fk-table/fk-table.component';
+import { FkImageComponent } from './filmkritiken/components/fk-image/fk-image.component';
+import { FkFilminfoComponent } from './filmkritiken/components/fk-filminfo/fk-filminfo.component';
+import { ApiModule, BASE_PATH } from './openapi';
+import { environment } from 'src/environments/environment';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   MsalModule,
   MsalService,
@@ -26,25 +26,25 @@ import {
   MsalGuardConfiguration,
   MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalGuard, MsalBroadcastService
 } from '@azure/msal-angular';
-import {BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication} from '@azure/msal-browser';
-import {ApiInterceptor} from './shared/interceptor/api.interceptor';
-import {UserService} from './shared/user/user.service';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatInputModule} from '@angular/material/input';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {MatDialogModule} from '@angular/material/dialog';
-import {FkAddFilmDialogComponent} from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
+import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
+import { ApiInterceptor } from './shared/interceptor/api.interceptor';
+import { UserService } from './shared/user/user.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FkAddFilmDialogComponent } from './filmkritiken/components/fk-add-film-dialog/fk-add-film-dialog.component';
 import {
   FkSetBesprochenAmDialogComponent
 } from './filmkritiken/components/fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Remove this line to use Angular Universal
 
@@ -73,6 +73,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     auth: {
       clientId: 'b4dcd77f-8bc3-46e4-add1-8a44cd968428',
       authority: 'https://login.microsoftonline.com/865638a4-e4fb-4aef-89e1-6824acc3a785',
+      redirectUri: window.location.origin,
+      postLogoutRedirectUri: window.location.origin,
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -91,14 +93,14 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
 
   return {
-    interactionType: InteractionType.Popup,
+    interactionType: InteractionType.Redirect,
     protectedResourceMap,
   };
 }
 
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
-    interactionType: InteractionType.Popup,
+    interactionType: InteractionType.Redirect,
     authRequest: {
       scopes: [],
     },

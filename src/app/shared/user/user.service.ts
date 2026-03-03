@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
 import { AccountInfo } from '@azure/msal-common';
@@ -22,16 +22,30 @@ export class UserService implements OnDestroy {
         private readonly authService: MsalService,
         private readonly msalBroadcastService: MsalBroadcastService,
     ) {
-        authService.initialize()
-        this.initUserData();
+        this.authService.initialize().subscribe({
+            complete: () => {
+                // initialize() sets up MSAL but does NOT call handleRedirectPromise().
+                // Call handleRedirectObservable() explicitly so MSAL processes the auth
+                // code URL on return from a loginRedirect() flow.
+                this.authService.handleRedirectObservable().subscribe({
+                    next: (result: AuthenticationResult | null) => {
+                        if (result) {
+                            this.onLoginFinished(result);
+                        }
+                    },
+                    error: (e) => console.error('[MSAL] handleRedirectObservable error', e),
+                });
+            },
+            error: (e) => console.error('[MSAL] Initialization error', e),
+        });
+
         this.msalBroadcastService.inProgress$
             .pipe(
                 filter((status: InteractionStatus) => status === InteractionStatus.None),
                 takeUntil(this.destroying$)
             )
-            .subscribe(() => {
-                this.initUserData();
-            });
+            .subscribe(() => this.initUserData());
+
     }
 
     ngOnDestroy(): void {
@@ -39,11 +53,10 @@ export class UserService implements OnDestroy {
         this.destroying$.complete();
     }
 
-    public loginViaPopup(): void {
-        this.authService.loginPopup()
-            .subscribe((response: AuthenticationResult) => {
-              this.onLoginFinished(response);
-            });
+    public loginViaRedirect(): void {
+        this.authService.loginRedirect().subscribe({
+            error: (err) => console.error('[MSAL] loginRedirect failed', err),
+        });
     }
 
     public logout(): void {
@@ -93,7 +106,11 @@ export class UserService implements OnDestroy {
         }
 
         if (activeAccount) {
+            const wasEmpty = !this.accountInfo;
             this.accountInfo = activeAccount;
+            if (wasEmpty) {
+                this.loginChanged.next(true);
+            }
         }
     }
 
@@ -105,13 +122,13 @@ export class UserService implements OnDestroy {
             })).pipe(
                 take(1),
                 map(authResult => {
-                    this.onLoginFinished(authResult);
+                    this.onLoginFinished(authResult as AuthenticationResult);
                     return this.authToken;
                 }),
                 catchError(error => {
                     console.log('Acquiring Token failed because of error: ' + error);
                     this.onLogout();
-                    this.loginViaPopup();
+                    this.loginViaRedirect();
                     return of(undefined);
                 })
             );
