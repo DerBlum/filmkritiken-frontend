@@ -1,109 +1,109 @@
 @if (hasRoleForAdd) {
-  <div class="bewertungen-buttonbar">
-    @if (hasRoleForAdd) {
-      <form [formGroup]="filmFormGroup" (ngSubmit)="addFilm()"
-        class="add-film-form">
-        <div class="fk-add-film-dialog-wrapper">
-          <div class="fk-add-film-dialog-field">
-            <mat-form-field appearance="fill" [color]="'primary'">
-              <mat-label>Von</mat-label>
-              <mat-hint>Von wem der Vorschlag kommt</mat-hint>
-              <input matInput class="form-control" id="von" formControlName="von" type="string" placeholder="Stefan"
-                minlength="1">
-              </mat-form-field>
-            </div>
-            <div class="fk-add-film-dialog-field">
-              <mat-form-field appearance="fill" [color]="'primary'">
-                <mat-label>Titel</mat-label>
-                <mat-hint>Der Titel des Films</mat-hint>
-                <input matInput class="form-control" id="titel" formControlName="titel" type="string"
-                  placeholder="Enter the Void" minlength="1">
-                </mat-form-field>
-              </div>
-              <div class="fk-add-film-dialog-field">
-                <mat-form-field appearance="fill" [color]="'primary'">
-                  <mat-label>Copyright</mat-label>
-                  <mat-hint>Eigentümer des Bildes</mat-hint>
-                  <input matInput class="form-control" id="imageCopyright" formControlName="imageCopyright" type="string"
-                    placeholder="IMDb" minlength="1">
-                  </mat-form-field>
-                </div>
-                <div class="fk-add-film-dialog-field">
-                  <mat-form-field appearance="fill" [color]="'primary'">
-                    <mat-label>Altersfreigabe</mat-label>
-                    <mat-hint>Altersfreigabe des Films in Deutschland</mat-hint>
-                    <input matInput class="form-control" id="altersfreigabe" formControlName="altersfreigabe" type="number"
-                      placeholder="0" min="0" max="18">
-                    </mat-form-field>
-                  </div>
-                  <div class="fk-add-film-dialog-field">
-                    <mat-form-field appearance="fill" [color]="'primary'">
-                      <mat-label>Erscheinungsjahr</mat-label>
-                      <mat-hint>Erscheinungsjahr des Films in Deutschland</mat-hint>
-                      <input matInput class="form-control" id="erscheinungsjahr" formControlName="erscheinungsjahr" type="number"
-                        placeholder="2000" min="1900" max="2100">
-                      </mat-form-field>
-                    </div>
-                    <div class="fk-add-film-dialog-field">
-                      <mat-form-field appearance="fill" [color]="'primary'">
-                        <mat-label>Regisseur</mat-label>
-                        <mat-hint>Regisseur des Films</mat-hint>
-                        <input matInput class="form-control" id="regie" formControlName="regie" type="string"
-                          placeholder="Quentin Tarantino" minlength="1">
-                        </mat-form-field>
-                      </div>
-                      <div class="fk-add-film-dialog-field">
-                        <mat-form-field appearance="fill" [color]="'primary'">
-                          <mat-label>Länge</mat-label>
-                          <mat-hint>Länge des Films in Minuten</mat-hint>
-                          <input matInput class="form-control" id="laenge" formControlName="laenge" type="number" placeholder="90"
-                            min="1" max="1000">
-                          </mat-form-field>
-                        </div>
-                        <div class="fk-add-film-dialog-field">
-                          <mat-form-field appearance="fill" [color]="'primary'">
-                            <mat-label>Originalsprache</mat-label>
-                            <mat-hint>Originalsprache des Films</mat-hint>
-                            <input matInput class="form-control" id="originalsprache" formControlName="originalsprache" type="string"
-                              placeholder="Deutsch" minlength="1">
-                            </mat-form-field>
-                          </div>
-                          <div class="fk-add-film-dialog-field">
-                            <mat-form-field appearance="fill" [color]="'primary'">
-                              <mat-label>Produktionsland</mat-label>
-                              <mat-hint>Produktionsland des Films</mat-hint>
-                              <input matInput class="form-control" id="produktionsland" formControlName="produktionsland" type="string"
-                                placeholder="Deutschland" minlength="1">
-                              </mat-form-field>
-                            </div>
-                            <div class="fk-add-film-dialog-field">
-                              <mat-form-field appearance="fill" [color]="'primary'">
-                                <mat-label>Originaltitel</mat-label>
-                                <mat-hint>Der Titel des Films in Originalsprache</mat-hint>
-                                <input matInput class="form-control" id="originaltitel" formControlName="originaltitel" type="string"
-                                  placeholder="Enter The Void" minlength="1">
-                                </mat-form-field>
-                              </div>
-                              <div class="fk-add-film-dialog-field">
-                                <mat-form-field appearance="fill" [color]="'primary'">
-                                  <mat-label>Besprechungsdatum</mat-label>
-                                  <input matInput [matDatepicker]="picker" formControlName="besprochenam">
-                                  <mat-hint>DD.MM.YYYY</mat-hint>
-                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                  <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                              </div>
-                              <div class="fk-add-film-dialog-field">
-                                <button type="button" mat-flat-button (click)="fileInput.click()">Bild auswählen</button>
-                                <input hidden (change)="onImageSelected()" #fileInput type="file" id="file">
-                              </div>
-                            </div>
-                            <button [disabled]="filmFormGroup.invalid || selectedImage === null" type="submit" mat-flat-button [color]="'primary'"
-                              class="fk-add-film-form-send" matTooltip="Film hinzufügen" matTooltipPosition="right"
-                              matTooltipClass="button-tooltip">
-                              <mat-icon>add</mat-icon>
-                            </button>
-                          </form>
-                        }
-                      </div>
-                    }
+<form [formGroup]="filmFormGroup" (ngSubmit)="addFilm()" class="add-film-form">
+  <h2 mat-dialog-title>Film hinzufügen</h2>
+  <mat-dialog-content>
+    <div class="fk-add-film-dialog-wrapper">
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Von</mat-label>
+          <mat-hint>Von wem der Vorschlag kommt</mat-hint>
+          <input matInput class="form-control" id="von" formControlName="von" type="string" placeholder="Stefan"
+            minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Titel</mat-label>
+          <mat-hint>Der Titel des Films</mat-hint>
+          <input matInput class="form-control" id="titel" formControlName="titel" type="string"
+            placeholder="Enter the Void" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Copyright</mat-label>
+          <mat-hint>Eigentümer des Bildes</mat-hint>
+          <input matInput class="form-control" id="imageCopyright" formControlName="imageCopyright" type="string"
+            placeholder="IMDb" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Altersfreigabe</mat-label>
+          <mat-hint>Altersfreigabe des Films in Deutschland</mat-hint>
+          <input matInput class="form-control" id="altersfreigabe" formControlName="altersfreigabe" type="number"
+            placeholder="0" min="0" max="18">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Erscheinungsjahr</mat-label>
+          <mat-hint>Erscheinungsjahr des Films in Deutschland</mat-hint>
+          <input matInput class="form-control" id="erscheinungsjahr" formControlName="erscheinungsjahr" type="number"
+            placeholder="2000" min="1900" max="2100">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Regisseur</mat-label>
+          <mat-hint>Regisseur des Films</mat-hint>
+          <input matInput class="form-control" id="regie" formControlName="regie" type="string"
+            placeholder="Quentin Tarantino" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Länge</mat-label>
+          <mat-hint>Länge des Films in Minuten</mat-hint>
+          <input matInput class="form-control" id="laenge" formControlName="laenge" type="number" placeholder="90"
+            min="1" max="1000">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Originalsprache</mat-label>
+          <mat-hint>Originalsprache des Films</mat-hint>
+          <input matInput class="form-control" id="originalsprache" formControlName="originalsprache" type="string"
+            placeholder="Deutsch" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Produktionsland</mat-label>
+          <mat-hint>Produktionsland des Films</mat-hint>
+          <input matInput class="form-control" id="produktionsland" formControlName="produktionsland" type="string"
+            placeholder="Deutschland" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Originaltitel</mat-label>
+          <mat-hint>Der Titel des Films in Originalsprache</mat-hint>
+          <input matInput class="form-control" id="originaltitel" formControlName="originaltitel" type="string"
+            placeholder="Enter The Void" minlength="1">
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <mat-form-field appearance="fill" [color]="'primary'">
+          <mat-label>Besprechungsdatum</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="besprochenam">
+          <mat-hint>DD.MM.YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="fk-add-film-dialog-field">
+        <button type="button" mat-flat-button (click)="fileInput.click()">Bild auswählen</button>
+        <input hidden (change)="onImageSelected()" #fileInput type="file" id="file">
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Abbrechen</button>
+    <button [disabled]="filmFormGroup.invalid || selectedImage === null" type="submit" mat-flat-button
+      [color]="'primary'">
+      Speichern
+    </button>
+  </mat-dialog-actions>
+</form>
+}

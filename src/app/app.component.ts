@@ -71,6 +71,10 @@ export class AppComponent implements OnInit {
   }
 
   openAddFilmDialog(): void {
-    this.matDialog.open(FkAddFilmDialogComponent);
+    this.matDialog.open(FkAddFilmDialogComponent, {
+      width: '80%',
+      height: '80%',
+      maxWidth: '100vw' // Prevents M3 from restricting the max width of the dialog
+    });
   }
 }

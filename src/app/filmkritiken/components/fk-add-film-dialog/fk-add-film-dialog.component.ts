@@ -2,19 +2,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {Film, Image} from 'src/app/openapi';
+import { Film, Image } from 'src/app/openapi';
 import { UserService } from 'src/app/shared/user/user.service';
 import { FilmkritikenFrontendService } from '../../services/filmkritiken.service';
 import { FilmRequest } from 'src/app/openapi/model/filmRequest';
 import { openErrorPopup } from '../../utilities/ErrorPopup';
 import * as roles from '../../../shared/user/roles';
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-fk-add-film-dialog',
-    templateUrl: './fk-add-film-dialog.component.html',
-    styleUrls: ['./fk-add-film-dialog.component.css'],
-    standalone: false
+  selector: 'app-fk-add-film-dialog',
+  templateUrl: './fk-add-film-dialog.component.html',
+  styleUrls: ['./fk-add-film-dialog.component.css'],
+  standalone: false
 })
 export class FkAddFilmDialogComponent implements OnInit {
 
@@ -57,7 +57,6 @@ export class FkAddFilmDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dialogRef.updateSize('80%', '80%');
     this.userService.subscribeToLoginState({
       next: _ => this.updateOnLoginStateChange()
     });

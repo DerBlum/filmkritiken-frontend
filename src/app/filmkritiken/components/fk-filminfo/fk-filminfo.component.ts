@@ -6,10 +6,10 @@ import * as roles from '../../../shared/user/roles';
 import { FkSetBesprochenAmDialogComponent } from '../fk-set-besprochen-am-dialog/fk-set-besprochen-am-dialog.component';
 
 @Component({
-    selector: 'fk-filminfo',
-    templateUrl: './fk-filminfo.component.html',
-    styleUrls: ['./fk-filminfo.component.css'],
-    standalone: false
+  selector: 'fk-filminfo',
+  templateUrl: './fk-filminfo.component.html',
+  styleUrls: ['./fk-filminfo.component.css'],
+  standalone: false
 })
 export class FkFilminfoComponent implements OnInit {
 
@@ -44,7 +44,7 @@ export class FkFilminfoComponent implements OnInit {
   openEditDialog(): void {
     const dialogRef = this.dialog.open(FkSetBesprochenAmDialogComponent, {
       data: { filmkritiken: this.filmkritiken },
-      width: '320px',
+      width: '450px',
     });
 
     dialogRef.afterClosed().subscribe((newDate: Date | undefined) => {
