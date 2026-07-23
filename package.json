@@ -2,8 +2,33 @@
   "name": "filmkritiken-frontend",
   "version": "1.0.0",
   "author": "Stefan Blum",
-  "description": "",
-  "main": "index.js",
+  "description": "Filmkritiken Filmclub – Vue 3 Frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/tsconfig": "^0.5.1",
+    "autoprefixer": "^10.4.19",
+    "playwright": "^1.61.1",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.0",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10",
+    "vue-tsc": "^2.0.21"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DerBlum/filmkritiken-frontend.git"
@@ -11,44 +36,5 @@
   "bugs": {
     "url": "https://github.com/DerBlum/filmkritiken-frontend/issues"
   },
-  "homepage": "https://github.com/DerBlum/filmkritiken-frontend#readme",
-  "private": true,
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --poll=1000",
-    "build": "ng build",
-    "build-prod": "ng build --configuration production",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "interface": "rm -fr src/app/openapi/ && openapi-generator-cli generate --global-property skipFormModel=false -g typescript-angular -i ../filmkritiken-backend/api/openapi.yaml -o src/app/openapi"
-  },
-  "dependencies": {
-    "@angular/animations": "^21.2.0",
-    "@angular/cdk": "^21.2.0",
-    "@angular/common": "^21.2.0",
-    "@angular/compiler": "^21.2.0",
-    "@angular/core": "^21.2.0",
-    "@angular/forms": "^21.2.0",
-    "@angular/material": "^21.2.0",
-    "@angular/platform-browser": "^21.2.0",
-    "@angular/platform-browser-dynamic": "^21.2.0",
-    "@angular/router": "^21.2.0",
-    "@azure/msal-angular": "^5.1.0",
-    "@azure/msal-browser": "^5.3.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.4.1",
-    "zone.js": "~0.16.1"
-  },
-  "devDependencies": {
-    "@angular/build": "^21.2.0",
-    "@angular/cli": "^21.2.0",
-    "@angular/compiler-cli": "^21.2.0",
-    "@openapitools/openapi-generator-cli": "^2.5.2",
-    "@types/node": "^25.3.1",
-    "jsdom": "^28.1.0",
-    "ts-node": "~10.9.0",
-    "typescript": "~5.9.3",
-    "vitest": "^4.0.18"
-  }
+  "homepage": "https://github.com/DerBlum/filmkritiken-frontend#readme"
 }

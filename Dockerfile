@@ -1,20 +1,31 @@
-######################
-### Stage 2: Build ###
-######################
-FROM node:24-alpine as build
+# Stage 1: Build
+FROM node:20-alpine AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
+# Copy package files first for better layer caching
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+# Copy source
 COPY ./ ./
 
-RUN npm ci --quiet && npm run build-prod
+# Build Vue app (Vite → dist/)
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
 
-####################
-### Stage 2: Run ###
-####################
+RUN npm run build
 
-FROM nginx:1.29.7-alpine
+# Stage 2: Serve with nginx
+FROM nginx:1.27-alpine AS serve
 
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /usr/src/app/dist/filmkritiken-frontend/browser /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy built Vue app
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy custom nginx config (SPA fallback)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

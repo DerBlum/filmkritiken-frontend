@@ -1,12 +1,13 @@
-import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-import { platformBrowser } from '@angular/platform-browser';
+import App from './App.vue'
+import router from './router'
+import '@/assets/styles/index.css'
 
-if (environment.production) {
-  enableProdMode();
-}
+const app = createApp(App)
 
-platformBrowser().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
-  .catch(err => console.error(err));
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
