@@ -37,6 +37,62 @@ Implementierung des Azure EntraID Login-Flows (Authorization Code Flow) im Vue-F
 
 ---
 
+## UAT – Akzeptanzszenarien
+
+```gherkin
+Feature: EntraID-Login & Session-Handling
+
+  @e2e
+  Scenario: Mitglied loggt sich erfolgreich ein
+    Given ich bin nicht eingeloggt und befinde mich auf der Startseite
+    When ich auf den "Login"-Button klicke
+    Then werde ich zu Azure EntraID weitergeleitet
+    And nach erfolgreichem Anmelden mit meinem Microsoft-Konto lande ich wieder auf der Startseite
+
+  @e2e
+  Scenario: Eingeloggtes Mitglied sieht seinen Namen in der NavBar
+    Given ich habe mich erfolgreich mit EntraID angemeldet
+    When ich die Startseite öffne
+    Then sehe ich meinen Namen in der NavBar (Desktop-Sidebar bzw. Mobile-BottomBar)
+
+  @e2e
+  Scenario: Mitglied loggt sich aus
+    Given ich bin eingeloggt
+    When ich auf den "Logout"-Button klicke
+    Then wird meine Session beendet
+    And mein Name verschwindet aus der NavBar
+    And ich verbleibe auf der aktuellen Seite
+
+  @e2e
+  Scenario: Abgelaufene Session auf einer öffentlichen Seite
+    Given ich war eingeloggt, aber meine Session ist abgelaufen
+    When ich eine öffentliche Seite aufrufe und ein API-Request ausgelöst wird
+    Then erscheint ein Toast "Deine Session ist abgelaufen"
+    And ich werde nicht von der Seite wegnavigiert
+    And die Seite bleibt vollständig lesbar
+
+  @e2e
+  Scenario: Permission-abhängige UI-Elemente
+    Given ich bin mit dem Konto eines Mitglieds mit der Permission "film.add" eingeloggt
+    When ich die Startseite öffne
+    Then sehe ich den "Film hinzufügen"-Button in der NavBar
+
+  @e2e
+  Scenario: Kein Permission-abhängiges UI für Mitglieder ohne film.add
+    Given ich bin eingeloggt, aber mein Konto besitzt nicht die Permission "film.add"
+    When ich die Startseite öffne
+    Then ist der "Film hinzufügen"-Button nicht sichtbar
+
+  @e2e
+  Scenario: Öffentlicher Besucher ohne Login
+    Given ich bin nicht eingeloggt
+    When ich die Startseite öffne
+    Then sehe ich alle öffentlichen Inhalte (Filmkritiken-Liste)
+    And kein Login-Pflicht-Dialog oder Fehler erscheint
+```
+
+---
+
 ## Out of Scope
 
 - Bewertungsformular (→ Phase 3)
