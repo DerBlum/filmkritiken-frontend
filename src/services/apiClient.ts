@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { useToast } from '@/composables/useToast'
+import { useAuthStore } from '@/stores/useAuthStore'
+import router from '@/router'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -12,7 +14,7 @@ const apiClient = axios.create({
 // Response Interceptors
 apiClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     const { showToast } = useToast()
     const status = error.response?.status
     const requestUrl = error.config?.url || ''
@@ -23,22 +25,11 @@ apiClient.interceptors.response.use(
         showToast('Deine Session ist abgelaufen.', 'error')
       }
 
-      try {
-        const { useAuthStore } = await import('@/stores/useAuthStore')
-        const auth = useAuthStore()
-        auth.$patch({ user: null, permissions: [] })
-      } catch {
-        // ignore
-      }
+      const auth = useAuthStore()
+      auth.$patch({ user: null, permissions: [] })
 
-      try {
-        const routerModule = await import('@/router')
-        const currentRoute = routerModule.default.currentRoute.value
-        if (currentRoute.meta?.requiresAuth) {
-          routerModule.default.push('/login')
-        }
-      } catch {
-        // ignore
+      if (router.currentRoute.value.meta?.requiresAuth) {
+        router.push('/login')
       }
 
       return Promise.reject(error)
