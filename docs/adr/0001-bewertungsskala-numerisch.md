@@ -1,6 +1,6 @@
 # Bewertungsskala: Numerisch 1–10, keine Sterne-Umrechnung
 
-Das Backend speichert Bewertungen auf einer 1–10 Skala. Wir zeigen diese Werte direkt als numerisches Badge (`★ 7.4`) an, ohne sie auf eine 1–5 Sterne-Skala zu halbieren. Die meisten Rating-UIs nutzen Sterne, aber die Halbierung erzeugt Präzisionsverlust und erfordert Rundungsentscheidungen ohne Mehrwert für die Nutzer des Filmclubs, die die 1–10 Skala bereits kennen.
+Das Backend speichert Bewertungen auf einer 1–10 Skala. Wir zeigen diese Werte direkt als numerisches Badge (`★ 7.4`) an, ohne sie auf eine 1–5 Sterne-Skala zu halbieren. Die meisten Rating-UIs nutzen Sterne, aber die Halbierung erzeugt Präzisionsverlust und erfordert Rundungsentscheidungen ohne Mehrwert für die Nutzer des Filmtreffs, die die 1–10 Skala bereits kennen.
 
 ## Considered Options
 
