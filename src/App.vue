@@ -21,7 +21,7 @@ onMounted(() => {
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 lg:ml-68 min-h-screen pb-20 lg:pb-0">
+    <main class="flex-1 lg:ml-68 min-h-screen pb-20 lg:pb-0 w-full max-w-full overflow-x-hidden">
       <router-view />
     </main>
 

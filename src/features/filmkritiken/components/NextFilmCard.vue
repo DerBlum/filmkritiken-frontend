@@ -54,21 +54,23 @@ const bewertungOffen = computed(() =>
     <!-- Film Content -->
     <div v-else class="flex-1 flex flex-col">
       <!-- Poster Container -->
-      <div class="relative aspect-video overflow-hidden bg-black/60 flex items-center justify-center">
+      <div class="relative h-52 sm:h-64 md:h-72 overflow-hidden bg-black/80 flex items-center justify-center">
         <!-- Blurred Background Backdrop -->
-        <img
-          v-if="posterUrl"
-          :src="posterUrl"
-          alt=""
-          aria-hidden="true"
-          class="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110"
-        />
+        <div class="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          <img
+            v-if="posterUrl"
+            :src="posterUrl"
+            alt=""
+            aria-hidden="true"
+            class="w-full h-full object-cover blur-2xl opacity-25 max-w-full max-h-full"
+          />
+        </div>
         <!-- Fully Visible Uncropped Poster -->
         <img
           v-if="posterUrl"
           :src="posterUrl"
           :alt="filmkritik.film.titel"
-          class="absolute inset-0 w-full h-full object-contain p-2 z-10"
+          class="h-full w-auto max-w-full object-contain p-3 relative z-10 drop-shadow-xl"
         />
         <!-- Fallback: Titelkarte (Amber → Rose Gradient) -->
         <div
