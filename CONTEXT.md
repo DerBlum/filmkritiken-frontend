@@ -1,8 +1,12 @@
 # Filmkritiken Frontend
 
-Das digitale Herzstück eines privaten Filmclubs. Die Plattform digitalisiert den Rhythmus der Gruppe: Ein Mitglied schlägt einen Film vor, die Gruppe schaut und diskutiert ihn, und jedes Mitglied gibt eine individuelle Wertung ab.
+Das digitale Herzstück eines privaten Filmtreffs. Die Plattform digitalisiert den Rhythmus der Gruppe: Ein Mitglied schlägt einen Film vor, die Gruppe schaut und diskutiert ihn, und jedes Mitglied gibt eine individuelle Wertung ab.
 
 ## Language
+
+**Filmtreff**:
+Der private Kreis von Filmbegeisterten, der die Anwendung nutzt.
+_Avoid_: Filmclub, Kino-Club, Gruppe (wenn die Organisation gemeint ist)
 
 **Filmkritiken** (Singular & Plural):
 Das zentrale Aggregat der Anwendung. Eine Filmkritiken umfasst genau einen Film, seine Metadaten zum Filmabend und die Sammlung aller Bewertungen der Mitglieder.

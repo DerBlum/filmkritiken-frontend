@@ -1,5 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import LoginView from '@/views/LoginView.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    requiresAuth?: boolean
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,14 +35,19 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/PlaceholderView.vue'),
+      component: LoginView,
     },
   ],
 })
 
-// Route Guards — leere Scaffolds, werden in Phase 2 befüllt
-// router.beforeEach((to, from, next) => {
-//   next()
-// })
+router.beforeEach((to, _from, next) => {
+  const auth = useAuthStore()
+  // TODO(Phase 3): returnUrl einbauen wenn geschützte Routen kommen
+  if (to.meta.requiresAuth && !auth.isAuthenticated) {
+    next('/login')
+  } else {
+    next()
+  }
+})
 
 export default router

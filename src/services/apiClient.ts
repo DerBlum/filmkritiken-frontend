@@ -12,13 +12,35 @@ const apiClient = axios.create({
 // Response Interceptors
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const { showToast } = useToast()
     const status = error.response?.status
+    const requestUrl = error.config?.url || ''
 
     if (status === 401) {
-      // Redirect to login — stub for Phase 2 (EntraID)
-      window.location.href = '/login'
+      // Still abfangen, wenn /auth/me 401 liefert (normal bei uneingeloggt)
+      if (!requestUrl.includes('/auth/me')) {
+        showToast('Deine Session ist abgelaufen.', 'error')
+      }
+
+      try {
+        const { useAuthStore } = await import('@/stores/useAuthStore')
+        const auth = useAuthStore()
+        auth.$patch({ user: null, permissions: [] })
+      } catch {
+        // ignore
+      }
+
+      try {
+        const routerModule = await import('@/router')
+        const currentRoute = routerModule.default.currentRoute.value
+        if (currentRoute.meta?.requiresAuth) {
+          routerModule.default.push('/login')
+        }
+      } catch {
+        // ignore
+      }
+
       return Promise.reject(error)
     }
 

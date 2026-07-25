@@ -1,8 +1,16 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import SideNav from '@/components/SideNav.vue'
 import BottomTabBar from '@/components/BottomTabBar.vue'
 import ToastContainer from '@/components/ToastContainer.vue'
 import AdminFab from '@/components/AdminFab.vue'
+import { useAuth } from '@/composables/useAuth'
+
+const auth = useAuth()
+
+onMounted(() => {
+  auth.fetchSession()
+})
 </script>
 
 <template>

@@ -11,6 +11,9 @@ RUN npm ci
 # Copy source
 COPY ./ ./
 
+# Run unit tests
+RUN npm test
+
 # Build Vue app (Vite → dist/)
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}

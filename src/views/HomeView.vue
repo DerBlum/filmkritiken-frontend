@@ -20,7 +20,7 @@ const archivFilme = computed(() => getArchivFilme(filmkritiken.value, nextFilm.v
     <!-- Page Title -->
     <header class="mb-8">
       <h1 class="text-cinema-text font-bold text-2xl lg:text-3xl tracking-tight">
-        Willkommen beim Filmclub
+        Willkommen beim Filmtreff
       </h1>
       <p class="text-cinema-text-muted mt-1">
         Unsere besprochenen Filme und der nächste Filmabend.

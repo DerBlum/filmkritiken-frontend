@@ -2,14 +2,16 @@
   "name": "filmkritiken-frontend",
   "version": "1.0.0",
   "author": "Stefan Blum",
-  "description": "Filmkritiken Filmclub – Vue 3 Frontend",
+  "description": "Filmkritiken Filmtreff – Vue 3 Frontend",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "axios": "^1.7.2",

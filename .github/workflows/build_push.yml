@@ -20,6 +20,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Tests
+        run: npm test
+
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v4
@@ -54,29 +66,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_API_URL=${{ secrets.VITE_API_URL }}
-
-#  check:
-#    runs-on: ubuntu-latest
-#    permissions:
-#      security-events: write
-#      actions: read
-#      contents: read
-#    needs:
-#      - build_push
-#    steps:
-#
-#      - name: Run Trivy vulnerability scanner
-#        uses: aquasecurity/trivy-action@0.30.0
-#        with:
-#          image-ref: '${{ env.FULL_IMAGE_NAME }}'
-#          format: 'sarif'
-#          output: 'trivy-results.sarif'
-#        env:
-#          TRIVY_USERNAME: ${{ github.actor }}
-#          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Upload Trivy scan results to GitHub Security tab
-#        uses: github/codeql-action/upload-sarif@v3
-#        if: always()
-#        with:
-#          sarif_file: 'trivy-results.sarif'
