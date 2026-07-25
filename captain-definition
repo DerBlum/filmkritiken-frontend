@@ -1,4 +1,4 @@
 {
     "schemaVersion": 2,
-    "imageName": "ghcr.io/derblum/filmkritiken-frontend:release"
+    "imageName": "ghcr.io/derblum/filmkritiken-frontend2:release"
 }
