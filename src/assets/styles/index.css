@@ -1,8 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-cinema-dark: #121212;
+  --color-cinema-red: #e50914;
+  --color-cinema-text: #ffffff;
+  --color-cinema-text-muted: #e0e0e0;
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-68: 17rem;
+  --spacing-72: 18rem;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --background-image-cinema-bg: url('../images/Cinema.jpg');
+}
 
 @layer base {
   *,
