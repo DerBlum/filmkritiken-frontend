@@ -1,7 +1,7 @@
 # Phase 3 – Funktionsparität & Angular-Ablösung
 
 **Labels**: `ready-for-agent`  
-**Status**: Draft — noch nicht gegrillt
+**Status**: Gegrillt ✅ — bereit zur Implementierung
 
 ---
 
@@ -39,13 +39,22 @@ Re-Implementierung der drei Kern-Features im Vue-Stack. Meilenstein: Vollständi
 
 ---
 
-## Key Decisions (noch offen)
+## Key Decisions (gegrillt, alle entschieden)
 
-- Bewertungsformular: Direkt auf der Startseite/Detailseite, oder als Modal?
-- Skalendarstellung im Formular: 10 Klick-Buttons, ein Slider, oder Sternchen-Auswahl die intern auf 1–10 mappt?
-- Detailseite: Eigene Route `/film/{id}` oder Slide-Over-Panel ohne Routenwechsel?
-- Endless Scrolling vs. "Mehr laden"-Button vs. klassische Pagination im Archiv?
-- Angular-Löschzeitpunkt: Direkt nach Phase-3-Abschluss oder separater Cleanup-Commit?
+| Entscheidung | Ergebnis |
+|---|---|
+| Bewertungsformular Ort | Eigene Route `/film/{id}`, eingebettet in Detailseite |
+| Skalendarstellung | Slider (1–10, Cinema-Red Theme-Farben, Snap auf Ganzzahlen) |
+| Detailseite | Eigene Route `/film/{id}` (tief-linkbar, kein Modal) |
+| Archiv-Navigation | „Mehr laden"-Button (`limit`/`offset`), späteres Upgrade auf Endless Scroll möglich |
+| Archiv-Filtering | Clientseitig zuerst; **Checkpoint vor Backend-Migration** |
+| Angular-Cleanup | Separater Commit; **Checkpoint vor Löschung** |
+
+### Meilensteine & Checkpoints
+
+1. **Feature-Meilenstein** — Bewertungsformular + Detailseite + Archiv mit clientseitigem Filter → einchecken
+2. **⛔ Checkpoint A** — Vor Backend-Filter-Migration: Review & ggf. einhecken / abbrechen
+3. **⛔ Checkpoint B** — Vor `legacy/angular/`-Löschung: explizite Bestätigung abwarten
 
 ---
 
@@ -54,3 +63,4 @@ Re-Implementierung der drei Kern-Features im Vue-Stack. Meilenstein: Vollständi
 - TMDB-Integration (→ Phase 4)
 - Admin-UI (→ Phase 4)
 - Watchlist (→ Phase 5)
+
