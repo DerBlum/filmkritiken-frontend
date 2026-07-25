@@ -7,7 +7,7 @@ on:
 
 
 env:
-  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-frontend2:release
+  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-frontend:release
 
 jobs:
 

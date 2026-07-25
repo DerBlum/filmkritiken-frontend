@@ -10,7 +10,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_REPO: ${{ github.repository }}
   IMAGE_TAG: release
-  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-frontend2:release
+  FULL_IMAGE_NAME: ghcr.io/derblum/filmkritiken-frontend:release
 
 jobs:
 
