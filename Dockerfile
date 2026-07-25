@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-alpine AS builder
+FROM node:26-alpine AS builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
 # Stage 2: Serve with nginx
-FROM nginx:1.27-alpine AS serve
+FROM nginx:1.31-alpine AS serve
 
 # Copy built Vue app
 COPY --from=builder /app/dist /usr/share/nginx/html
