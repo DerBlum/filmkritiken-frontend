@@ -68,7 +68,7 @@ const bewertungOffen = computed(() =>
           v-if="posterUrl"
           :src="posterUrl"
           :alt="filmkritik.film.titel"
-          class="relative w-full h-full object-contain p-2 z-10"
+          class="absolute inset-0 w-full h-full object-contain p-2 z-10"
         />
         <!-- Fallback: Titelkarte (Amber → Rose Gradient) -->
         <div

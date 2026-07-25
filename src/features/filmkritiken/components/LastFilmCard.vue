@@ -96,7 +96,7 @@ function ratingLabel(b: Bewertung): string {
             </div>
             <div v-if="beitragVon" class="flex items-center gap-1.5 mt-1">
               <span class="text-sm">👤</span>
-              <span>{{ beitragVon }}</span>
+              <span>Beitrag von <strong class="text-cinema-text">{{ beitragVon }}</strong></span>
             </div>
           </div>
         </div>
