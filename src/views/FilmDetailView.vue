@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { fetchFilmkritikById } from '@/features/filmkritiken/services/filmkritikenService'
+import {
+  fetchFilmkritikById,
+  updateBewertungOffen,
+} from '@/features/filmkritiken/services/filmkritikenService'
 import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 import {
   getDurchschnittsBewertung,
@@ -9,15 +12,20 @@ import {
   formatDatum,
 } from '@/features/filmkritiken/composables/useFilmkritiken'
 import BewertungsFormular from '@/features/filmkritiken/components/BewertungsFormular.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
+import { useToast } from '@/composables/useToast'
 
 const route = useRoute()
 const router = useRouter()
+const authStore = useAuthStore()
+const { showToast } = useToast()
 
 const apiBaseUrl = import.meta.env.VITE_API_URL as string
 
 const filmkritik = ref<Filmkritik | null>(null)
 const isLoading = ref(true)
 const isNotFound = ref(false)
+const isTogglingState = ref(false)
 
 const posterUrl = computed(() =>
   filmkritik.value ? getPosterUrl(filmkritik.value, apiBaseUrl) : null
@@ -51,6 +59,24 @@ async function loadDetail(): Promise<void> {
     isNotFound.value = true
   } finally {
     isLoading.value = false
+  }
+}
+
+async function handleToggleBewertungOffen(): Promise<void> {
+  if (!filmkritik.value) return
+  const newState = !filmkritik.value.details.bewertungoffen
+  isTogglingState.value = true
+  try {
+    await updateBewertungOffen(filmkritik.value.id, newState)
+    showToast(
+      newState ? 'Bewertungen wurden geöffnet.' : 'Bewertungen wurden geschlossen.',
+      'success'
+    )
+    await loadDetail()
+  } catch {
+    showToast('Fehler beim Ändern des Bewertungsstatus.', 'error')
+  } finally {
+    isTogglingState.value = false
   }
 }
 
@@ -202,7 +228,19 @@ watch(
       <!-- Ratings List Card -->
       <div class="cinema-glass rounded-2xl p-6 space-y-4">
         <h2 class="text-xl font-bold text-cinema-text flex items-center justify-between">
-          <span>Bewertungen</span>
+          <div class="flex items-center gap-3">
+            <span>Bewertungen</span>
+            <!-- Toggle Open/Close Button (nur für Benutzer mit bewertung.openclose Berechtigung) -->
+            <button
+              v-if="authStore.hasPermission('bewertung.openclose')"
+              @click="handleToggleBewertungOffen"
+              :disabled="isTogglingState"
+              class="btn-slate-glass text-xs py-1 px-2.5 flex items-center gap-1.5 font-normal rounded-lg transition-all"
+              :title="filmkritik.details.bewertungoffen ? 'Bewertung schließen' : 'Bewertung öffnen'"
+            >
+              <span>{{ filmkritik.details.bewertungoffen ? '🔒 Schließen' : '🔓 Öffnen' }}</span>
+            </button>
+          </div>
           <span class="text-xs text-cinema-text-muted font-normal">
             {{ filmkritik.bewertungen?.length ?? 0 }} {{ (filmkritik.bewertungen?.length === 1) ? 'Bewertung' : 'Bewertungen' }}
           </span>

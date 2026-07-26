@@ -82,3 +82,12 @@ export async function submitBewertung(
     body
   )
 }
+
+/**
+ * Öffnet oder schließt die Bewertungsmöglichkeit für eine Filmkritik.
+ */
+export async function updateBewertungOffen(id: string, offen: boolean): Promise<void> {
+  await apiClient.patch(
+    `/api/filmkritiken/${encodeURIComponent(id)}/bewertungenoffen/${offen}`
+  )
+}
