@@ -17,11 +17,19 @@ export async function fetchFilmkritiken(options?: FilterOptions): Promise<Filmkr
   if (options) {
     if (options.suche && options.suche.trim() !== '') {
       const query = options.suche.trim().toLowerCase()
-      result = result.filter((f) => f.film.titel.toLowerCase().includes(query))
+      result = result.filter(
+        (f) =>
+          f.film.titel.toLowerCase().includes(query) ||
+          Boolean(f.film.originaltitel && f.film.originaltitel.toLowerCase().includes(query))
+      )
     }
 
     if (options.jahr !== undefined && options.jahr !== null) {
-      result = result.filter((f) => f.film.erscheinungsjahr === options.jahr)
+      result = result.filter((f) => {
+        if (!f.details.besprochenam) return false
+        const d = new Date(f.details.besprochenam)
+        return !isNaN(d.getTime()) && d.getFullYear() === options.jahr
+      })
     }
 
     if (options.beitragvon && options.beitragvon.trim() !== '') {
@@ -50,6 +58,11 @@ export async function fetchFilmkritiken(options?: FilterOptions): Promise<Filmkr
         }
         return 0
       })
+    }
+
+    if (options.limit !== undefined && options.limit > 0) {
+      const offset = options.offset ?? 0
+      result = result.slice(offset, offset + options.limit)
     }
   }
 

@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/archiv',
       name: 'archiv',
-      component: () => import('@/views/PlaceholderView.vue'),
+      component: () => import('@/views/ArchivView.vue'),
     },
     {
       path: '/film/:id',
@@ -45,13 +45,10 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to) => {
   const auth = useAuthStore()
-  // TODO(Phase 3): returnUrl einbauen wenn geschützte Routen kommen
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
-    next('/login')
-  } else {
-    next()
+    return '/login'
   }
 })
 
