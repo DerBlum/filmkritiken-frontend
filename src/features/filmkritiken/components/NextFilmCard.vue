@@ -117,7 +117,7 @@ const bewertungOffen = computed(() =>
         <button
           disabled
           class="btn-slate-glass flex-1 cursor-not-allowed opacity-50"
-          title="Kalender-Export – verfügbar in Phase 6"
+          title="Kalender-Export – demnächst verfügbar"
         >
           🗓️ Kalender
         </button>

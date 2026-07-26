@@ -16,7 +16,7 @@ const durchschnitt = computed(() => getDurchschnittsBewertung(props.filmkritik))
 <template>
   <RouterLink
     :to="'/film/' + filmkritik.id"
-    class="group block flex-shrink-0 w-44 lg:w-auto snap-start cinema-glass-interactive rounded-xl overflow-hidden cursor-pointer"
+    class="group block w-36 sm:w-44 lg:w-full flex-shrink-0 snap-start cinema-glass-interactive rounded-xl overflow-hidden cursor-pointer"
   >
     <!-- Poster / Titelkarte -->
     <div class="relative aspect-[2/3] overflow-hidden">
@@ -41,9 +41,9 @@ const durchschnitt = computed(() => getDurchschnittsBewertung(props.filmkritik))
       <!-- Rating Badge (nur wenn Bewertungen vorhanden) -->
       <div
         v-if="durchschnitt !== null"
-        class="absolute top-2 right-2 badge-rating"
+        class="absolute top-2 right-2 badge-rating text-xs px-2 py-0.5"
       >
-        ★ {{ durchschnitt.toFixed(1) }}
+        {{ durchschnitt.toFixed(1) }} ★
       </div>
     </div>
 

@@ -7,11 +7,11 @@ import ArchivGrid from '@/features/filmkritiken/components/ArchivGrid.vue'
 
 const apiBaseUrl = import.meta.env.VITE_API_URL as string
 
-const { filmkritiken, isLoading, error } = useFilmkritiken()
+const { filmkritiken, isLoading, error } = useFilmkritiken({ limit: 10 })
 
 const nextFilm = computed(() => getNextFilm(filmkritiken.value))
 const lastFilm = computed(() => getLastFilm(filmkritiken.value))
-const archivFilme = computed(() => getArchivFilme(filmkritiken.value, nextFilm.value, lastFilm.value))
+const archivFilme = computed(() => getArchivFilme(filmkritiken.value, nextFilm.value, lastFilm.value).slice(0, 8))
 </script>
 
 <template>

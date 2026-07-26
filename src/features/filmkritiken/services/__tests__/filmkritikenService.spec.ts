@@ -56,8 +56,21 @@ describe('filmkritikenService with FilterOptions', () => {
     expect(res[0].film.titel).toBe('Interstellar')
   })
 
-  it('filters by appearance year', async () => {
-    const res = await fetchFilmkritiken({ jahr: 1999 })
+  it('filters explicitly by original title search', async () => {
+    const mockWithOriginal = [...mockFilme]
+    mockWithOriginal[0] = {
+      ...mockWithOriginal[0],
+      film: { ...mockWithOriginal[0].film, originaltitel: 'Inception Original Cut' },
+    }
+    vi.mocked(apiClient.get).mockResolvedValueOnce({ data: mockWithOriginal })
+
+    const res = await fetchFilmkritiken({ suche: 'Original Cut' })
+    expect(res).toHaveLength(1)
+    expect(res[0].film.titel).toBe('Inception')
+  })
+
+  it('filters by Besprechungsjahr', async () => {
+    const res = await fetchFilmkritiken({ jahr: 2025 })
     expect(res).toHaveLength(1)
     expect(res[0].film.titel).toBe('Matrix')
   })

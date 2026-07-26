@@ -154,7 +154,9 @@ export function formatDatum(besprochenam: string | null): string | null {
 // Composable
 // ─────────────────────────────────────────────
 
-export function useFilmkritiken() {
+import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
+
+export function useFilmkritiken(options?: FilterOptions) {
   const filmkritiken = ref<Filmkritik[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
@@ -163,7 +165,7 @@ export function useFilmkritiken() {
     isLoading.value = true
     error.value = null
     try {
-      filmkritiken.value = await fetchFilmkritiken()
+      filmkritiken.value = await fetchFilmkritiken(options)
     } catch (e) {
       // Toast wird vom apiClient-Interceptor ausgelöst — kein doppelter Toast hier
       error.value = 'Fehler beim Laden der Filmkritiken.'

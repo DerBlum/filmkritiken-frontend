@@ -93,12 +93,14 @@ async function handleSubmit(): Promise<void> {
         <!-- Slider Section (Left) -->
         <div class="md:col-span-8 space-y-3">
           <div class="flex items-center justify-between">
-            <label class="text-sm font-semibold text-cinema-text">
+            <label for="bewertung-wertung-range" class="text-sm font-semibold text-cinema-text">
               Wertung (1 bis 10)
             </label>
           </div>
 
           <input
+            id="bewertung-wertung-range"
+            name="wertung"
             type="range"
             min="1"
             max="10"
@@ -113,9 +115,8 @@ async function handleSubmit(): Promise<void> {
         <div class="md:col-span-4 flex items-center justify-center p-4 rounded-xl bg-slate-900/80 border border-white/5">
           <template v-if="!enthaltung">
             <span class="text-4xl font-extrabold text-amber-400 drop-shadow-md">
-              ★ {{ wert }}
+              {{ wert }} ★
             </span>
-            <span class="text-cinema-text-muted text-sm ml-1.5 font-medium">/ 10</span>
           </template>
           <template v-else>
             <span class="text-cinema-text-muted text-base font-semibold italic">
@@ -129,10 +130,13 @@ async function handleSubmit(): Promise<void> {
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-white/10">
         <!-- Enthaltung Checkbox -->
         <label
+          for="bewertung-enthaltung-checkbox"
           class="flex items-center gap-3 cursor-pointer select-none text-sm font-medium text-cinema-text"
           :class="{ 'opacity-50 cursor-not-allowed': !authStore.isAuthenticated }"
         >
           <input
+            id="bewertung-enthaltung-checkbox"
+            name="enthaltung"
             type="checkbox"
             v-model="enthaltung"
             :disabled="!authStore.isAuthenticated || isSubmitting"

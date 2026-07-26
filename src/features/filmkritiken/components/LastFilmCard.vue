@@ -36,9 +36,9 @@ const beitragVon = computed(() =>
       <!-- Durchschnitts-Badge -->
       <div
         v-if="durchschnitt !== null"
-        class="badge-rating text-sm"
+        class="badge-rating"
       >
-        ★ {{ durchschnitt.toFixed(1) }}
+        {{ durchschnitt.toFixed(1) }} ★
       </div>
     </div>
 
@@ -130,7 +130,7 @@ const beitragVon = computed(() =>
               v-if="!b.enthaltung && b.wertung !== null"
               class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold"
             >
-              ★ {{ b.wertung }} / 10
+              {{ b.wertung }} ★
             </span>
             <!-- Enthaltung Pill -->
             <span

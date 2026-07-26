@@ -10,4 +10,8 @@ export interface FilterOptions {
   beitragvon?: string
   /** Sortierreihenfolge */
   sortierung?: 'neueste' | 'aelteste' | 'beste'
+  /** Maximale Anzahl der zurückgegebenen Elemente */
+  limit?: number
+  /** Offset für Paginierung */
+  offset?: number
 }

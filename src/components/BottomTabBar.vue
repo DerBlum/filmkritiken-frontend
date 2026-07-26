@@ -8,8 +8,6 @@ const auth = useAuth()
 const tabs = [
   { name: 'Home', path: '/', icon: '🏠' },
   { name: 'Archiv', path: '/archiv', icon: '🎬' },
-  { name: 'Watchlist', path: '/watchlist', icon: '📋' },
-  { name: 'Stats', path: '/stats', icon: '📊' },
 ]
 
 function isActive(path: string): boolean {

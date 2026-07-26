@@ -33,7 +33,7 @@ defineProps<{
     </div>
 
     <!-- Mobile: Horizontal Snap Scroll -->
-    <div class="lg:hidden flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+    <div class="lg:hidden flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
       <FilmCard
         v-for="film in filme"
         :key="film.id"
@@ -43,7 +43,7 @@ defineProps<{
     </div>
 
     <!-- Desktop: 4-Column Grid -->
-    <div class="hidden lg:grid lg:grid-cols-4 lg:gap-6">
+    <div class="hidden lg:grid lg:grid-cols-4 lg:gap-6 justify-items-center">
       <FilmCard
         v-for="film in filme"
         :key="film.id"

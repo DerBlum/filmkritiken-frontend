@@ -103,7 +103,7 @@ watch(
     <div class="mb-6">
       <button
         @click="router.back()"
-        class="inline-flex items-center gap-2 text-cinema-text-muted hover:text-white transition-colors duration-150 text-sm font-medium"
+        class="inline-flex items-center gap-2 text-cinema-text-muted hover:text-white transition-colors duration-150 text-sm font-medium cursor-pointer"
       >
         <span>←</span> Zurück
       </button>
@@ -182,9 +182,9 @@ watch(
 
             <span
               v-if="durchschnitt !== null"
-              class="badge-rating text-xs"
+              class="badge-rating"
             >
-              ★ {{ durchschnitt.toFixed(1) }} / 10
+              {{ durchschnitt.toFixed(1) }} ★
             </span>
           </div>
 
@@ -277,7 +277,7 @@ watch(
               v-if="!b.enthaltung && b.wertung !== null"
               class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold"
             >
-              ★ {{ b.wertung }} / 10
+              {{ b.wertung }} ★
             </span>
             <!-- Enthaltung Pill -->
             <span

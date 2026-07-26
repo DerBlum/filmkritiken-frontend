@@ -8,8 +8,6 @@ const auth = useAuth()
 const navLinks = [
   { name: 'Home', path: '/', icon: '🏠' },
   { name: 'Archiv', path: '/archiv', icon: '🎬' },
-  { name: 'Watchlist', path: '/watchlist', icon: '📋' },
-  { name: 'Statistiken', path: '/stats', icon: '📊' },
 ]
 
 function isActive(path: string): boolean {

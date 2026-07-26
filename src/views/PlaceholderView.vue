@@ -19,7 +19,7 @@ const title = titles[route.path] ?? 'Seite'
       <span class="text-6xl block">🚧</span>
       <h1 class="text-cinema-text font-bold text-2xl">{{ title }}</h1>
       <p class="text-cinema-text-muted">
-        Diese Seite wird in einer späteren Phase implementiert.
+        Diese Seite wird zu einem späteren Zeitpunkt zur Verfügung stehen.
       </p>
       <router-link
         to="/"
