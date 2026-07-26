@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useToast } from '@/composables/useToast'
 import { useAuthStore } from '@/stores/useAuthStore'
-import router from '@/router'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -28,9 +27,11 @@ apiClient.interceptors.response.use(
       const auth = useAuthStore()
       auth.$patch({ user: null, permissions: [] })
 
-      if (router.currentRoute.value.meta?.requiresAuth) {
-        router.push('/login')
-      }
+      import('@/router').then(({ default: router }) => {
+        if (router.currentRoute.value.meta?.requiresAuth) {
+          router.push('/login')
+        }
+      }).catch(() => {})
 
       return Promise.reject(error)
     }

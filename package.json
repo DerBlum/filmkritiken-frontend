@@ -24,6 +24,7 @@
     "@vitejs/plugin-vue": "^6.0.8",
     "@vue/tsconfig": "^0.9.1",
     "autoprefixer": "^10.5.4",
+    "happy-dom": "^20.11.1",
     "playwright": "^1.61.1",
     "postcss": "^8.5.22",
     "tailwindcss": "^4.3.3",
