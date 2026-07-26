@@ -28,9 +28,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  function login(): void {
+  function login(returnUrl?: string): void {
     const baseUrl = import.meta.env.VITE_API_URL as string
-    window.location.href = `${baseUrl}/auth/login`
+    const currentPath = returnUrl || (window.location.pathname + window.location.search)
+    const redirectParam = currentPath && currentPath !== '/' ? `?redirect=${encodeURIComponent(currentPath)}` : ''
+    window.location.href = `${baseUrl}/auth/login${redirectParam}`
   }
 
   async function logout(): Promise<void> {
