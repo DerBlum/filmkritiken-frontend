@@ -36,6 +36,11 @@ const durchschnitt = computed(() =>
 const datumFormatiert = computed(() =>
   filmkritik.value ? formatDatum(filmkritik.value.details.besprochenam) : null
 )
+const istZukunft = computed(() => {
+  if (!filmkritik.value?.details.besprochenam) return false
+  const d = new Date(filmkritik.value.details.besprochenam)
+  return !isNaN(d.getTime()) && d.getTime() > Date.now()
+})
 
 async function loadDetail(): Promise<void> {
   const filmId = route.params.id as string
@@ -163,6 +168,12 @@ watch(
               Bewertung offen
             </span>
             <span
+              v-else-if="istZukunft"
+              class="badge-pending"
+            >
+              Besprechung ausstehend
+            </span>
+            <span
               v-else
               class="badge-closed"
             >
@@ -218,9 +229,10 @@ watch(
             </div>
           </div>
 
-          <!-- Besprochen am -->
+          <!-- Besprochen am / Wird besprochen am -->
           <p v-if="datumFormatiert" class="text-xs text-cinema-text-muted">
-            Besprochen am <span class="text-cinema-text font-medium">{{ datumFormatiert }}</span>
+            {{ istZukunft ? 'Wird besprochen am' : 'Besprochen am' }}
+            <span class="text-cinema-text font-medium">{{ datumFormatiert }}</span>
           </p>
         </div>
       </div>
