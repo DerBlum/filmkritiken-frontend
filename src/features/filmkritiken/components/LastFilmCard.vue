@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Filmkritik, Bewertung } from '@/features/filmkritiken/types/filmkritik'
+import { RouterLink } from 'vue-router'
+import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 import { getDurchschnittsBewertung, getPosterUrl, formatDatum, getBesprochenAm, getBeitragVon } from '@/features/filmkritiken/composables/useFilmkritiken'
 
 const props = defineProps<{
@@ -23,17 +24,11 @@ const datum = computed(() =>
 const beitragVon = computed(() =>
   props.filmkritik ? getBeitragVon(props.filmkritik) : null
 )
-
-function ratingLabel(b: Bewertung): string {
-  if (b.enthaltung) return '— Enthaltung'
-  if (b.wertung !== null) return `${b.wertung.toFixed(1)}`
-  return '—'
-}
 </script>
 
 <template>
   <!-- Karte B: Letzte Besprechung -->
-  <div class="bg-black/75 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl overflow-hidden flex flex-col">
+  <div class="cinema-glass rounded-2xl overflow-hidden flex flex-col">
 
     <!-- Header -->
     <div class="px-6 pt-5 pb-3 border-b border-white/10 flex items-center justify-between">
@@ -41,7 +36,7 @@ function ratingLabel(b: Bewertung): string {
       <!-- Durchschnitts-Badge -->
       <div
         v-if="durchschnitt !== null"
-        class="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 font-bold text-sm"
+        class="badge-rating text-sm"
       >
         ★ {{ durchschnitt.toFixed(1) }}
       </div>
@@ -58,70 +53,91 @@ function ratingLabel(b: Bewertung): string {
     </div>
 
     <!-- Film Content -->
-    <div v-else class="flex-1 flex flex-col">
-      <!-- Poster + Film Info (horizontal layout) -->
-      <div class="flex gap-4 p-4">
-        <!-- Kleines Poster -->
-        <div class="flex-shrink-0 w-20 h-28 rounded-lg overflow-hidden">
+    <div v-else class="p-6 flex-1 flex flex-col gap-6">
+      <!-- Top: Poster (Left) + Metadata (Right) -->
+      <div class="flex gap-6 items-start">
+        <!-- Large Crisp Poster (Left) -->
+        <RouterLink
+          :to="'/film/' + filmkritik.id"
+          class="group/poster flex-shrink-0 w-32 sm:w-40 md:w-44 aspect-[2/3] rounded-xl overflow-hidden cursor-pointer block border border-white/10 shadow-2xl relative"
+        >
           <img
             v-if="posterUrl"
             :src="posterUrl"
             :alt="filmkritik.film.titel"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover poster-zoom"
           />
           <div
             v-else
-            class="w-full h-full bg-gradient-to-br from-amber-500 to-rose-600 flex items-end p-1.5"
+            class="w-full h-full poster-fallback flex items-end p-3 poster-zoom"
           >
-            <span class="text-white text-xs font-bold leading-tight">
+            <span class="text-white font-bold text-sm leading-tight drop-shadow-lg line-clamp-3">
               {{ filmkritik.film.titel }}
             </span>
           </div>
-        </div>
+        </RouterLink>
 
-        <!-- Film Metadata -->
-        <div class="flex-1 min-w-0 flex flex-col justify-between">
+        <!-- Metadata Column (Right) -->
+        <div class="flex-1 min-w-0 space-y-3">
           <div>
-            <h3 class="text-cinema-text font-bold text-base leading-snug line-clamp-2">
+            <RouterLink
+              :to="'/film/' + filmkritik.id"
+              class="text-cinema-text hover:text-amber-400 transition-colors duration-150 font-extrabold text-xl sm:text-2xl leading-snug block line-clamp-2"
+            >
               {{ filmkritik.film.titel }}
-            </h3>
-            <p v-if="filmkritik.film.erscheinungsjahr" class="text-cinema-text-muted text-sm mt-0.5">
+            </RouterLink>
+            <p v-if="filmkritik.film.erscheinungsjahr" class="text-cinema-text-muted text-sm mt-1 font-medium">
               {{ filmkritik.film.erscheinungsjahr }}
             </p>
           </div>
-          <div class="text-sm text-cinema-text-muted mt-2">
-            <div v-if="datum" class="flex items-center gap-1.5">
-              <span class="text-sm">📅</span>
-              <span>{{ datum }}</span>
+
+          <div class="space-y-2 text-sm text-cinema-text-muted pt-2 border-t border-white/10">
+            <div v-if="filmkritik.film.regie" class="flex items-center gap-2">
+              <span class="text-cinema-text-muted text-xs">Regie:</span>
+              <span class="text-cinema-text font-medium">{{ filmkritik.film.regie }}</span>
             </div>
-            <div v-if="beitragVon" class="flex items-center gap-1.5 mt-1">
-              <span class="text-sm">👤</span>
-              <span>Beitrag von <strong class="text-cinema-text">{{ beitragVon }}</strong></span>
+            <div v-if="filmkritik.film.laenge" class="flex items-center gap-2">
+              <span class="text-cinema-text-muted text-xs">Laufzeit:</span>
+              <span class="text-cinema-text font-medium">{{ filmkritik.film.laenge }} Min.</span>
+            </div>
+            <div v-if="beitragVon" class="flex items-center gap-2">
+              <span class="text-base">👤</span>
+              <span>Beitrag von <strong class="text-cinema-text font-semibold">{{ beitragVon }}</strong></span>
+            </div>
+            <div v-if="datum" class="flex items-center gap-2">
+              <span class="text-base">📅</span>
+              <span class="text-cinema-text font-medium">{{ datum }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Individuelle Mitglieder-Bewertungen -->
-      <div class="px-4 pb-4 flex-1">
+      <!-- Bottom: Full-Width 2-Column Member Ratings -->
+      <div class="mt-auto pt-4 border-t border-white/10">
         <p class="text-cinema-text-muted text-xs font-semibold uppercase tracking-wider mb-3">
           Bewertungen
         </p>
-        <div v-if="filmkritik.bewertungen.length > 0" class="space-y-2">
+        <div v-if="filmkritik.bewertungen.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div
-            v-for="bewertung in filmkritik.bewertungen"
-            :key="bewertung.von"
-            class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg bg-white/5"
+            v-for="b in filmkritik.bewertungen"
+            :key="b.von"
+            class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-white/5"
           >
-            <div class="flex items-center gap-2">
-              <span class="text-sm">👤</span>
-              <span class="text-cinema-text-muted text-sm font-medium">{{ bewertung.von }}</span>
-            </div>
+            <span class="text-cinema-text font-semibold text-sm">{{ b.von }}</span>
+
+            <!-- Score Pill -->
             <span
-              class="text-sm font-bold"
-              :class="bewertung.enthaltung ? 'text-cinema-text-muted/60' : 'text-amber-300'"
+              v-if="!b.enthaltung && b.wertung !== null"
+              class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold"
             >
-              {{ ratingLabel(bewertung) }}
+              ★ {{ b.wertung }} / 10
+            </span>
+            <!-- Enthaltung Pill -->
+            <span
+              v-else
+              class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 text-xs font-medium italic"
+            >
+              Enthaltung
             </span>
           </div>
         </div>

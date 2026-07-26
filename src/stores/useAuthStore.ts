@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function login(): void {
-    const baseUrl = import.meta.env.VITE_API_URL || ''
+    const baseUrl = import.meta.env.VITE_API_URL as string
     window.location.href = `${baseUrl}/auth/login`
   }
 

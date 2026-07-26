@@ -24,7 +24,7 @@ jobs:
         uses: caprover/deploy-from-github@v1.2.0
         with:
           server: 'https://captain.marsrover.418-teapot.de'
-          app: 'filmkritiken2'
+          app: 'filmkritiken'
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
           image: '${{ env.FULL_IMAGE_NAME }}'
 

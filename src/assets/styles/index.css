@@ -78,3 +78,123 @@
     background: rgba(255, 255, 255, 0.35);
   }
 }
+
+@layer components {
+  /* Static Cinema-Glass Container */
+  .cinema-glass {
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Interactive Cinema-Glass Card (Hover/Active scale & border glow) */
+  .cinema-glass-interactive {
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .cinema-glass-interactive:hover {
+    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .cinema-glass-interactive:active {
+    transform: scale(0.98);
+  }
+
+  /* Poster Zoom Animation */
+  .poster-zoom {
+    transition: transform 300ms ease;
+  }
+
+  .group:hover .poster-zoom,
+  .group\/poster:hover .poster-zoom,
+  .poster-zoom:hover {
+    transform: scale(1.05);
+  }
+
+  /* Poster Fallback Gradient */
+  .poster-fallback {
+    background-image: linear-gradient(to bottom right, #f59e0b, #e11d48);
+  }
+
+  /* Badges */
+  .badge-rating {
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fcd34d;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .badge-open {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-closed {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Glass Buttons */
+  .btn-amber-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fcd34d;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 150ms ease, border-color 150ms ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-amber-glass:hover {
+    background-color: rgba(245, 158, 11, 0.3);
+  }
+
+  .btn-slate-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .btn-slate-glass:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}

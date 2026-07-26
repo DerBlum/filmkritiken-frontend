@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 import { getPosterUrl, formatDatum, getBesprochenAm, getBeitragVon, isBewertungOffen } from '@/features/filmkritiken/composables/useFilmkritiken'
 
@@ -27,7 +28,7 @@ const bewertungOffen = computed(() =>
 
 <template>
   <!-- Karte A: Nächster Film -->
-  <div class="bg-black/75 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl overflow-hidden flex flex-col">
+  <div class="cinema-glass rounded-2xl overflow-hidden flex flex-col">
 
     <!-- Header -->
     <div class="px-6 pt-5 pb-3 border-b border-white/10 flex items-center justify-between">
@@ -35,7 +36,7 @@ const bewertungOffen = computed(() =>
       <!-- Bewertungen-offen Badge -->
       <span
         v-if="bewertungOffen"
-        class="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold"
+        class="badge-open"
       >
         Bewertungen offen
       </span>
@@ -52,76 +53,81 @@ const bewertungOffen = computed(() =>
     </div>
 
     <!-- Film Content -->
-    <div v-else class="flex-1 flex flex-col">
-      <!-- Poster Container -->
-      <div class="relative h-52 sm:h-64 md:h-72 overflow-hidden bg-black/80 flex items-center justify-center">
-        <!-- Blurred Background Backdrop -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none select-none">
+    <div v-else class="p-6 flex-1 flex flex-col gap-6">
+      <!-- Top: Poster (Left) + Metadata (Right) -->
+      <div class="flex gap-6 items-start">
+        <!-- Large Crisp Poster (Left) -->
+        <RouterLink
+          :to="'/film/' + filmkritik.id"
+          class="group/poster flex-shrink-0 w-32 sm:w-40 md:w-44 aspect-[2/3] rounded-xl overflow-hidden cursor-pointer block border border-white/10 shadow-2xl relative"
+        >
           <img
             v-if="posterUrl"
             :src="posterUrl"
-            alt=""
-            aria-hidden="true"
-            class="w-full h-full object-cover blur-2xl opacity-25 max-w-full max-h-full"
+            :alt="filmkritik.film.titel"
+            class="w-full h-full object-cover poster-zoom"
           />
-        </div>
-        <!-- Fully Visible Uncropped Poster -->
-        <img
-          v-if="posterUrl"
-          :src="posterUrl"
-          :alt="filmkritik.film.titel"
-          class="h-full w-auto max-w-full object-contain p-3 relative z-10 drop-shadow-xl"
-        />
-        <!-- Fallback: Titelkarte (Amber → Rose Gradient) -->
-        <div
-          v-else
-          class="w-full h-full bg-gradient-to-br from-amber-500 to-rose-600 flex items-end p-4"
-        >
-          <span class="text-white font-bold text-xl leading-tight drop-shadow-lg">
-            {{ filmkritik.film.titel }}
-          </span>
+          <div
+            v-else
+            class="w-full h-full poster-fallback flex items-end p-3 poster-zoom"
+          >
+            <span class="text-white font-bold text-sm leading-tight drop-shadow-lg line-clamp-3">
+              {{ filmkritik.film.titel }}
+            </span>
+          </div>
+        </RouterLink>
+
+        <!-- Metadata Column (Right) -->
+        <div class="flex-1 min-w-0 space-y-3">
+          <div>
+            <RouterLink
+              :to="'/film/' + filmkritik.id"
+              class="text-cinema-text hover:text-amber-400 transition-colors duration-150 font-extrabold text-xl sm:text-2xl leading-snug block line-clamp-2"
+            >
+              {{ filmkritik.film.titel }}
+            </RouterLink>
+            <p v-if="filmkritik.film.erscheinungsjahr" class="text-cinema-text-muted text-sm mt-1 font-medium">
+              {{ filmkritik.film.erscheinungsjahr }}
+            </p>
+          </div>
+
+          <div class="space-y-2 text-sm text-cinema-text-muted pt-2 border-t border-white/10">
+            <div v-if="filmkritik.film.regie" class="flex items-center gap-2">
+              <span class="text-cinema-text-muted text-xs">Regie:</span>
+              <span class="text-cinema-text font-medium">{{ filmkritik.film.regie }}</span>
+            </div>
+            <div v-if="filmkritik.film.laenge" class="flex items-center gap-2">
+              <span class="text-cinema-text-muted text-xs">Laufzeit:</span>
+              <span class="text-cinema-text font-medium">{{ filmkritik.film.laenge }} Min.</span>
+            </div>
+            <div v-if="beitragVon" class="flex items-center gap-2">
+              <span class="text-base">👤</span>
+              <span>Beitrag von <strong class="text-cinema-text font-semibold">{{ beitragVon }}</strong></span>
+            </div>
+            <div v-if="datum" class="flex items-center gap-2">
+              <span class="text-base">📅</span>
+              <span class="text-cinema-text font-medium">{{ datum }}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Film Metadata -->
-      <div class="px-6 py-4 flex-1 flex flex-col gap-4">
-        <div>
-          <h3 class="text-cinema-text font-bold text-xl leading-tight">
-            {{ filmkritik.film.titel }}
-          </h3>
-          <p v-if="filmkritik.film.erscheinungsjahr" class="text-cinema-text-muted text-sm mt-1">
-            {{ filmkritik.film.erscheinungsjahr }}
-          </p>
-        </div>
-
-        <div class="flex flex-col gap-2 text-sm text-cinema-text-muted">
-          <div v-if="beitragVon" class="flex items-center gap-2">
-            <span class="text-base">👤</span>
-            <span>Beitrag von <strong class="text-cinema-text">{{ beitragVon }}</strong></span>
-          </div>
-          <div v-if="datum" class="flex items-center gap-2">
-            <span class="text-base">📅</span>
-            <span>{{ datum }}</span>
-          </div>
-        </div>
-
-        <!-- CTA Buttons (disabled placeholders) -->
-        <div class="flex gap-3 mt-auto pt-2">
-          <button
-            disabled
-            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-cinema-text-muted text-sm font-medium cursor-not-allowed opacity-50"
-            title="Kalender-Export – verfügbar in Phase 6"
-          >
-            🗓️ Kalender
-          </button>
-          <button
-            disabled
-            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-cinema-red/20 border border-cinema-red/30 text-cinema-text-muted text-sm font-medium cursor-not-allowed opacity-50"
-            title="Bewertung abgeben – verfügbar in Phase 3"
-          >
-            ⭐ Bewerten
-          </button>
-        </div>
+      <!-- Bottom: Full Width Action Buttons -->
+      <div class="mt-auto pt-4 border-t border-white/10 flex gap-3">
+        <button
+          disabled
+          class="btn-slate-glass flex-1 cursor-not-allowed opacity-50"
+          title="Kalender-Export – verfügbar in Phase 6"
+        >
+          🗓️ Kalender
+        </button>
+        <RouterLink
+          v-if="filmkritik"
+          :to="'/film/' + filmkritik.id"
+          class="btn-amber-glass flex-1"
+        >
+          ⭐ Details
+        </RouterLink>
       </div>
     </div>
   </div>
