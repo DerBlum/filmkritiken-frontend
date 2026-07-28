@@ -43,6 +43,12 @@ const router = createRouter({
       component: LoginView,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0 }
+  },
 })
 
 router.beforeEach((to) => {

@@ -85,6 +85,14 @@ async function handleToggleBewertungOffen(): Promise<void> {
   }
 }
 
+function goBack(): void {
+  if (typeof window !== 'undefined' && window.history.state?.back) {
+    router.back()
+  } else {
+    router.push('/archiv')
+  }
+}
+
 onMounted(() => {
   loadDetail()
 })
@@ -102,7 +110,7 @@ watch(
     <!-- Back Button -->
     <div class="mb-6">
       <button
-        @click="router.back()"
+        @click="goBack"
         class="inline-flex items-center gap-2 text-cinema-text-muted hover:text-white transition-colors duration-150 text-sm font-medium cursor-pointer"
       >
         <span>←</span> Zurück

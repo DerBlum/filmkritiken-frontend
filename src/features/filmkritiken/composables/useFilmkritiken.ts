@@ -154,9 +154,9 @@ export function formatDatum(besprochenam: string | null): string | null {
 // Composable
 // ─────────────────────────────────────────────
 
-import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
+import type { FilmkritikenQueryOptions } from '@/features/filmkritiken/services/filmkritikenService'
 
-export function useFilmkritiken(options?: FilterOptions) {
+export function useFilmkritiken(options?: FilmkritikenQueryOptions) {
   const filmkritiken = ref<Filmkritik[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)

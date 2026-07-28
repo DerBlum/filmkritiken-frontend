@@ -3,16 +3,33 @@ import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
 import { getDurchschnittsBewertung } from '@/features/filmkritiken/composables/useFilmkritiken'
 
+export interface FilmkritikenQueryOptions {
+  suche?: string
+  jahr?: number | null
+  beitragvon?: string
+  sortierung?: 'neueste' | 'aelteste' | 'beste'
+  limit?: number
+  offset?: number
+}
+
 export interface FetchFilmkritikenResponse {
   items: Filmkritik[]
   totalCount: number
 }
 
 /**
- * Lädt Filmkritiken vom Backend.
- * Unterstützt FilterOptions für Suche, Jahr, BeitragVon, Sortierung, Limit & Offset als Query-Parameter.
+ * Lädt verfügbare Filter-Optionen (Jahre und Beitragende) vom Backend.
  */
-export async function fetchFilmkritiken(options?: FilterOptions): Promise<FetchFilmkritikenResponse> {
+export async function fetchFilterOptions(): Promise<FilterOptions> {
+  const response = await apiClient.get<FilterOptions>('/api/filmkritiken/filter-options')
+  return response.data
+}
+
+/**
+ * Lädt Filmkritiken vom Backend.
+ * Unterstützt Filter-Optionen für Suche, Jahr, BeitragVon, Sortierung, Limit & Offset als Query-Parameter.
+ */
+export async function fetchFilmkritiken(options?: FilmkritikenQueryOptions): Promise<FetchFilmkritikenResponse> {
   const params: Record<string, string | number> = {}
 
   if (options) {
@@ -53,11 +70,21 @@ export async function fetchFilmkritiken(options?: FilterOptions): Promise<FetchF
 }
 
 /**
- * Lädt eine einzelne Filmkritik anhand der ID.
+ * Lädt eine einzelne Filmkritik anhand der ID vom Backend.
  */
 export async function fetchFilmkritikById(id: string): Promise<Filmkritik | null> {
-  const { items } = await fetchFilmkritiken()
-  return items.find((f) => f.id === id) ?? null
+  try {
+    const response = await apiClient.get<Filmkritik>(`/api/filmkritiken/${encodeURIComponent(id)}`)
+    return response.data ?? null
+  } catch (err: unknown) {
+    if (typeof err === 'object' && err !== null && 'response' in err) {
+      const resp = (err as { response?: { status?: number } }).response
+      if (resp?.status === 404) {
+        return null
+      }
+    }
+    throw err
+  }
 }
 
 /**

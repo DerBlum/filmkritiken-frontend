@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch, nextTick } from 'vue'
+import { onBeforeRouteLeave, useRoute } from 'vue-router'
 import { useFilmkritiken, getNextFilm, getLastFilm, getArchivFilme } from '@/features/filmkritiken/composables/useFilmkritiken'
 import NextFilmCard from '@/features/filmkritiken/components/NextFilmCard.vue'
 import LastFilmCard from '@/features/filmkritiken/components/LastFilmCard.vue'
 import ArchivGrid from '@/features/filmkritiken/components/ArchivGrid.vue'
+import { useNavigationStore } from '@/stores/useNavigationStore'
+
+const route = useRoute()
+const navigationStore = useNavigationStore()
 
 const apiBaseUrl = import.meta.env.VITE_API_URL as string
 
@@ -12,6 +17,26 @@ const { filmkritiken, isLoading, error } = useFilmkritiken({ limit: 10 })
 const nextFilm = computed(() => getNextFilm(filmkritiken.value))
 const lastFilm = computed(() => getLastFilm(filmkritiken.value))
 const archivFilme = computed(() => getArchivFilme(filmkritiken.value, nextFilm.value, lastFilm.value).slice(0, 8))
+
+onBeforeRouteLeave(() => {
+  if (typeof window !== 'undefined') {
+    navigationStore.saveScrollPosition(route.path, window.scrollY)
+  }
+})
+
+watch(
+  isLoading,
+  async (loading) => {
+    if (!loading) {
+      await nextTick()
+      const savedY = navigationStore.getScrollPosition(route.path)
+      if (savedY !== undefined && savedY > 0 && typeof window !== 'undefined') {
+        window.scrollTo({ top: savedY, behavior: 'instant' })
+      }
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

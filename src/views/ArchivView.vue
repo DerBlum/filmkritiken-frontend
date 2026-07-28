@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, nextTick } from 'vue'
+import { onBeforeRouteLeave, useRoute } from 'vue-router'
 import FilmCard from '@/features/filmkritiken/components/FilmCard.vue'
 import { useArchivFilter } from '@/features/filmkritiken/composables/useArchivFilter'
+import { useNavigationStore } from '@/stores/useNavigationStore'
+
+const route = useRoute()
+const navigationStore = useNavigationStore()
 
 const apiBaseUrl = import.meta.env.VITE_API_URL as string
 const showFilters = ref<boolean>(false)
@@ -22,6 +27,26 @@ const {
   loadMore,
   resetFilters,
 } = useArchivFilter()
+
+onBeforeRouteLeave(() => {
+  if (typeof window !== 'undefined') {
+    navigationStore.saveScrollPosition(route.path, window.scrollY)
+  }
+})
+
+watch(
+  isLoading,
+  async (loading) => {
+    if (!loading) {
+      await nextTick()
+      const savedY = navigationStore.getScrollPosition(route.path)
+      if (savedY !== undefined && savedY > 0 && typeof window !== 'undefined') {
+        window.scrollTo({ top: savedY, behavior: 'instant' })
+      }
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

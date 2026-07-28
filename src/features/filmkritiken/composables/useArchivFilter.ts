@@ -1,22 +1,54 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
+import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
 import { getDurchschnittsBewertung } from '@/features/filmkritiken/composables/useFilmkritiken'
-import { fetchFilmkritiken } from '@/features/filmkritiken/services/filmkritikenService'
+import { fetchFilmkritiken, fetchFilterOptions } from '@/features/filmkritiken/services/filmkritikenService'
+import { useNavigationStore } from '@/stores/useNavigationStore'
 
 export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
-  const suche = ref<string>('')
-  const jahr = ref<number | null>(null)
-  const beitragvon = ref<string>('')
-  const sortierung = ref<'neueste' | 'aelteste' | 'beste'>('neueste')
+  const isBackend = !allFilmkritiken
+  const navStore = isBackend ? useNavigationStore() : null
+
+  const suche = ref<string>(navStore ? navStore.archivFilter.suche : '')
+  const jahr = ref<number | null>(navStore ? navStore.archivFilter.jahr : null)
+  const beitragvon = ref<string>(navStore ? navStore.archivFilter.beitragvon : '')
+  const sortierung = ref<'neueste' | 'aelteste' | 'beste'>(
+    navStore ? navStore.archivFilter.sortierung : 'neueste'
+  )
 
   const pageSize = 10
-  const displayedCount = ref<number>(pageSize)
-  const isBackend = !allFilmkritiken
+  const displayedCount = ref<number>(navStore ? navStore.archivFilter.displayedCount : pageSize)
 
   const backendFilme = ref<Filmkritik[]>([])
   const totalCount = ref<number>(0)
   const isLoading = ref<boolean>(false)
   const hasMoreBackend = ref<boolean>(true)
+  const fallbackFilterOptions = ref<FilterOptions | null>(null)
+
+  // Sync with navigation store
+  watch([suche, jahr, beitragvon, sortierung, displayedCount], () => {
+    if (navStore) {
+      navStore.archivFilter.suche = suche.value
+      navStore.archivFilter.jahr = jahr.value
+      navStore.archivFilter.beitragvon = beitragvon.value
+      navStore.archivFilter.sortierung = sortierung.value
+      navStore.archivFilter.displayedCount = displayedCount.value
+    }
+  })
+
+  async function loadFilterOptionsData() {
+    if (!isBackend) return
+    try {
+      const opts = await fetchFilterOptions()
+      if (navStore) {
+        navStore.backendFilterOptions = opts
+      } else {
+        fallbackFilterOptions.value = opts
+      }
+    } catch (err) {
+      console.error('Fehler beim Laden der Filter-Optionen:', err)
+    }
+  }
 
   async function loadBackendData() {
     if (!isBackend) return
@@ -43,7 +75,6 @@ export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
 
   // Watch title search with 500ms debounce
   watch(suche, () => {
-    displayedCount.value = pageSize
     if (isBackend) {
       if (searchDebounceTimer) {
         clearTimeout(searchDebounceTimer)
@@ -56,7 +87,6 @@ export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
 
   // Watch select/dropdown filters immediately
   watch([jahr, beitragvon, sortierung], () => {
-    displayedCount.value = pageSize
     if (isBackend) {
       if (searchDebounceTimer) {
         clearTimeout(searchDebounceTimer)
@@ -73,14 +103,19 @@ export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
 
   if (isBackend) {
     onMounted(() => {
+      loadFilterOptionsData()
       loadBackendData()
     })
   }
 
   const sourceList = computed(() => (allFilmkritiken ? allFilmkritiken.value : backendFilme.value))
 
-  // Extract unique discussion years from dataset for dropdown
+  // Extract unique discussion years from backend options or dataset fallback
   const verfuegbareJahre = computed<number[]>(() => {
+    const opts = navStore?.backendFilterOptions || fallbackFilterOptions.value
+    if (isBackend && opts && Array.isArray(opts.jahre) && opts.jahre.length > 0) {
+      return opts.jahre
+    }
     const jahre = sourceList.value
       .map((f) => {
         if (!f.details.besprochenam) return null
@@ -91,8 +126,12 @@ export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
     return Array.from(new Set(jahre)).sort((a, b) => b - a)
   })
 
-  // Extract unique contributors from dataset for dropdown
+  // Extract unique contributors from backend options or dataset fallback
   const verfuegbareBeitragende = computed<string[]>(() => {
+    const opts = navStore?.backendFilterOptions || fallbackFilterOptions.value
+    if (isBackend && opts && Array.isArray(opts.beitragende) && opts.beitragende.length > 0) {
+      return opts.beitragende
+    }
     const beitragende = sourceList.value
       .map((f) => f.details.beitragvon)
       .filter((b): b is string => Boolean(b && b.trim() !== ''))
@@ -190,6 +229,9 @@ export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
     beitragvon.value = ''
     sortierung.value = 'neueste'
     displayedCount.value = pageSize
+    if (navStore) {
+      navStore.resetArchivFilters()
+    }
   }
 
   return {

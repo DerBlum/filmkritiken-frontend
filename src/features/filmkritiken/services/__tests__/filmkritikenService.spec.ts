@@ -88,9 +88,12 @@ describe('filmkritikenService with FilterOptions', () => {
   })
 
   it('fetchFilmkritikById returns matching item or null', async () => {
+    vi.mocked(apiClient.get).mockResolvedValueOnce({ data: mockFilme[1] })
     const item = await fetchFilmkritikById('2')
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken/2')
     expect(item?.film.titel).toBe('Interstellar')
 
+    vi.mocked(apiClient.get).mockRejectedValueOnce({ response: { status: 404 } })
     const notFound = await fetchFilmkritikById('non-existent')
     expect(notFound).toBeNull()
   })

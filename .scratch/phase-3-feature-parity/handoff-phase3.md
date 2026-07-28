@@ -76,12 +76,21 @@
 
 ---
 
+## Umgesetzte Zusatzfeatures (Post-Phase 3)
+
+1. **Backend-gestützte Filter-Werte (`GET /api/filmkritiken/filter-options`):**
+   - ✅ implementiert: In-Memory-Caching (5 Min TTL + Invalidation bei Schreibzugriffen) im Go Backend.
+   - ✅ OpenAPI & Handler erweitert.
+   - ✅ `useArchivFilter` lädt Filter-Dropdown-Optionen (`verfuegbareJahre`, `verfuegbareBeitragende`) vom Backend.
+
+2. **Navigation & State-Restoration (Scrollposition & Filter):**
+   - ✅ Pinia Store `useNavigationStore` verwaltet Scrollpositionen je Route & Archiv-Filterzustände.
+   - ✅ Vue Router `scrollBehavior` & verzögerte Scrollpositionswiederherstellung (`watch(isLoading)`) nach Async DOM-Rendering.
+   - ✅ Archiv-Filter, Paginierungszahl & Scrollposition bleiben beim Navigieren zur Detailseite und Zurückkehren exakt erhalten.
+
+---
+
 ## Nächste Schritte für die nachfolgende Session
 
-1. **Backend-gestützte Filter-Werte (`verfuegbareJahre`, `verfuegbareBeitragende`):**
-   - Beim nächsten Mal starten wir damit, die verfuegbaren Filter-Werte (Besprechungsjahre, Beitragende Mitglieder) direkt aus dem Backend ans Frontend zu übertragen.
-   - Diese Filter-Werte sollen im Backend gecacht und dem Frontend über einen eigenen Endpoint aus dem Cache geliefert werden.
-   - *Grund:* Aktuell basieren die Dropdown-Optionen (`verfuegbareJahre`, `verfuegbareBeitragende`) im Frontend nur auf den aktuell geladenen Paginierungs-Daten im Frontend. Bei größeren Datensätzen fehlen dadurch in den Dropdowns Filteroptionen für Filme, die noch nicht geladen wurden.
-
-2. **Weitere Phase 4 Features:**
+1. **Phase 4 Features:**
    - Implementierung von Folgefeatures (z. B. Watchlist, erweiterte Statistiken oder Admin-Funktionen).

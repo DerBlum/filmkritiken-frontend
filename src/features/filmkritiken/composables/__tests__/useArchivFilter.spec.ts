@@ -84,4 +84,12 @@ describe('useArchivFilter', () => {
     expect(filter.jahr.value).toBeNull()
     expect(filter.isFilterActive.value).toBe(false)
   })
+
+  it('computes verfuegbareJahre and verfuegbareBeitragende from list in client mode', () => {
+    const list = ref(dummyFilmkritiken)
+    const { verfuegbareJahre, verfuegbareBeitragende } = useArchivFilter(list)
+
+    expect(verfuegbareJahre.value).toEqual([2024, 2023, 2022])
+    expect(verfuegbareBeitragende.value).toEqual(['Anna', 'Stefan'])
+  })
 })
