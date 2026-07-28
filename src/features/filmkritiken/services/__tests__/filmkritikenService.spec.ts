@@ -42,58 +42,49 @@ const mockFilme: Filmkritik[] = [
 describe('filmkritikenService with FilterOptions', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(apiClient.get).mockResolvedValue({ data: mockFilme })
+    vi.mocked(apiClient.get).mockResolvedValue({ data: { items: mockFilme, totalCount: 3 } })
   })
 
   it('fetches all filmkritiken when no options provided', async () => {
     const res = await fetchFilmkritiken()
-    expect(res).toHaveLength(3)
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', { params: {} })
+    expect(res.items).toHaveLength(3)
+    expect(res.totalCount).toBe(3)
   })
 
-  it('filters by title search (case insensitive)', async () => {
-    const res = await fetchFilmkritiken({ suche: 'inter' })
-    expect(res).toHaveLength(1)
-    expect(res[0].film.titel).toBe('Interstellar')
+  it('passes suche query parameter', async () => {
+    await fetchFilmkritiken({ suche: 'inter' })
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', {
+      params: { suche: 'inter' },
+    })
   })
 
-  it('filters explicitly by original title search', async () => {
-    const mockWithOriginal = [...mockFilme]
-    mockWithOriginal[0] = {
-      ...mockWithOriginal[0],
-      film: { ...mockWithOriginal[0].film, originaltitel: 'Inception Original Cut' },
-    }
-    vi.mocked(apiClient.get).mockResolvedValueOnce({ data: mockWithOriginal })
-
-    const res = await fetchFilmkritiken({ suche: 'Original Cut' })
-    expect(res).toHaveLength(1)
-    expect(res[0].film.titel).toBe('Inception')
+  it('passes jahr query parameter', async () => {
+    await fetchFilmkritiken({ jahr: 2025 })
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', {
+      params: { jahr: 2025 },
+    })
   })
 
-  it('filters by Besprechungsjahr', async () => {
-    const res = await fetchFilmkritiken({ jahr: 2025 })
-    expect(res).toHaveLength(1)
-    expect(res[0].film.titel).toBe('Matrix')
+  it('passes beitragvon query parameter', async () => {
+    await fetchFilmkritiken({ beitragvon: 'Julia' })
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', {
+      params: { beitragvon: 'Julia' },
+    })
   })
 
-  it('filters by beitragvon', async () => {
-    const res = await fetchFilmkritiken({ beitragvon: 'Julia' })
-    expect(res).toHaveLength(1)
-    expect(res[0].film.titel).toBe('Interstellar')
+  it('passes sortierung query parameter', async () => {
+    await fetchFilmkritiken({ sortierung: 'neueste' })
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', {
+      params: { sortierung: 'neueste' },
+    })
   })
 
-  it('sorts by neueste', async () => {
-    const res = await fetchFilmkritiken({ sortierung: 'neueste' })
-    expect(res.map((f) => f.id)).toEqual(['2', '1', '3'])
-  })
-
-  it('sorts by aelteste', async () => {
-    const res = await fetchFilmkritiken({ sortierung: 'aelteste' })
-    expect(res.map((f) => f.id)).toEqual(['3', '1', '2'])
-  })
-
-  it('sorts by beste (highest average score)', async () => {
-    const res = await fetchFilmkritiken({ sortierung: 'beste' })
-    expect(res.map((f) => f.film.titel)).toEqual(['Interstellar', 'Inception', 'Matrix'])
+  it('passes limit and offset query parameters', async () => {
+    await fetchFilmkritiken({ limit: 10, offset: 20 })
+    expect(apiClient.get).toHaveBeenCalledWith('/api/filmkritiken', {
+      params: { limit: 10, offset: 20 },
+    })
   })
 
   it('fetchFilmkritikById returns matching item or null', async () => {

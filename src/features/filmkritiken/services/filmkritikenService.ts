@@ -3,79 +3,61 @@ import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
 import { getDurchschnittsBewertung } from '@/features/filmkritiken/composables/useFilmkritiken'
 
+export interface FetchFilmkritikenResponse {
+  items: Filmkritik[]
+  totalCount: number
+}
+
 /**
  * Lädt Filmkritiken vom Backend.
- * Unterstüzt FilterOptions für Suche, Jahr, BeitragVon und Sortierung.
+ * Unterstützt FilterOptions für Suche, Jahr, BeitragVon, Sortierung, Limit & Offset als Query-Parameter.
  */
-export async function fetchFilmkritiken(options?: FilterOptions): Promise<Filmkritik[]> {
-  const response = await apiClient.get<Filmkritik[]>('/api/filmkritiken', {
-    params: { limit: 100 },
-  })
-  let result = response.data ?? []
+export async function fetchFilmkritiken(options?: FilterOptions): Promise<FetchFilmkritikenResponse> {
+  const params: Record<string, string | number> = {}
 
-  // TODO(Phase3-Backend): Ersetzen durch Query-Params wenn Backend-Ticket-05 fertig
   if (options) {
     if (options.suche && options.suche.trim() !== '') {
-      const query = options.suche.trim().toLowerCase()
-      result = result.filter(
-        (f) =>
-          f.film.titel.toLowerCase().includes(query) ||
-          Boolean(f.film.originaltitel && f.film.originaltitel.toLowerCase().includes(query))
-      )
+      params.suche = options.suche.trim()
     }
-
     if (options.jahr !== undefined && options.jahr !== null) {
-      result = result.filter((f) => {
-        if (!f.details.besprochenam) return false
-        const d = new Date(f.details.besprochenam)
-        return !isNaN(d.getTime()) && d.getFullYear() === options.jahr
-      })
+      params.jahr = options.jahr
     }
-
     if (options.beitragvon && options.beitragvon.trim() !== '') {
-      const beitragQuery = options.beitragvon.trim().toLowerCase()
-      result = result.filter(
-        (f) => f.details.beitragvon?.toLowerCase() === beitragQuery
-      )
+      params.beitragvon = options.beitragvon.trim()
     }
-
     if (options.sortierung) {
-      result = [...result].sort((a, b) => {
-        if (options.sortierung === 'neueste') {
-          const da = a.details.besprochenam ? new Date(a.details.besprochenam).getTime() : 0
-          const db = b.details.besprochenam ? new Date(b.details.besprochenam).getTime() : 0
-          return db - da
-        }
-        if (options.sortierung === 'aelteste') {
-          const da = a.details.besprochenam ? new Date(a.details.besprochenam).getTime() : Infinity
-          const db = b.details.besprochenam ? new Date(b.details.besprochenam).getTime() : Infinity
-          return da - db
-        }
-        if (options.sortierung === 'beste') {
-          const avgA = getDurchschnittsBewertung(a) ?? -1
-          const avgB = getDurchschnittsBewertung(b) ?? -1
-          return avgB - avgA
-        }
-        return 0
-      })
+      params.sortierung = options.sortierung
     }
-
     if (options.limit !== undefined && options.limit > 0) {
-      const offset = options.offset ?? 0
-      result = result.slice(offset, offset + options.limit)
+      params.limit = options.limit
+    }
+    if (options.offset !== undefined && options.offset >= 0) {
+      params.offset = options.offset
     }
   }
 
-  return result
+  const response = await apiClient.get<FetchFilmkritikenResponse>('/api/filmkritiken', { params })
+  if (response.data && Array.isArray(response.data.items)) {
+    return {
+      items: response.data.items,
+      totalCount: response.data.totalCount ?? response.data.items.length,
+    }
+  }
+
+  // Fallback if backend returns array
+  const rawArray = Array.isArray(response.data) ? (response.data as unknown as Filmkritik[]) : []
+  return {
+    items: rawArray,
+    totalCount: rawArray.length,
+  }
 }
 
 /**
  * Lädt eine einzelne Filmkritik anhand der ID.
  */
 export async function fetchFilmkritikById(id: string): Promise<Filmkritik | null> {
-  // TODO(Phase3-Backend): Ersetzen durch GET /api/filmkritiken/{id} wenn Backend-Ticket-05 fertig
-  const alle = await fetchFilmkritiken()
-  return alle.find((f) => f.id === id) ?? null
+  const { items } = await fetchFilmkritiken()
+  return items.find((f) => f.id === id) ?? null
 }
 
 /**

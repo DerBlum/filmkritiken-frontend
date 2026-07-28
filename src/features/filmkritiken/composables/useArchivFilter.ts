@@ -1,25 +1,87 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
-import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
 import { getDurchschnittsBewertung } from '@/features/filmkritiken/composables/useFilmkritiken'
+import { fetchFilmkritiken } from '@/features/filmkritiken/services/filmkritikenService'
 
-export function useArchivFilter(allFilmkritiken: { value: Filmkritik[] }) {
+export function useArchivFilter(allFilmkritiken?: { value: Filmkritik[] }) {
   const suche = ref<string>('')
   const jahr = ref<number | null>(null)
   const beitragvon = ref<string>('')
   const sortierung = ref<'neueste' | 'aelteste' | 'beste'>('neueste')
 
-  const pageSize = 12
+  const pageSize = 10
   const displayedCount = ref<number>(pageSize)
+  const isBackend = !allFilmkritiken
 
-  // Reset pagination whenever filter options change
-  watch([suche, jahr, beitragvon, sortierung], () => {
+  const backendFilme = ref<Filmkritik[]>([])
+  const totalCount = ref<number>(0)
+  const isLoading = ref<boolean>(false)
+  const hasMoreBackend = ref<boolean>(true)
+
+  async function loadBackendData() {
+    if (!isBackend) return
+    isLoading.value = true
+    try {
+      const res = await fetchFilmkritiken({
+        suche: suche.value,
+        jahr: jahr.value,
+        beitragvon: beitragvon.value,
+        sortierung: sortierung.value,
+        limit: displayedCount.value,
+      })
+      backendFilme.value = res.items
+      totalCount.value = res.totalCount
+      hasMoreBackend.value = res.items.length < res.totalCount
+    } catch (err) {
+      console.error('Fehler beim Laden der gefilterten Filmkritiken:', err)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null
+
+  // Watch title search with 500ms debounce
+  watch(suche, () => {
     displayedCount.value = pageSize
+    if (isBackend) {
+      if (searchDebounceTimer) {
+        clearTimeout(searchDebounceTimer)
+      }
+      searchDebounceTimer = setTimeout(() => {
+        loadBackendData()
+      }, 500)
+    }
   })
+
+  // Watch select/dropdown filters immediately
+  watch([jahr, beitragvon, sortierung], () => {
+    displayedCount.value = pageSize
+    if (isBackend) {
+      if (searchDebounceTimer) {
+        clearTimeout(searchDebounceTimer)
+      }
+      loadBackendData()
+    }
+  })
+
+  watch(displayedCount, () => {
+    if (isBackend) {
+      loadBackendData()
+    }
+  })
+
+  if (isBackend) {
+    onMounted(() => {
+      loadBackendData()
+    })
+  }
+
+  const sourceList = computed(() => (allFilmkritiken ? allFilmkritiken.value : backendFilme.value))
 
   // Extract unique discussion years from dataset for dropdown
   const verfuegbareJahre = computed<number[]>(() => {
-    const jahre = allFilmkritiken.value
+    const jahre = sourceList.value
       .map((f) => {
         if (!f.details.besprochenam) return null
         const d = new Date(f.details.besprochenam)
@@ -31,7 +93,7 @@ export function useArchivFilter(allFilmkritiken: { value: Filmkritik[] }) {
 
   // Extract unique contributors from dataset for dropdown
   const verfuegbareBeitragende = computed<string[]>(() => {
-    const beitragende = allFilmkritiken.value
+    const beitragende = sourceList.value
       .map((f) => f.details.beitragvon)
       .filter((b): b is string => Boolean(b && b.trim() !== ''))
     return Array.from(new Set(beitragende)).sort((a, b) => a.localeCompare(b))
@@ -39,7 +101,11 @@ export function useArchivFilter(allFilmkritiken: { value: Filmkritik[] }) {
 
   // Filtered and sorted list
   const filteredFilmkritiken = computed<Filmkritik[]>(() => {
-    let result = [...allFilmkritiken.value]
+    if (isBackend) {
+      return backendFilme.value
+    }
+
+    let result = [...sourceList.value]
 
     // Title & Original Title search
     if (suche.value.trim() !== '') {
@@ -91,18 +157,22 @@ export function useArchivFilter(allFilmkritiken: { value: Filmkritik[] }) {
 
   // Paginated visible items
   const paginatedFilmkritiken = computed<Filmkritik[]>(() => {
+    if (isBackend) {
+      return backendFilme.value
+    }
     return filteredFilmkritiken.value.slice(0, displayedCount.value)
   })
 
   // Check if there are more items to load
   const hasMore = computed<boolean>(() => {
+    if (isBackend) {
+      return hasMoreBackend.value
+    }
     return displayedCount.value < filteredFilmkritiken.value.length
   })
 
   function loadMore(): void {
-    if (hasMore.value) {
-      displayedCount.value += pageSize
-    }
+    displayedCount.value += pageSize
   }
 
   const isFilterActive = computed<boolean>(() => {
@@ -132,8 +202,11 @@ export function useArchivFilter(allFilmkritiken: { value: Filmkritik[] }) {
     filteredFilmkritiken,
     paginatedFilmkritiken,
     hasMore,
+    totalCount,
     isFilterActive,
+    isLoading,
     loadMore,
     resetFilters,
+    reload: loadBackendData,
   }
 }

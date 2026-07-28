@@ -163,9 +163,9 @@ export function useFilmkritiken(options?: FilterOptions) {
 
   async function load(): Promise<void> {
     isLoading.value = true
-    error.value = null
     try {
-      filmkritiken.value = await fetchFilmkritiken(options)
+      const res = await fetchFilmkritiken(options)
+      filmkritiken.value = res.items
     } catch (e) {
       // Toast wird vom apiClient-Interceptor ausgelöst — kein doppelter Toast hier
       error.value = 'Fehler beim Laden der Filmkritiken.'
