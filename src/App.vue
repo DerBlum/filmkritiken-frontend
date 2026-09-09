@@ -4,6 +4,7 @@ import SideNav from '@/components/SideNav.vue'
 import BottomTabBar from '@/components/BottomTabBar.vue'
 import ToastContainer from '@/components/ToastContainer.vue'
 import AdminFab from '@/components/AdminFab.vue'
+import FilmkritikCreateModal from '@/features/filmkritiken/components/FilmkritikCreateModal.vue'
 import { useAuth } from '@/composables/useAuth'
 
 const auth = useAuth()
@@ -32,6 +33,9 @@ onMounted(() => {
 
     <!-- Admin FAB (only visible when isAdmin: true — Phase 1 stub: always hidden) -->
     <AdminFab />
+
+    <!-- Admin Modal: Film hinzufügen -->
+    <FilmkritikCreateModal />
 
     <!-- Toast Container (renders active toasts, always present) -->
     <ToastContainer />

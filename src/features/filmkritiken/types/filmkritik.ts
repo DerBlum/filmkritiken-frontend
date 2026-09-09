@@ -48,3 +48,24 @@ export interface Filmkritik {
   film: Film
   bewertungen: Bewertung[]
 }
+
+export interface CreateFilmPayload {
+  von: string
+  besprochenam: string | null
+  bewertungoffen: boolean
+  film: {
+    titel: string
+    erscheinungsjahr: number
+    regie?: string | null
+    laenge?: number | null
+    altersfreigabe?: number | null
+    originaltitel?: string | null
+    originalsprache?: string | null
+    produktionsland?: string | null
+    image: {
+      source: string
+      copyright: string
+      id: string
+    }
+  }
+}

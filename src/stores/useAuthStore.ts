@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
   const { showToast } = useToast()
 
   const isAuthenticated = computed(() => user.value !== null)
-  const isAdmin = computed(() => hasPermission('film.add'))
+  const canAddFilm = computed(() => hasPermission('film.add'))
 
   function hasPermission(perm: Permission): boolean {
     return permissions.value.includes(perm)
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     permissions,
     isAuthenticated,
-    isAdmin,
+    canAddFilm,
     hasPermission,
     fetchSession,
     login,

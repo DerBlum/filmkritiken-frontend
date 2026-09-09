@@ -1,7 +1,14 @@
+import { ref } from 'vue'
 import apiClient from '@/services/apiClient'
-import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
+import type { Filmkritik, CreateFilmPayload } from '@/features/filmkritiken/types/filmkritik'
 import type { FilterOptions } from '@/features/filmkritiken/types/filterOptions'
 import { getDurchschnittsBewertung } from '@/features/filmkritiken/composables/useFilmkritiken'
+
+export const filmkritikenReloadTrigger = ref(0)
+
+export function triggerFilmkritikenReload(): void {
+  filmkritikenReloadTrigger.value++
+}
 
 export interface FilmkritikenQueryOptions {
   suche?: string
@@ -112,4 +119,26 @@ export async function updateBewertungOffen(id: string, offen: boolean): Promise<
   await apiClient.patch(
     `/api/filmkritiken/${encodeURIComponent(id)}/bewertungenoffen/${offen}`
   )
+}
+
+/**
+ * Legt einen neuen Film mit hochgeladenem Poster an.
+ * Sendet Multipart-Form-Data an POST /api/filme.
+ */
+export async function createFilm(
+  payload: CreateFilmPayload,
+  imageFile: File
+): Promise<Filmkritik> {
+  const formData = new FormData()
+  formData.append('json', JSON.stringify(payload))
+  formData.append('image', imageFile)
+
+  const response = await apiClient.post<Filmkritik>('/api/filme', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+
+  triggerFilmkritikenReload()
+  return response.data
 }

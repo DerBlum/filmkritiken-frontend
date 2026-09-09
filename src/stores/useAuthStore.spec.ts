@@ -25,6 +25,7 @@ describe('useAuthStore', () => {
     expect(store.isAuthenticated).toBe(false)
     expect(store.user).toBeNull()
     expect(store.permissions).toEqual([])
+    expect(store.canAddFilm).toBe(false)
     expect(store.hasPermission('film.add')).toBe(false)
   })
 
@@ -39,6 +40,7 @@ describe('useAuthStore', () => {
 
     expect(store.isAuthenticated).toBe(true)
     expect(store.user).toBe('Stefan')
+    expect(store.canAddFilm).toBe(true)
     expect(store.hasPermission('film.add')).toBe(true)
     expect(store.hasPermission('bewertung.openclose')).toBe(false)
   })

@@ -1,5 +1,5 @@
-import { ref, onMounted } from 'vue'
-import { fetchFilmkritiken } from '@/features/filmkritiken/services/filmkritikenService'
+import { ref, onMounted, watch } from 'vue'
+import { fetchFilmkritiken, filmkritikenReloadTrigger } from '@/features/filmkritiken/services/filmkritikenService'
 import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
 
 // ─────────────────────────────────────────────
@@ -175,6 +175,10 @@ export function useFilmkritiken(options?: FilmkritikenQueryOptions) {
   }
 
   onMounted(() => {
+    load()
+  })
+
+  watch(filmkritikenReloadTrigger, () => {
     load()
   })
 

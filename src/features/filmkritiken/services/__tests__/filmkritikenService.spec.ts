@@ -1,12 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import apiClient from '@/services/apiClient'
-import { fetchFilmkritiken, fetchFilmkritikById } from '../filmkritikenService'
-import type { Filmkritik } from '@/features/filmkritiken/types/filmkritik'
+import { fetchFilmkritiken, fetchFilmkritikById, createFilm, filmkritikenReloadTrigger } from '../filmkritikenService'
+import type { Filmkritik, CreateFilmPayload } from '@/features/filmkritiken/types/filmkritik'
 
 vi.mock('@/services/apiClient', () => ({
   default: {
     get: vi.fn(),
     put: vi.fn(),
+    post: vi.fn(),
+    patch: vi.fn(),
   },
 }))
 
@@ -96,5 +98,62 @@ describe('filmkritikenService with FilterOptions', () => {
     vi.mocked(apiClient.get).mockRejectedValueOnce({ response: { status: 404 } })
     const notFound = await fetchFilmkritikById('non-existent')
     expect(notFound).toBeNull()
+  })
+
+  it('createFilm sends FormData with json and image and increments reload trigger', async () => {
+    const payload: CreateFilmPayload = {
+      von: 'Stefan',
+      besprochenam: '2026-10-31T12:00:00Z',
+      bewertungoffen: false,
+      film: {
+        titel: 'Dune: Part Two',
+        erscheinungsjahr: 2024,
+        regie: 'Denis Villeneuve',
+        laenge: 166,
+        altersfreigabe: 12,
+        originaltitel: 'Dune: Part Two',
+        originalsprache: 'Englisch',
+        produktionsland: 'USA',
+        image: {
+          source: '',
+          copyright: 'IMDb',
+          id: '',
+        },
+      },
+    }
+    const mockFile = new File(['fake content'], 'dune2.jpg', { type: 'image/jpeg' })
+    const mockResponseFilm: Filmkritik = {
+      id: 'new-id-123',
+      details: {
+        besprochenam: '2026-10-31T12:00:00Z',
+        bewertungoffen: false,
+        beitragvon: 'Stefan',
+      },
+      film: {
+        titel: 'Dune: Part Two',
+        erscheinungsjahr: 2024,
+        regie: 'Denis Villeneuve',
+        laenge: 166,
+        image: { id: 'img-123', copyright: 'IMDb', source: '' },
+      },
+      bewertungen: [],
+    }
+
+    vi.mocked(apiClient.post).mockResolvedValueOnce({ data: mockResponseFilm })
+    const initialTrigger = filmkritikenReloadTrigger.value
+
+    const result = await createFilm(payload, mockFile)
+
+    expect(apiClient.post).toHaveBeenCalledWith(
+      '/api/filme',
+      expect.any(FormData),
+      expect.objectContaining({
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+    )
+    expect(result.id).toBe('new-id-123')
+    expect(filmkritikenReloadTrigger.value).toBe(initialTrigger + 1)
   })
 })

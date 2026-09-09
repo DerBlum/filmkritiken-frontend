@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import { useFilmCreateModal } from '@/features/filmkritiken/composables/useFilmCreateModal'
 
 const route = useRoute()
 const auth = useAuth()
+const { openModal } = useFilmCreateModal()
 
 const navLinks = [
   { name: 'Home', path: '/', icon: '🏠' },
@@ -74,10 +76,11 @@ function isActive(path: string): boolean {
         <span class="text-sm font-medium">Login</span>
       </router-link>
 
-      <!-- Permission: Add Film Button (visible when film.add in permissions) -->
+      <!-- Permission: Add Film Button (visible when canAddFilm is true) -->
       <button
-        v-if="auth.hasPermission('film.add')"
+        v-if="auth.canAddFilm"
         class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-cinema-red hover:opacity-90 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        @click="openModal"
       >
         <span>+</span>
         <span>Film hinzufügen</span>
