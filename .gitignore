@@ -5,15 +5,10 @@
 /tmp
 /out-tsc
 /bazel-out
+page_dump.html
 
-# Dependencies (root & legacy)
+# Dependencies
 /node_modules
-/legacy/angular/node_modules
-
-# Angular build artifacts
-/.angular
-/legacy/angular/.angular
-/legacy/angular/dist
 
 # Vite / Vue
 *.local

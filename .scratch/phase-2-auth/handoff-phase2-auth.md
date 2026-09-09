@@ -49,8 +49,8 @@ Alle Entscheidungen sind gefallen. Der nächste Agent soll die Issues **einzeln 
 
 ## Azure App Registration
 
-- Tenant ID: `865638a4-e4fb-4aef-89e1-6824acc3a785`
-- Client ID: `b4dcd77f-8bc3-46e4-add1-8a44cd968428`
+- Tenant ID: `<tenant-id>`
+- Client ID: `<client-id>`
 - Redirect URIs registriert: `http://localhost:8080/auth/callback`, `https://filmkritiken-backend.marsrover.418-teapot.de/auth/callback`
 
 ## Suggested Skills
